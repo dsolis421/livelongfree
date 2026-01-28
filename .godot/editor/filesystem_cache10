@@ -1,0 +1,16 @@
+63f7b34db8d8cdea90c76aacccf841ec
+::res://::1769632155
+icon.svg::CompressedTexture2D::6003226096522664481::1769617510::1769617514::1::::<><><>0<>0<>c7a04c3f1c084dd415a4de03e0781cd2<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
+::res://assets/::1769618200
+::res://scenes/::1769632152
+Main.tscn::PackedScene::1286649141900624831::1769632152::0::1::::<><><>0<>0<><>::uid://br82q10ty1k2e::::res://scenes/ui/VirtualJoystick.tscn<>uid://djx0wt86xpxae::::res://scenes/actors/Player.tscn
+::res://scenes/actors/::1769631039
+Player.tscn::PackedScene::7840000594812087272::1769631039::0::1::::<><><>0<>0<><>::uid://cyf5nwygeonb0::::res://scripts/Player.gd
+::res://scenes/ui/::1769628970
+VirtualJoystick.gd::GDScript::2252344885380303400::1769628698::0::1::::VirtualJoystick<>Control<><>0<>0<><>::
+VirtualJoystick.tscn::PackedScene::3649424828054390706::1769628970::0::1::::<><><>0<>0<><>::uid://7db15u7mf5rg::::res://scenes/ui/VirtualJoystick.gd
+::res://scripts/::1769630020
+Player.gd::GDScript::6469541421440568159::1769630020::0::1::::Player<>CharacterBody2D<><>0<>0<><>::
+::res://scripts/autoloads/::1769619402
+SignalBus.gd::GDScript::7747776614717244123::1769619415::0::1::::<>Node<><>0<>0<><>::
+::res://systems/::1769618230
