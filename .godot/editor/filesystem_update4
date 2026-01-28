@@ -1,6 +1,2 @@
 res://scenes/Main.tscn
-res://scenes/actors/Enemy.tscn
 res://scenes/actors/Enemy.gd
-res://scenes/actors/Player.tscn
-res://scripts/EnemySpawner.gd
-res://scripts/Player.gd

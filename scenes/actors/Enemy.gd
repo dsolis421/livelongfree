@@ -9,7 +9,7 @@ func _ready() -> void:
 	# 1. Find the Player when the enemy spawns
 	# We ask the "Scene Tree" to find the first node in the 'player' group
 	player_reference = get_tree().get_first_node_in_group("player")
-	
+	# Is this the proper directory for Godot Tracking?
 func _physics_process(_delta: float) -> void:
 	if player_reference:
 		# 2. Calculate direction to the player
