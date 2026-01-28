@@ -1,6 +1,8 @@
 extends CharacterBody2D
 class_name Player
 
+@export var game_over_screen: PackedScene
+
 # --- CONFIGURATION ---
 @export var movement_speed: float = 300.0
 
@@ -32,3 +34,16 @@ func move() -> void:
 
 	# 4. Godot Physics Move
 	move_and_slide()
+	
+func die() -> void:
+	print("Player has died!")
+	# 1. Instantiate the Game Over UI
+	if game_over_screen:
+		var screen = game_over_screen.instantiate()
+		get_tree().root.add_child(screen)
+
+	# 2. Pause the game so everything stops moving
+	get_tree().paused = true
+
+	# 3. Optional: Delete the player or hide them
+	queue_free()

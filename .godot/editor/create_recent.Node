@@ -1,8 +1,10 @@
+Button
+Label
+ColorRect
 CanvasLayer
 Timer
 Node2D
 CollisionShape2D
-ColorRect
 CharacterBody2D
 Sprite2D
 ParallaxLayer
