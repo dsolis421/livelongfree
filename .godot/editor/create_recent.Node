@@ -1,0 +1,11 @@
+Timer
+Node2D
+CollisionShape2D
+ColorRect
+CharacterBody2D
+Sprite2D
+ParallaxLayer
+ParallaxBackground
+Camera2D
+CanvasLayer
+TextureRect
