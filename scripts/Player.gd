@@ -1,5 +1,6 @@
 extends CharacterBody2D
 class_name Player
+signal player_died
 @export var projectile_scene: PackedScene
 @onready var gun_timer = $GunTimer
 
@@ -38,6 +39,7 @@ func move() -> void:
 	move_and_slide()
 	
 func die() -> void:
+	player_died.emit()
 	print("Player has died!")
 	# 1. Instantiate the Game Over UI
 	if game_over_screen:
@@ -96,3 +98,7 @@ func _on_gun_timer_timeout() -> void:
 	
 	# 7. Add the bullet to the "Main" scene (get_parent() is usually Main)
 	
+
+
+func _on_player_died() -> void:
+	pass # Replace with function body.

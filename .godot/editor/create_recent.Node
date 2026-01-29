@@ -1,9 +1,9 @@
-Camera2D
-Timer
-VisibleOnScreenNotifier2D
 Sprite2D
 CollisionShape2D
 Area2D
+Camera2D
+Timer
+VisibleOnScreenNotifier2D
 CanvasLayer
 MarginContainer
 Label
@@ -12,4 +12,3 @@ HBoxContainer
 VBoxContainer
 CenterContainer
 Button
-ColorRect

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cgna31p5cx674"]
 
 [ext_resource type="Script" uid="uid://toqod6dgw8sw" path="res://scenes/actors/Enemy.gd" id="1_jq30h"]
+[ext_resource type="PackedScene" uid="uid://teqhl7anwhsn" path="res://scenes/loot/Gem.tscn" id="2_ay0ne"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ay0ne"]
 size = Vector2(40, 40)
@@ -10,6 +11,7 @@ size = Vector2(42, 42)
 
 [node name="Enemy" type="CharacterBody2D" unique_id=1413542967 groups=["enemy"]]
 script = ExtResource("1_jq30h")
+loot_scene = ExtResource("2_ay0ne")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=2128324598]
 offset_left = -20.0

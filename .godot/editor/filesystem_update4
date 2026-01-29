@@ -10,3 +10,7 @@ res://scenes/combat/Projectile.gd
 res://scenes/actors/Player.tscn
 res://scripts/Player.gd
 res://scenes/actors/Enemy.tscn
+res://scenes/actors/Enemy.gd
+res://scripts/autoloads/SignalBus.gd
+res://scenes/loot/Gem.tscn
+res://scenes/loot/Gem.gd

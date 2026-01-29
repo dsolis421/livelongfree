@@ -1,7 +1,9 @@
 extends CharacterBody2D
-class_name Enemy
 
+class_name Enemy
+var hp: int = 3
 @export var movement_speed: float = 150.0 # Slower than player (300)
+@export var loot_scene: PackedScene
 
 var player_reference: Player
 
@@ -22,6 +24,48 @@ func _physics_process(_delta: float) -> void:
 
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
-	# Check if the thing we touched has a "die" function
-	if body.has_method("die"):
+	# Only kill it if it is the Player!
+	if body.name == "Player":
 		body.die()
+
+func take_damage() -> void:
+	hp -= 1
+	# Optional: Add a "Flash White" or "Knockback" effect here later!
+	
+	if hp <= 0:
+		die()
+
+func die() -> void:
+	GameManager.kills += 1
+	
+	# 1. Roll for Drop Chance (1 in 10 chance)
+	# randf() gives a random number between 0.0 and 1.0
+	if randf() <= 0.10: 
+		spawn_loot()
+		
+	queue_free()
+
+func spawn_loot() -> void:
+	if loot_scene == null:
+		return
+		
+	# 2. Decide Rarity (Weighted Probability)
+	var roll = randf()
+	var type = 0 # Default to COMMON
+	
+	# 1% chance for Legendary
+	if roll < 0.01:
+		type = 3 # LEGENDARY
+	# 5% chance for Epic
+	elif roll < 0.06: 
+		type = 2 # EPIC
+	# 20% chance for Rare
+	elif roll < 0.26:
+		type = 1 # RARE
+	# Otherwise, it stays COMMON
+	
+	# 3. Create the Gem
+	var gem = loot_scene.instantiate()
+	gem.global_position = global_position
+	gem.setup(type) # Tell the gem what it is
+	get_parent().call_deferred("add_child", gem)
