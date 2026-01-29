@@ -23,6 +23,8 @@ func setup(type: int) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
-		# TODO: Give XP to player
-		print("Collected Gem! XP: ", xp_value)
+		# Deposit the XP
+		GameManager.add_experience(xp_value)
+		
+		# Optional Sound Effect could go here later)
 		queue_free()

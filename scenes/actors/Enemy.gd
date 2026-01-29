@@ -49,23 +49,20 @@ func spawn_loot() -> void:
 	if loot_scene == null:
 		return
 		
-	# 2. Decide Rarity (Weighted Probability)
+	# 1. Simple Rarity Roll
 	var roll = randf()
-	var type = 0 # Default to COMMON
+	var type = 0 
+	if roll < 0.01: type = 3
+	elif roll < 0.06: type = 2
+	elif roll < 0.26: type = 1
 	
-	# 1% chance for Legendary
-	if roll < 0.01:
-		type = 3 # LEGENDARY
-	# 5% chance for Epic
-	elif roll < 0.06: 
-		type = 2 # EPIC
-	# 20% chance for Rare
-	elif roll < 0.26:
-		type = 1 # RARE
-	# Otherwise, it stays COMMON
-	
-	# 3. Create the Gem
+	# 2. Make the Gem
 	var gem = loot_scene.instantiate()
+	gem.setup(type)
+	
+	# 3. CRITICAL FIX: Add it to the absolute root of the current scene
+	# This ensures it doesn't care about the Enemy dying
+	get_tree().current_scene.add_child(gem)
+	
+	# 4. Set position AFTER adding it (prevents drift)
 	gem.global_position = global_position
-	gem.setup(type) # Tell the gem what it is
-	get_parent().call_deferred("add_child", gem)

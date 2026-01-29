@@ -59,3 +59,4 @@ grow_horizontal = 1
 grow_vertical = 0
 
 [connection signal="player_died" from="Player" to="CanvasLayer/GameOver" method="_on_player_died"]
+[connection signal="timeout" from="EnemySpawner/Timer" to="EnemySpawner" method="_on_timer_timeout"]
