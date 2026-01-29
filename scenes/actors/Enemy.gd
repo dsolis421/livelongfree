@@ -19,3 +19,9 @@ func _physics_process(_delta: float) -> void:
 		# 3. Move
 		velocity = direction * movement_speed
 		move_and_slide()
+
+
+func _on_hitbox_body_entered(body: Node2D) -> void:
+	# Check if the thing we touched has a "die" function
+	if body.has_method("die"):
+		body.die()

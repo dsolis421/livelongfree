@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://djx0wt86xpxae" path="res://scenes/actors/Player.tscn" id="2_0bbpv"]
 [ext_resource type="PackedScene" uid="uid://cgna31p5cx674" path="res://scenes/actors/Enemy.tscn" id="3_0bbpv"]
 [ext_resource type="Script" uid="uid://bevfo8jg6sw65" path="res://scripts/EnemySpawner.gd" id="3_rarhs"]
+[ext_resource type="PackedScene" uid="uid://prmueubsccmx" path="res://scenes/ui/HUD.tscn" id="5_vcsgt"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_rvslj"]
 
@@ -17,10 +18,8 @@ position = Vector2(640, 360)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1055227062]
 
-[node name="VirtualJoystick" parent="CanvasLayer" unique_id=1603360565 instance=ExtResource("1_rvslj")]
-
 [node name="Player" parent="." unique_id=1378413890 node_paths=PackedStringArray("joystick") instance=ExtResource("2_0bbpv")]
-joystick = NodePath("../CanvasLayer/VirtualJoystick")
+joystick = NodePath("../Controls/VirtualJoystick")
 
 [node name="Camera2D2" type="Camera2D" parent="Player" unique_id=1102355290]
 
@@ -39,3 +38,19 @@ enemy_scene = ExtResource("3_0bbpv")
 
 [node name="Timer" type="Timer" parent="EnemySpawner" unique_id=1323218654]
 autostart = true
+
+[node name="HUD" parent="." unique_id=2066269178 instance=ExtResource("5_vcsgt")]
+
+[node name="Controls" type="CanvasLayer" parent="." unique_id=2031422744]
+
+[node name="VirtualJoystick" parent="Controls" unique_id=1603360565 instance=ExtResource("1_rvslj")]
+modulate = Color(1, 1, 1, 0.3137255)
+anchors_preset = 2
+anchor_top = 1.0
+anchor_right = 0.0
+offset_left = 125.0
+offset_top = -120.0
+offset_right = 125.0
+offset_bottom = -120.0
+grow_horizontal = 1
+grow_vertical = 0

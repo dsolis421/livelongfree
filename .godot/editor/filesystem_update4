@@ -1,4 +1,12 @@
-res://scenes/ui/GameOver.gd
+res://scenes/ui/HUD.tscn
 res://scenes/ui/GameOver.tscn
-res://scripts/Player.gd
+res://scenes/Main.tscn
+res://scenes/ui/VirtualJoystick.tscn
+res://scripts/GameManager.gd
+res://scenes/ui/HUD.gd
+res://scenes/ui/GameOver.gd
+res://scenes/combat/Projectile.tscn
+res://scenes/combat/Projectile.gd
 res://scenes/actors/Player.tscn
+res://scripts/Player.gd
+res://scenes/actors/Enemy.tscn

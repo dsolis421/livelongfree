@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://prmueubsccmx"]
+
+[ext_resource type="Script" uid="uid://cjt3iiiu7d0vf" path="res://scenes/ui/HUD.gd" id="1_kw0id"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_hc4fa"]
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_kw0id"]
+font_size = 24
+
+[node name="HUD" type="CanvasLayer" unique_id=2066269178]
+script = ExtResource("1_kw0id")
+
+[node name="TopBar" type="MarginContainer" parent="." unique_id=1914842132]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 34.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TopBar" unique_id=451630119]
+layout_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="TopBar/HBoxContainer" unique_id=1569117900]
+layout_mode = 2
+text = "KILLS: 0"
+label_settings = SubResource("LabelSettings_hc4fa")
+
+[node name="Control" type="Control" parent="TopBar/HBoxContainer" unique_id=1177358828]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TimerLabel" type="Label" parent="TopBar/HBoxContainer" unique_id=429517275]
+layout_mode = 2
+text = "00:00"
+label_settings = SubResource("LabelSettings_kw0id")

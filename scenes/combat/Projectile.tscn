@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://2clnf1b15jy2"]
+
+[ext_resource type="Script" uid="uid://dmmgfxklclfkd" path="res://scenes/combat/Projectile.gd" id="1_02wxa"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rgbsv"]
+
+[sub_resource type="Gradient" id="Gradient_1jo0v"]
+colors = PackedColorArray(1, 1, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kw6bp"]
+gradient = SubResource("Gradient_1jo0v")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Projectile" type="Area2D" unique_id=1222971837]
+script = ExtResource("1_02wxa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=833756142]
+shape = SubResource("CircleShape2D_rgbsv")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1210751398]
+texture = SubResource("GradientTexture2D_kw6bp")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=785078487]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,5 +1,7 @@
 extends CharacterBody2D
 class_name Player
+@export var projectile_scene: PackedScene
+@onready var gun_timer = $GunTimer
 
 @export var game_over_screen: PackedScene
 
@@ -47,3 +49,50 @@ func die() -> void:
 
 	# 3. Optional: Delete the player or hide them
 	queue_free()
+
+func get_nearest_enemy():
+	var enemies = get_tree().get_nodes_in_group("enemy")
+	if enemies.is_empty():
+		return null
+	
+	var nearest_enemy = null
+	var min_dist = INF # Start with "Infinite" distance
+	
+	for enemy in enemies:
+		# Calculate distance to this specific goblin
+		var dist = global_position.distance_to(enemy.global_position)
+		if dist < min_dist:
+			min_dist = dist
+			nearest_enemy = enemy
+			
+	return nearest_enemy
+	
+func _on_gun_timer_timeout() -> void:
+	print("Timer Fired!") # CHECK 1: Is the clock running?
+	# 1. Use the helper function to find a target
+	var target = get_nearest_enemy()
+	print("Target found: ", target) # CHECK 2: Did we see a goblin?
+	# 2. If no enemies exist, stop here (don't shoot at nothing)
+	if target == null:
+		return 
+		
+	# 3. Create a copy of the bullet blueprint
+	var bullet = projectile_scene.instantiate()
+	
+	# We do this so the bullet moves independently of the player
+	get_parent().add_child(bullet)
+	
+	# 4. Set the bullet's starting position to the Player's position
+	bullet.global_position = global_position
+	# DEBUG: Tell me where we are
+	print("Player Pos: ", global_position)
+	print("Bullet Spawn: ", bullet.global_position)
+	# 5. Calculate the direction: (Destination - Start)
+	var direction = (target.global_position - global_position).normalized()
+	bullet.direction = direction
+	
+	# 6. Rotate the bullet sprite to face the target (optional visual polish)
+	bullet.rotation = direction.angle()
+	
+	# 7. Add the bullet to the "Main" scene (get_parent() is usually Main)
+	

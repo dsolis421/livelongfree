@@ -5,6 +5,7 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _on_button_pressed() -> void:
+	GameManager.reset()
 	# Unpause the game (if we paused it)
 	get_tree().paused = false
 	# Reload the current scene (Main.tscn)

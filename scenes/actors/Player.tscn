@@ -2,12 +2,14 @@
 
 [ext_resource type="Script" uid="uid://cyf5nwygeonb0" path="res://scripts/Player.gd" id="1_xjuxa"]
 [ext_resource type="PackedScene" uid="uid://ddiyexie8mw2g" path="res://scenes/ui/GameOver.tscn" id="2_8iu4y"]
+[ext_resource type="PackedScene" uid="uid://2clnf1b15jy2" path="res://scenes/combat/Projectile.tscn" id="2_df4lg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8iu4y"]
 size = Vector2(40, 40)
 
 [node name="Player" type="CharacterBody2D" unique_id=1378413890 groups=["player"]]
 script = ExtResource("1_xjuxa")
+projectile_scene = ExtResource("2_df4lg")
 game_over_screen = ExtResource("2_8iu4y")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1795172058]
@@ -27,3 +29,11 @@ color = Color(0, 0, 1, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=988426529]
 shape = SubResource("RectangleShape2D_8iu4y")
+
+[node name="GunTimer" type="Timer" parent="." unique_id=539837230]
+wait_time = 0.5
+autostart = true
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1282083395]
+
+[connection signal="timeout" from="GunTimer" to="." method="_on_gun_timer_timeout"]
