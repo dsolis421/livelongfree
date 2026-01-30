@@ -28,8 +28,8 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
 		body.die()
 
-func take_damage() -> void:
-	hp -= 1
+func take_damage(amount: int = 1) -> void:
+	hp -= amount
 	# Optional: Add a "Flash White" or "Knockback" effect here later!
 	
 	if hp <= 0:

@@ -10,6 +10,7 @@ signal player_died
 # --- CONFIGURATION ---
 @export var movement_speed: float = 300.0
 # Upgradeable Stats
+const BASE_COOLDOWN_TIME: float = 0.5 # The starting speed
 var damage_multiplier: float = 1.0
 var cooldown_modifier: float = 1.0 # Lower is faster
 # --- CONNECTIONS ---
@@ -85,7 +86,7 @@ func _on_gun_timer_timeout() -> void:
 	
 	# We do this so the bullet moves independently of the player
 	get_parent().add_child(bullet)
-	
+	bullet.damage = 1 * damage_multiplier # Assuming 1 is base damage
 	# 4. Set the bullet's starting position to the Player's position
 	bullet.global_position = global_position
 
@@ -104,11 +105,16 @@ func apply_upgrade(type: String) -> void:
 			movement_speed += 50.0
 			print("Speed Upgraded! New Speed: ", movement_speed)
 		"cooldown":
-			cooldown_modifier -= 0.1 # 10% faster
-			$GunTimer.wait_time = 0.5 * cooldown_modifier
-			print("Fire Rate Upgraded! New Wait Time: ", $GunTimer.wait_time)
+			# 1. Decrease the modifier (Make it smaller)
+			cooldown_modifier -= 0.1 
+			# 2. CAP IT: Don't let it go below 0.1 (machine gun crash risk!)
+			if cooldown_modifier < 0.1:
+				cooldown_modifier = 0.1
+			# 3. Apply math to the CONSTANT Base
+			$GunTimer.wait_time = BASE_COOLDOWN_TIME * cooldown_modifier
+			print("Fire Rate Upgraded! Modifier: ", cooldown_modifier, " New Wait Time: ", $GunTimer.wait_time)
 		"damage":
-			damage_multiplier += 0.5
+			damage_multiplier += 1
 			print("Damage Upgraded! New Multiplier: ", damage_multiplier)
 			
 func _on_player_died() -> void:

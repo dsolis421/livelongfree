@@ -1,7 +1,6 @@
-res://scripts/EnemySpawner.gd
-res://scenes/Main.tscn
+res://scenes/combat/Projectile.tscn
+res://scenes/ui/LevelUpScreen.gd
 res://scenes/actors/Enemy.gd
 res://scripts/Player.gd
-res://scenes/ui/LevelUpScreen.tscn
-res://scenes/ui/LevelUpScreen.gd
-res://scripts/GameManager.gd
+res://scenes/combat/Projectile.gd
+res://scenes/actors/Enemy.tscn

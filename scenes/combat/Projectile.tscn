@@ -5,12 +5,12 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_rgbsv"]
 
 [sub_resource type="Gradient" id="Gradient_1jo0v"]
-colors = PackedColorArray(1, 1, 0, 1, 1, 1, 1, 0)
+colors = PackedColorArray(1, 1, 0, 1, 1, 0, 0, 0.039215688)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_kw6bp"]
 gradient = SubResource("Gradient_1jo0v")
-width = 32
-height = 32
+width = 15
+height = 15
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 

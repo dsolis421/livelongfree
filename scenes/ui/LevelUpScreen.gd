@@ -13,18 +13,24 @@ func show_options() -> void:
 	get_tree().paused = true # FREEZE THE GAME
 
 func _on_btn_speed_pressed() -> void:
+	apply_to_player("movement_speed")
 	print("Speed Selected")
-	# We will add the actual upgrade logic in the next step
-	close_menu()
 
 func _on_btn_cooldown_pressed() -> void:
+	apply_to_player("cooldown")
 	print("Cooldown Selected")
-	close_menu()
 
 func _on_btn_damage_pressed() -> void:
+	apply_to_player("damage")
 	print("Damage Selected")
-	close_menu()
 
 func close_menu() -> void:
 	visible = false
 	get_tree().paused = false # RESUME THE GAME
+	
+func apply_to_player(type: String) -> void:
+	var player = get_tree().get_first_node_in_group("player")
+	if player:
+		player.apply_upgrade(type)
+
+	close_menu()

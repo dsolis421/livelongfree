@@ -2,6 +2,7 @@ extends Area2D
 
 var speed = 400
 var direction = Vector2.RIGHT
+var damage: float = 1.0 # Added variable
 
 func _ready() -> void:
 	# When the bullet leaves the screen, delete it
@@ -15,5 +16,5 @@ func _on_body_entered(body: Node2D) -> void:
 	# If we hit an enemy, kill it (We will add this logic next)
 	if body.is_in_group("enemy"):
 		if body.has_method("take_damage"):
-			body.take_damage()
+			body.take_damage(int(damage))
 		queue_free() # Destroy the bullet on impact
