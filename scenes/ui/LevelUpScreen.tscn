@@ -1,17 +1,21 @@
 [gd_scene format=3 uid="uid://dfe3nkk2kx5yn"]
 
+[ext_resource type="Script" uid="uid://bnpcoj0wkitce" path="res://scenes/ui/LevelUpScreen.gd" id="1_rnnc6"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_11if8"]
 bg_color = Color(0, 0, 0, 0.48235294)
 
 [sub_resource type="LabelSettings" id="LabelSettings_rnnc6"]
 
 [node name="LevelUpScreen" type="Control" unique_id=145395974]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_rnnc6")
 
 [node name="Panel" type="Panel" parent="." unique_id=1476873475]
 layout_mode = 1
@@ -54,3 +58,7 @@ text = "Fire Faster"
 [node name="BtnDamage" type="Button" parent="VBoxContainer" unique_id=730715878]
 layout_mode = 2
 text = "Increase Damage"
+
+[connection signal="pressed" from="VBoxContainer/BtnSpeed" to="." method="_on_btn_speed_pressed"]
+[connection signal="pressed" from="VBoxContainer/BtnCooldown" to="." method="_on_btn_cooldown_pressed"]
+[connection signal="pressed" from="VBoxContainer/BtnDamage" to="." method="_on_btn_damage_pressed"]

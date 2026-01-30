@@ -1,4 +1,5 @@
 extends Node
+signal level_up_triggered
 
 # Global Variables
 var time_elapsed: float = 0.0
@@ -19,7 +20,7 @@ func reset() -> void:
 	kills = 0
 	experience = 0
 	level = 1
-	target_experience = 100
+	target_experience = 30
 
 # --- NEW FUNCTION ---
 func add_experience(amount: int) -> void:
@@ -42,3 +43,4 @@ func level_up() -> void:
 	
 	print("LEVEL UP!!! Now Level: ", level)
 	print("Next Level requires: ", target_experience)
+	level_up_triggered.emit()
