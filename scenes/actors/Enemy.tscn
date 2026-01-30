@@ -12,6 +12,7 @@ size = Vector2(42, 42)
 [node name="Enemy" type="CharacterBody2D" unique_id=1413542967 groups=["enemy"]]
 script = ExtResource("1_jq30h")
 loot_scene = ExtResource("2_ay0ne")
+drop_chance = 0.5
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=2128324598]
 offset_left = -20.0

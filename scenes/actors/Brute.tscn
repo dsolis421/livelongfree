@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://b5krklryr84lh"]
+
+[ext_resource type="PackedScene" uid="uid://cgna31p5cx674" path="res://scenes/actors/Enemy.tscn" id="1_hij64"]
+
+[node name="Brute" unique_id=1413542967 instance=ExtResource("1_hij64")]
+scale = Vector2(2, 1.5)
+hp = 10
+movement_speed = 50.0
+damage = 2
+xp_value = 5
+drop_chance = 0.7
+knockback_resistance = 0.8
+
+[node name="ColorRect" parent="." index="0" unique_id=2128324598]
+color = Color(1, 0.49566668, 0.110000014, 1)

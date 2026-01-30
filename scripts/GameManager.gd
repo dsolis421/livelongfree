@@ -1,4 +1,5 @@
 extends Node
+signal xp_updated(current: int, target: int)
 signal level_up_triggered
 
 # Global Variables
@@ -30,17 +31,16 @@ func add_experience(amount: int) -> void:
 	# Check for Level Up
 	if experience >= target_experience:
 		level_up()
+		
+	xp_updated.emit(experience, target_experience)
 
 func level_up() -> void:
-	# 1. Carry over extra XP (e.g. if you have 105/100, you keep 5)
 	experience -= target_experience
-	
-	# 2. Increase Level
 	level += 1
 	
-	# 3. Increase difficulty (Next level requires 50% more XP)
+	# Increase difficulty (Next level requires 50% more XP)
 	target_experience = int(target_experience * 1.5)
-	
+	xp_updated.emit(experience, target_experience)
 	print("LEVEL UP!!! Now Level: ", level)
 	print("Next Level requires: ", target_experience)
 	level_up_triggered.emit()

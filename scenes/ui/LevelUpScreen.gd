@@ -20,10 +20,6 @@ func _on_btn_cooldown_pressed() -> void:
 	apply_to_player("cooldown")
 	print("Cooldown Selected")
 
-func _on_btn_damage_pressed() -> void:
-	apply_to_player("damage")
-	print("Damage Selected")
-
 func close_menu() -> void:
 	visible = false
 	get_tree().paused = false # RESUME THE GAME

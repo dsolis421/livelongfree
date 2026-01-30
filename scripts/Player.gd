@@ -9,10 +9,12 @@ signal player_died
 
 # --- CONFIGURATION ---
 @export var movement_speed: float = 300.0
+const MAX_SPEED: float = 500.0 # Cap: Don't go faster than this
 # Upgradeable Stats
 const BASE_COOLDOWN_TIME: float = 0.5 # The starting speed
 var damage_multiplier: float = 1.0
 var cooldown_modifier: float = 1.0 # Lower is faster
+const MIN_COOLDOWN_MODIFIER: float = 0.2 # Cap: Don't fire faster than 0.1s (0.5 * 0.2)
 # --- CONNECTIONS ---
 # We export this variable so we can drag the Joystick node into it later.
 @export var joystick: VirtualJoystick 
@@ -102,20 +104,24 @@ func _on_gun_timer_timeout() -> void:
 func apply_upgrade(type: String) -> void:
 	match type:
 		"movement_speed":
+			if movement_speed >= MAX_SPEED:
+				print("Speed Maxed Out!")
+				return
 			movement_speed += 50.0
 			print("Speed Upgraded! New Speed: ", movement_speed)
 		"cooldown":
-			# 1. Decrease the modifier (Make it smaller)
-			cooldown_modifier -= 0.1 
-			# 2. CAP IT: Don't let it go below 0.1 (machine gun crash risk!)
-			if cooldown_modifier < 0.1:
-				cooldown_modifier = 0.1
-			# 3. Apply math to the CONSTANT Base
+			# check if we are already at max fire rate
+			if cooldown_modifier <= MIN_COOLDOWN_MODIFIER:
+				print("Fire Rate Maxed Out!")
+				return
+			cooldown_modifier -= 0.1
+			if cooldown_modifier < MIN_COOLDOWN_MODIFIER:
+				cooldown_modifier = MIN_COOLDOWN_MODIFIER
+			# Apply to Timer
 			$GunTimer.wait_time = BASE_COOLDOWN_TIME * cooldown_modifier
-			print("Fire Rate Upgraded! Modifier: ", cooldown_modifier, " New Wait Time: ", $GunTimer.wait_time)
-		"damage":
-			damage_multiplier += 1
-			print("Damage Upgraded! New Multiplier: ", damage_multiplier)
+			print("Fire Rate Upgraded! New Wait Time: ", $GunTimer.wait_time)
 			
+		# "damage": REMOVED. Logic deleted to prevent confusion.
+
 func _on_player_died() -> void:
 	pass # Replace with function body.

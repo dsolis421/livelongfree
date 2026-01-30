@@ -3,6 +3,7 @@ extends Area2D
 var speed = 400
 var direction = Vector2.RIGHT
 var damage: float = 1.0 # Added variable
+var knockback_force: float = 500.0 # Standard impact
 
 func _ready() -> void:
 	# When the bullet leaves the screen, delete it
@@ -17,4 +18,6 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy"):
 		if body.has_method("take_damage"):
 			body.take_damage(int(damage))
+		if body.has_method("take_knockback"):
+			body.take_knockback(global_position, knockback_force)
 		queue_free() # Destroy the bullet on impact

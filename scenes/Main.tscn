@@ -7,6 +7,15 @@
 [ext_resource type="Script" uid="uid://bevfo8jg6sw65" path="res://scripts/EnemySpawner.gd" id="3_rarhs"]
 [ext_resource type="PackedScene" uid="uid://prmueubsccmx" path="res://scenes/ui/HUD.tscn" id="5_vcsgt"]
 [ext_resource type="PackedScene" uid="uid://dfe3nkk2kx5yn" path="res://scenes/ui/LevelUpScreen.tscn" id="6_nxtc6"]
+[ext_resource type="PackedScene" uid="uid://b5e3t05knd183" path="res://scenes/actors/Sprinter.tscn" id="8_q8u5g"]
+[ext_resource type="PackedScene" uid="uid://b5krklryr84lh" path="res://scenes/actors/Brute.tscn" id="9_lhr70"]
+[ext_resource type="Script" uid="uid://cm0ska731efvc" path="res://scenes/ui/XPBar.gd" id="9_wp0k4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bjd11"]
+bg_color = Color(0.35, 0.35, 0.35, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qmy6f"]
+bg_color = Color(0.4648739, 0.78235406, 0.4648739, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_rvslj"]
 
@@ -25,10 +34,11 @@ joystick = NodePath("../Controls/VirtualJoystick")
 
 [node name="EnemySpawner" type="Node2D" parent="." unique_id=1658014085]
 script = ExtResource("3_rarhs")
-enemy_scene = ExtResource("3_0bbpv")
+goblin_scene = ExtResource("3_0bbpv")
+sprinter_scene = ExtResource("8_q8u5g")
+brute_scene = ExtResource("9_lhr70")
 
 [node name="Timer" type="Timer" parent="EnemySpawner" unique_id=1323218654]
-wait_time = 2.03
 autostart = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1055227062]
@@ -38,6 +48,21 @@ autostart = true
 [node name="HUD" parent="CanvasLayer" unique_id=2066269178 instance=ExtResource("5_vcsgt")]
 
 [node name="LevelUpScreen" parent="CanvasLayer" unique_id=145395974 instance=ExtResource("6_nxtc6")]
+
+[node name="XPBar" type="ProgressBar" parent="CanvasLayer" unique_id=40867681]
+custom_minimum_size = Vector2(0, 20)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_top = 25.0
+offset_right = 150.0
+offset_bottom = 45.0
+grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_bjd11")
+theme_override_styles/fill = SubResource("StyleBoxFlat_qmy6f")
+show_percentage = false
+script = ExtResource("9_wp0k4")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=136562145]
 
