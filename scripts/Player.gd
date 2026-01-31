@@ -125,3 +125,13 @@ func apply_upgrade(type: String) -> void:
 
 func _on_player_died() -> void:
 	pass # Replace with function body.
+
+func activate_power_weapon(type: String) -> void:
+	match type:
+		"meteor":
+			print("BOOM! Meteor fired!")
+			# We will code the actual logic later
+		"nuke":
+			print("KA-POW! Screen cleared!")
+		"heal":
+			print("Player Healed!")

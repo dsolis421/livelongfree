@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://b5e3t05knd183" path="res://scenes/actors/Sprinter.tscn" id="8_q8u5g"]
 [ext_resource type="PackedScene" uid="uid://b5krklryr84lh" path="res://scenes/actors/Brute.tscn" id="9_lhr70"]
 [ext_resource type="Script" uid="uid://cm0ska731efvc" path="res://scenes/ui/XPBar.gd" id="9_wp0k4"]
+[ext_resource type="PackedScene" uid="uid://xckxgfbsk16a" path="res://scenes/ui/ActiveItemHUD.tscn" id="10_wp0k4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bjd11"]
 bg_color = Color(0.35, 0.35, 0.35, 1)
@@ -63,6 +64,8 @@ theme_override_styles/background = SubResource("StyleBoxFlat_bjd11")
 theme_override_styles/fill = SubResource("StyleBoxFlat_qmy6f")
 show_percentage = false
 script = ExtResource("9_wp0k4")
+
+[node name="ActiveItemHUD" parent="CanvasLayer" unique_id=1798283823 instance=ExtResource("10_wp0k4")]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=136562145]
 

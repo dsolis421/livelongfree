@@ -11,3 +11,5 @@ res://scenes/Main.tscn
 res://scripts/EnemySpawner.gd
 res://scripts/GameManager.gd
 res://scenes/ui/XPBar.gd
+res://scenes/ui/ActiveItemHUD.tscn
+res://scenes/ui/ActiveItemHUD.gd

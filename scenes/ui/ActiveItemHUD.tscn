@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://xckxgfbsk16a"]
+
+[ext_resource type="Script" uid="uid://dpiq1pgkt1ecc" path="res://scenes/ui/ActiveItemHUD.gd" id="1_q5sid"]
+
+[node name="ActiveItemHUD" type="Control" unique_id=1798283823]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q5sid")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1384144381]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -270.0
+offset_top = -90.0
+offset_right = -22.0
+offset_bottom = -30.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Slot1" type="Button" parent="HBoxContainer" unique_id=1456769811]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+focus_mode = 0
+
+[node name="Slot2" type="Button" parent="HBoxContainer" unique_id=1464869062]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+focus_mode = 0
+
+[node name="Slot3" type="Button" parent="HBoxContainer" unique_id=706041105]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+focus_mode = 0
+
+[connection signal="pressed" from="HBoxContainer/Slot1" to="." method="_on_slot_1_pressed"]
+[connection signal="pressed" from="HBoxContainer/Slot2" to="." method="_on_slot_2_pressed"]
+[connection signal="pressed" from="HBoxContainer/Slot3" to="." method="_on_slot_3_pressed"]

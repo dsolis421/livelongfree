@@ -1,5 +1,6 @@
-ProgressBar
 Button
+HBoxContainer
+ProgressBar
 Label
 VBoxContainer
 Panel
@@ -11,5 +12,3 @@ Timer
 VisibleOnScreenNotifier2D
 CanvasLayer
 MarginContainer
-Control
-HBoxContainer
