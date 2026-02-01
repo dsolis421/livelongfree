@@ -15,6 +15,7 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 
 [node name="Projectile" type="Area2D" unique_id=1222971837]
+collision_mask = 5
 script = ExtResource("1_02wxa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=833756142]

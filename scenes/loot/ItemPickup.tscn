@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://nsfu03fajja8"]
+
+[ext_resource type="Script" uid="uid://u4idrtjqa144" path="res://scenes/loot/ItemPickup.gd" id="1_t1jmj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_r0d0g"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qfhrj"]
+radius = 20.0
+
+[node name="ItemPickup" type="Area2D" unique_id=2101372479]
+collision_layer = 17
+collision_mask = 3
+script = ExtResource("1_t1jmj")
+
+[node name="Label" type="Label" parent="." unique_id=1947437185]
+offset_right = 57.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_r0d0g")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=852212872 groups=["loot"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=740024824]
+shape = SubResource("CircleShape2D_qfhrj")

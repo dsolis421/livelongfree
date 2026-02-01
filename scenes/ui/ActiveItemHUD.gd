@@ -7,11 +7,13 @@ var slots = [null, null, null]
 @onready var buttons = [$HBoxContainer/Slot1, $HBoxContainer/Slot2, $HBoxContainer/Slot3]
 
 func _ready() -> void:
-	# 1. Clear all slots visually
+	# 1. FORCE GROUP REGISTRATION
+	# This ensures the HUD is found, even if the Inspector setting is wrong.
+	add_to_group("hud")
+	print("ActiveItemHUD: I have joined group 'hud'") # Debug print
+
+	# 2. Clear all slots visually
 	update_ui()
-	# TEST: Add a fake item immediately
-	try_add_item("meteor")
-	try_add_item("nuke")
 
 # --- ADDING ITEMS ---
 # Returns TRUE if added successfully, FALSE if full

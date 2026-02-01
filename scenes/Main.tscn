@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cgna31p5cx674" path="res://scenes/actors/Enemy.tscn" id="3_0bbpv"]
 [ext_resource type="Script" uid="uid://bevfo8jg6sw65" path="res://scripts/EnemySpawner.gd" id="3_rarhs"]
 [ext_resource type="PackedScene" uid="uid://prmueubsccmx" path="res://scenes/ui/HUD.tscn" id="5_vcsgt"]
+[ext_resource type="PackedScene" uid="uid://cg1lfl38v4s4t" path="res://scenes/actors/Phantom.tscn" id="6_bjd11"]
 [ext_resource type="PackedScene" uid="uid://dfe3nkk2kx5yn" path="res://scenes/ui/LevelUpScreen.tscn" id="6_nxtc6"]
 [ext_resource type="PackedScene" uid="uid://b5e3t05knd183" path="res://scenes/actors/Sprinter.tscn" id="8_q8u5g"]
 [ext_resource type="PackedScene" uid="uid://b5krklryr84lh" path="res://scenes/actors/Brute.tscn" id="9_lhr70"]
@@ -38,17 +39,14 @@ script = ExtResource("3_rarhs")
 goblin_scene = ExtResource("3_0bbpv")
 sprinter_scene = ExtResource("8_q8u5g")
 brute_scene = ExtResource("9_lhr70")
+phantom_scene = ExtResource("6_bjd11")
 
 [node name="Timer" type="Timer" parent="EnemySpawner" unique_id=1323218654]
 autostart = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1055227062]
 
-[node name="GameOver" parent="CanvasLayer" unique_id=250668618 instance=ExtResource("1_c01mt")]
-
 [node name="HUD" parent="CanvasLayer" unique_id=2066269178 instance=ExtResource("5_vcsgt")]
-
-[node name="LevelUpScreen" parent="CanvasLayer" unique_id=145395974 instance=ExtResource("6_nxtc6")]
 
 [node name="XPBar" type="ProgressBar" parent="CanvasLayer" unique_id=40867681]
 custom_minimum_size = Vector2(0, 20)
@@ -65,7 +63,26 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_qmy6f")
 show_percentage = false
 script = ExtResource("9_wp0k4")
 
+[node name="CurrentLevelLbl" type="Label" parent="CanvasLayer/XPBar" unique_id=102981994]
+layout_mode = 0
+offset_left = -45.0
+offset_right = -5.0
+offset_bottom = 23.0
+text = "1"
+horizontal_alignment = 2
+
+[node name="NextLevelLbl" type="Label" parent="CanvasLayer/XPBar" unique_id=586461845]
+layout_mode = 0
+offset_left = 305.0
+offset_right = 345.0
+offset_bottom = 23.0
+text = "2"
+
 [node name="ActiveItemHUD" parent="CanvasLayer" unique_id=1798283823 instance=ExtResource("10_wp0k4")]
+
+[node name="LevelUpScreen" parent="CanvasLayer" unique_id=145395974 instance=ExtResource("6_nxtc6")]
+
+[node name="GameOver" parent="CanvasLayer" unique_id=250668618 instance=ExtResource("1_c01mt")]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=136562145]
 

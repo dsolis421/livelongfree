@@ -1,9 +1,10 @@
 extends Area2D
 
-var speed = 400
+@export var speed = 400
+@export var damage: float = 1.0 # Added variable
+@export var knockback_force: float = 500.0 # Standard impact
+
 var direction = Vector2.RIGHT
-var damage: float = 1.0 # Added variable
-var knockback_force: float = 500.0 # Standard impact
 
 func _ready() -> void:
 	# When the bullet leaves the screen, delete it

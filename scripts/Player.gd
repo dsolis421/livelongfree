@@ -9,12 +9,14 @@ signal player_died
 
 # --- CONFIGURATION ---
 @export var movement_speed: float = 300.0
-const MAX_SPEED: float = 500.0 # Cap: Don't go faster than this
-# Upgradeable Stats
-const BASE_COOLDOWN_TIME: float = 0.5 # The starting speed
+
 var damage_multiplier: float = 1.0
 var cooldown_modifier: float = 1.0 # Lower is faster
+var is_invincible: bool = false
+
+const BASE_COOLDOWN_TIME: float = 0.5 # The starting speed
 const MIN_COOLDOWN_MODIFIER: float = 0.2 # Cap: Don't fire faster than 0.1s (0.5 * 0.2)
+const MAX_SPEED: float = 500.0 # Cap: Don't go faster than this
 # --- CONNECTIONS ---
 # We export this variable so we can drag the Joystick node into it later.
 @export var joystick: VirtualJoystick 
@@ -58,6 +60,17 @@ func die() -> void:
 	# 3. Optional: Delete the player or hide them
 	queue_free()
 
+# This function is called by Enemies when they touch you.
+# We accept an 'amount' argument to be future-proof, even if we don't use it yet.
+func take_damage(amount: int = 1) -> void:
+	# 1. THE CHECK: Are we invincible?
+	if is_invincible:
+		print("Damage Blocked! (Invincible)")
+		return # Do nothing!
+
+	# 2. If not invincible, we die (since we have 1 HP)
+	die()
+	
 func get_nearest_enemy():
 	var enemies = get_tree().get_nodes_in_group("enemy")
 	if enemies.is_empty():
@@ -128,10 +141,58 @@ func _on_player_died() -> void:
 
 func activate_power_weapon(type: String) -> void:
 	match type:
-		"meteor":
-			print("BOOM! Meteor fired!")
-			# We will code the actual logic later
+		"invincible":
+			cast_invincible()
 		"nuke":
-			print("KA-POW! Screen cleared!")
-		"heal":
-			print("Player Healed!")
+			cast_nuke()
+		"meteor":
+			cast_meteor()
+
+# --- SPELL 1: INVINCIBILITY (Gold) ---
+func cast_invincible() -> void:
+	if is_invincible:
+		return # Don't stack it if already active
+	print("PLAYER IS GODLIKE!")
+	is_invincible = true
+	
+	# Visual Feedback: Turn Gold
+	var original_modulate = self.modulate
+	self.modulate = Color(2, 2, 0, 1) # Bright Gold (Values > 1 make it glow!)
+	
+	# Wait for 5 seconds
+	await get_tree().create_timer(5.0).timeout
+	
+	# Revert
+	is_invincible = false
+	self.modulate = original_modulate
+	print("Player is mortal again.")
+
+# --- SPELL 2: NUKE (Green) ---
+func cast_nuke() -> void:
+	print("NUKE TRIGGERED!")
+	# Get all enemies currently in the game
+	var enemies = get_tree().get_nodes_in_group("enemy")
+	
+	# Loop through them and destroy them
+	for enemy in enemies:
+		if enemy.has_method("take_damage"):
+			# Deal massive damage (so they run their death logic/animations)
+			enemy.take_damage(9999) 
+			
+			# Optional: Add a screen shake here later!
+
+# --- SPELL 3: METEOR (Red) ---
+func cast_meteor() -> void:
+	print("METEOR SHOWER!")
+	# For now, let's make "Meteor" kill 5 random enemies 
+	# (We will make this a visual explosion scene next)
+	var enemies = get_tree().get_nodes_in_group("enemy")
+	enemies.shuffle() # Randomize the list
+	
+	var kill_count = 0
+	for enemy in enemies:
+		if kill_count >= 5: 
+			break # Stop after killing 5
+		if enemy.has_method("take_damage"):
+			enemy.take_damage(50) # Meteors hurt, but maybe don't kill Brutes instantly?
+			kill_count += 1

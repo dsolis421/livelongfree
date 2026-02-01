@@ -5,7 +5,19 @@ extends Node2D
 @export var goblin_scene: PackedScene
 @export var sprinter_scene: PackedScene
 @export var brute_scene: PackedScene
+@export var phantom_scene: PackedScene
 
+func _ready() -> void:
+	# Listen for level up to reset our rhythm
+	GameManager.level_up_triggered.connect(_on_level_up)
+
+func _on_level_up() -> void:
+	# When level up happens, stop the timer.
+	# It will restart naturally when the game unpauses, 
+	# effectively giving the player the full 'wait_time' before the first enemy appears.
+	$Timer.stop()
+	$Timer.start()
+	
 func _on_timer_timeout() -> void:
 	var player = get_tree().get_first_node_in_group("player")
 	if player == null:
@@ -38,9 +50,10 @@ func pick_enemy_by_level() -> PackedScene:
 	
 	# LEVEL 6+: Danger Zone (Brutes, Sprinters, Goblins)
 	if current_level >= 6:
-		if roll < 0.1: return brute_scene     # 10% Chance
-		elif roll < 0.4: return sprinter_scene # 30% Chance
-		else: return goblin_scene              # 60% Chance
+		if roll < 0.05: return phantom_scene    # 5% Chance (Very Rare)
+		elif roll < 0.15: return brute_scene    # 10% Chance
+		elif roll < 0.45: return sprinter_scene # 30% Chance
+		else: return goblin_scene               # 50% Chance
 		
 	# LEVEL 3+: Speed Zone (Sprinters, Goblins)
 	elif current_level >= 3:

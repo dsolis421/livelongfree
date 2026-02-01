@@ -1,12 +1,12 @@
+Label
+CollisionShape2D
+Sprite2D
+Area2D
 Button
 HBoxContainer
 ProgressBar
-Label
 VBoxContainer
 Panel
-Sprite2D
-CollisionShape2D
-Area2D
 Camera2D
 Timer
 VisibleOnScreenNotifier2D

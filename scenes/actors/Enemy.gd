@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 class_name Enemy
+@export_group("Loot Settings")
 @export var hp: int = 3
 @export var movement_speed: float = 150.0 # Slower than player (300)
 @export var damage: int = 1 # How much it hurts the player (for future use)
@@ -8,6 +9,10 @@ class_name Enemy
 @export var loot_scene: PackedScene
 @export var drop_chance: float = 1.0 # Default 100% (1.0), but we will change this!
 @export var knockback_resistance: float = 0.0 
+
+@export var special_drop_chance: float = 1.0 # Chance to drop PowerUp/Spell
+@export var special_drop_scene: PackedScene  # The PowerUp OR Spell Scene
+@export var available_drops: Array[String] = ["meteor", "nuke"] # Default list
 
 var knockback_velocity: Vector2 = Vector2.ZERO
 
@@ -37,7 +42,8 @@ func _physics_process(delta: float) -> void:
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	# Only kill it if it is the Player!
 	if body.name == "Player":
-		body.die()
+		if body.has_method("take_damage"):
+			body.take_damage(1)
 
 func take_damage(amount: int = 1) -> void:
 	hp -= amount
@@ -63,24 +69,43 @@ func die() -> void:
 	queue_free()
 
 func spawn_loot() -> void:
-	if loot_scene == null:
-		return
-	if randf() > drop_chance:
-		return
-	# 1. Simple Rarity Roll
-	var roll = randf()
-	var type = 0 
-	if roll < 0.01: type = 3
-	elif roll < 0.06: type = 2
-	elif roll < 0.26: type = 1
-	
-	# 2. Make the Gem
-	var gem = loot_scene.instantiate()
-	gem.setup(type)
-	
-	# 1. Add to scene deferred (wait for physics to finish)
-	get_tree().current_scene.call_deferred("add_child", gem)
+	# 1. ATTEMPT GEM DROP (XP)
+	# Only run this if a loot_scene is actually assigned in Inspector!
+	if loot_scene != null:
+		if randf() <= drop_chance:
+			# ... [Insert your existing Gem Rarity Logic here] ...
+			# ... (Instantiate gem, call_deferred, etc.) ...
+			var roll = randf()
+			var type = 0 
+			if roll < 0.01: type = 3
+			elif roll < 0.06: type = 2
+			elif roll < 0.26: type = 1
+			
+			var gem = loot_scene.instantiate()
+			gem.setup(type)
+			get_tree().current_scene.call_deferred("add_child", gem)
+			gem.set_deferred("global_position", global_position)
 
-	# 2. Set Position deferred (wait for it to be in the tree)
-	# We pass the CURRENT global_position to the gem's "global_position" property
-	gem.set_deferred("global_position", global_position)
+	# 2. ATTEMPT SPECIAL DROP (Weapon/Spell)
+	# Only run this if a special scene is assigned!
+	if special_drop_scene != null:
+		if randf() <= special_drop_chance:
+			print("---SPAWNING SPECIAL DROP")
+			print("---Name: ", name)
+			print("---Available Drop List: ", available_drops)
+			
+			var pickup = special_drop_scene.instantiate()
+			
+			# Add to scene FIRST so it exists
+			get_tree().current_scene.call_deferred("add_child", pickup)
+			pickup.set_deferred("global_position", global_position)
+			
+			# NOW we decide what it is
+			# If I am a Brute, maybe I only drop Weapons?
+			# If I am a Phantom, maybe I only drop Spells?
+			
+			# For now, let's pick randomly from a list suitable for this enemy
+			# We can create a new export variable for this list!
+			var chosen_type = available_drops.pick_random()
+			print("***I Picked ", chosen_type)
+			pickup.call_deferred("setup", chosen_type)
