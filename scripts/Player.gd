@@ -6,6 +6,14 @@ signal player_died
 @export var projectile_scene: PackedScene
 @onready var gun_timer = $GunTimer
 @export var game_over_screen: PackedScene
+@export var explosion_scene: PackedScene
+
+# --- SPELL CONFIGURATION ---
+@export_group("Spell Stats")
+@export var invincible_duration: float = 5.0
+@export var nuke_damage: int = 9999
+@export var meteor_damage: int = 100 # Increased from 50
+@export var meteor_impact_radius: float = 150.0 # How big is the explosion?
 
 # --- CONFIGURATION ---
 @export var movement_speed: float = 300.0
@@ -120,14 +128,14 @@ func apply_upgrade(type: String) -> void:
 			if movement_speed >= MAX_SPEED:
 				print("Speed Maxed Out!")
 				return
-			movement_speed += 50.0
+			movement_speed += 20.0
 			print("Speed Upgraded! New Speed: ", movement_speed)
 		"cooldown":
 			# check if we are already at max fire rate
 			if cooldown_modifier <= MIN_COOLDOWN_MODIFIER:
 				print("Fire Rate Maxed Out!")
 				return
-			cooldown_modifier -= 0.1
+			cooldown_modifier -= 0.03
 			if cooldown_modifier < MIN_COOLDOWN_MODIFIER:
 				cooldown_modifier = MIN_COOLDOWN_MODIFIER
 			# Apply to Timer
@@ -160,7 +168,7 @@ func cast_invincible() -> void:
 	self.modulate = Color(2, 2, 0, 1) # Bright Gold (Values > 1 make it glow!)
 	
 	# Wait for 5 seconds
-	await get_tree().create_timer(5.0).timeout
+	await get_tree().create_timer(invincible_duration).timeout
 	
 	# Revert
 	is_invincible = false
@@ -177,22 +185,56 @@ func cast_nuke() -> void:
 	for enemy in enemies:
 		if enemy.has_method("take_damage"):
 			# Deal massive damage (so they run their death logic/animations)
-			enemy.take_damage(9999) 
+			enemy.take_damage(nuke_damage) 
 			
 			# Optional: Add a screen shake here later!
 
 # --- SPELL 3: METEOR (Red) ---
 func cast_meteor() -> void:
-	print("METEOR SHOWER!")
-	# For now, let's make "Meteor" kill 5 random enemies 
-	# (We will make this a visual explosion scene next)
-	var enemies = get_tree().get_nodes_in_group("enemy")
-	enemies.shuffle() # Randomize the list
+	print("METEOR CAST!")
 	
-	var kill_count = 0
-	for enemy in enemies:
-		if kill_count >= 5: 
-			break # Stop after killing 5
-		if enemy.has_method("take_damage"):
-			enemy.take_damage(50) # Meteors hurt, but maybe don't kill Brutes instantly?
-			kill_count += 1
+	if not explosion_scene:
+		print("Error: No Explosion Scene assigned!")
+		return
+
+	var all_enemies = get_tree().get_nodes_in_group("enemy")
+	if all_enemies.is_empty():
+		return
+		
+	# 1. FILTER: Find enemies on screen
+	var visible_enemies = []
+	var screen_size = get_viewport_rect().size
+	var player_pos = global_position
+	
+	# Box check: roughly half screen width + buffer
+	var max_dx = (screen_size.x / 2) + 100 
+	var max_dy = (screen_size.y / 2) + 100
+	
+	for enemy in all_enemies:
+		var dx = abs(enemy.global_position.x - player_pos.x)
+		var dy = abs(enemy.global_position.y - player_pos.y)
+		
+		if dx < max_dx and dy < max_dy:
+			visible_enemies.append(enemy)
+	
+	# 2. SELECT TARGET
+	var target = null
+	
+	if visible_enemies.size() > 0:
+		target = visible_enemies.pick_random()
+	else:
+		# Fallback: Find closest off-screen enemy
+		target = all_enemies[0]
+		var closest_dist = 99999.0
+		for enemy in all_enemies:
+			var d = player_pos.distance_to(enemy.global_position)
+			if d < closest_dist:
+				closest_dist = d
+				target = enemy
+
+	# 3. SPAWN (The Fix: Add to scene BEFORE setting position)
+	var boom = explosion_scene.instantiate()
+	get_tree().current_scene.add_child(boom) 
+	
+	# Now force the position
+	boom.global_position = target.global_position

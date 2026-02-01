@@ -1,7 +1,8 @@
-Label
-CollisionShape2D
+AnimationPlayer
 Sprite2D
+CollisionShape2D
 Area2D
+Label
 Button
 HBoxContainer
 ProgressBar
@@ -11,4 +12,3 @@ Camera2D
 Timer
 VisibleOnScreenNotifier2D
 CanvasLayer
-MarginContainer

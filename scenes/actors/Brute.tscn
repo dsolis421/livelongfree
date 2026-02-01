@@ -5,6 +5,7 @@
 
 [node name="Brute" unique_id=1413542967 instance=ExtResource("1_hij64")]
 scale = Vector2(2, 1.5)
+collision_layer = 5
 hp = 10
 movement_speed = 90.0
 damage = 2

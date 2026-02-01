@@ -22,3 +22,7 @@ func _on_body_entered(body: Node2D) -> void:
 		if body.has_method("take_knockback"):
 			body.take_knockback(global_position, knockback_force)
 		queue_free() # Destroy the bullet on impact
+
+
+func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	queue_free()

@@ -4,6 +4,7 @@
 
 [node name="Sprinter" unique_id=1413542967 instance=ExtResource("1_xsveu")]
 scale = Vector2(0.5, 1.5)
+collision_layer = 5
 hp = 2
 movement_speed = 250.0
 drop_chance = 0.6

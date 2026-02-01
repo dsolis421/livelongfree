@@ -10,6 +10,7 @@ size = Vector2(40, 40)
 size = Vector2(42, 42)
 
 [node name="Enemy" type="CharacterBody2D" unique_id=1413542967 groups=["enemy"]]
+collision_layer = 5
 script = ExtResource("1_jq30h")
 movement_speed = 120.0
 loot_scene = ExtResource("2_ay0ne")
