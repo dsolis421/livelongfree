@@ -14,13 +14,18 @@ signal player_died
 @export var nuke_damage: int = 9999
 @export var meteor_damage: int = 100 # Increased from 50
 @export var meteor_impact_radius: float = 150.0 # How big is the explosion?
-
+# --- SCREEN SHAKE SETTINGS ---
+# How quickly the shaking stops (Higher = stops faster)
+@export var shake_decay: float = 5.0  
+# How many pixels the screen can move during the shake
+@export var meteor_shake_intensity: float = 8.0
 # --- CONFIGURATION ---
 @export var movement_speed: float = 300.0
 
 var damage_multiplier: float = 1.0
 var cooldown_modifier: float = 1.0 # Lower is faster
 var is_invincible: bool = false
+var current_shake_strength: float = 0.0
 
 const BASE_COOLDOWN_TIME: float = 0.5 # The starting speed
 const MIN_COOLDOWN_MODIFIER: float = 0.2 # Cap: Don't fire faster than 0.1s (0.5 * 0.2)
@@ -31,7 +36,8 @@ const MAX_SPEED: float = 500.0 # Cap: Don't go faster than this
 
 func _physics_process(_delta: float) -> void:
 	move()
-
+	handle_screen_shake(_delta)
+	
 func move() -> void:
 	var direction: Vector2 = Vector2.ZERO
 	
@@ -189,10 +195,21 @@ func cast_nuke() -> void:
 			
 			# Optional: Add a screen shake here later!
 
-# --- SPELL 3: METEOR (Red) ---
+# --- SPELL 3: METEOR SHOWER (Red) ---
+# This is the "Manager" function
 func cast_meteor() -> void:
-	print("METEOR CAST!")
+	print("--- METEOR SHOWER INCOMING ---")
 	
+	# Loop 3 times to create the shower effect
+	for i in range(3):
+		fire_one_meteor()
+		# Wait 0.2 seconds between shots for that "rapid fire" feel
+		await get_tree().create_timer(0.2).timeout
+
+
+# This is the "Worker" function (Your previous logic)
+func fire_one_meteor() -> void:
+	# 1. Safety Checks
 	if not explosion_scene:
 		print("Error: No Explosion Scene assigned!")
 		return
@@ -201,7 +218,7 @@ func cast_meteor() -> void:
 	if all_enemies.is_empty():
 		return
 		
-	# 1. FILTER: Find enemies on screen
+	# 2. FILTER: Find enemies on screen
 	var visible_enemies = []
 	var screen_size = get_viewport_rect().size
 	var player_pos = global_position
@@ -217,7 +234,7 @@ func cast_meteor() -> void:
 		if dx < max_dx and dy < max_dy:
 			visible_enemies.append(enemy)
 	
-	# 2. SELECT TARGET
+	# 3. SELECT TARGET
 	var target = null
 	
 	if visible_enemies.size() > 0:
@@ -232,9 +249,35 @@ func cast_meteor() -> void:
 				closest_dist = d
 				target = enemy
 
-	# 3. SPAWN (The Fix: Add to scene BEFORE setting position)
+	# 4. SPAWN EXPLOSION (This is likely what went missing!)
 	var boom = explosion_scene.instantiate()
 	get_tree().current_scene.add_child(boom) 
 	
-	# Now force the position
-	boom.global_position = target.global_position
+	# 5. POSITION WITH OFFSET
+	var offset = Vector2(randf_range(-30, 30), randf_range(-30, 30))
+	boom.global_position = target.global_position + offset
+
+	# 6. TRIGGER SHAKE (The new part)
+	apply_shake(meteor_shake_intensity)
+
+func handle_screen_shake(delta: float) -> void:
+	# 1. If we are currently shaking...
+	if current_shake_strength > 0:
+		# 2. Fade the strength out over time (Lerp towards 0)
+		current_shake_strength = lerp(current_shake_strength, 0.0, shake_decay * delta)     
+		# 3. Apply random jitter to the camera
+		# Note: We assume your Camera is a child named "Camera2D"
+		var camera = $Camera2D
+		if camera:
+			var random_offset = Vector2(
+				randf_range(-current_shake_strength, current_shake_strength),
+				randf_range(-current_shake_strength, current_shake_strength)
+			)
+			camera.offset = random_offset
+			# Stop completely if it's very small (optimization)
+			if current_shake_strength < 0.1:
+				current_shake_strength = 0
+				if camera: camera.offset = Vector2.ZERO
+				
+func apply_shake(amount: float) -> void:
+	current_shake_strength = amount
