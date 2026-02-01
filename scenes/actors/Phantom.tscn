@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cgna31p5cx674" path="res://scenes/actors/Enemy.tscn" id="1_mleiq"]
 [ext_resource type="Script" uid="uid://cwqunqm646jmr" path="res://scenes/actors/Phantom.gd" id="2_p7m8u"]
 [ext_resource type="PackedScene" uid="uid://nsfu03fajja8" path="res://scenes/loot/ItemPickup.tscn" id="3_n74la"]
+[ext_resource type="PackedScene" uid="uid://cx1i5tfrv4ajw" path="res://scenes/combat/DeathPhantom.tscn" id="3_q5s0s"]
 
 [node name="Phantom" unique_id=1413542967 instance=ExtResource("1_mleiq")]
 collision_layer = 4
@@ -10,6 +11,7 @@ collision_mask = 0
 script = ExtResource("2_p7m8u")
 movement_speed = 170.0
 loot_scene = null
+death_effect = ExtResource("3_q5s0s")
 special_drop_chance = 1.0
 special_drop_scene = ExtResource("3_n74la")
 available_drops = Array[String](["invincible"])

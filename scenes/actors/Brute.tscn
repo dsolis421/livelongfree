@@ -2,10 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://cgna31p5cx674" path="res://scenes/actors/Enemy.tscn" id="1_hij64"]
 [ext_resource type="PackedScene" uid="uid://nsfu03fajja8" path="res://scenes/loot/ItemPickup.tscn" id="2_4ix3n"]
+[ext_resource type="PackedScene" uid="uid://djffp1gncw3vf" path="res://scenes/combat/DeathBrute.tscn" id="2_sbw3t"]
 
 [node name="Brute" unique_id=1413542967 instance=ExtResource("1_hij64")]
 scale = Vector2(2, 1.5)
-collision_layer = 5
 hp = 10
 movement_speed = 90.0
 damage = 2
@@ -13,6 +13,7 @@ xp_value = 5
 loot_scene = null
 drop_chance = 0.7
 knockback_resistance = 0.8
+death_effect = ExtResource("2_sbw3t")
 special_drop_chance = 1.0
 special_drop_scene = ExtResource("2_4ix3n")
 

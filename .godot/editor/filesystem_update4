@@ -10,3 +10,11 @@ res://scenes/actors/Enemy.tscn
 res://scenes/combat/Explosion2.gd
 res://scenes/actors/Player.tscn
 res://scenes/combat/Explosion2.tscn
+res://scripts/EffectCleanup.gd
+res://scenes/combat/DeathPhantom.tscn
+res://scenes/combat/DeathBrute.tscn
+res://scenes/combat/DeathShatter.tscn
+res://scenes/actors/Phantom.tscn
+res://scenes/actors/Enemy.gd
+res://scenes/combat/DeathGoblin.tscn
+res://scenes/actors/Phantom.gd

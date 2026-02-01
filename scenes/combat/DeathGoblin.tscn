@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://720dybtofa5b"]
+
+[ext_resource type="Script" uid="uid://g7h3vgibrjnu" path="res://scripts/EffectCleanup.gd" id="1_4h576"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_b3wvv"]
+size = Vector2(5, 5)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nq22s"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 10.0
+spread = 180.0
+initial_velocity_min = 150.0
+initial_velocity_max = 250.0
+gravity = Vector3(0, 98, 0)
+scale_min = 2.0
+scale_max = 4.0
+
+[node name="DeathGoblin" type="GPUParticles2D" unique_id=1860417171]
+z_index = 100
+emitting = false
+amount = 24
+texture = SubResource("PlaceholderTexture2D_b3wvv")
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_nq22s")
+script = ExtResource("1_4h576")

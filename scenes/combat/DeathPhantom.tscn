@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://cx1i5tfrv4ajw"]
+
+[ext_resource type="Script" uid="uid://g7h3vgibrjnu" path="res://scripts/EffectCleanup.gd" id="1_w3ycu"]
+
+[sub_resource type="Gradient" id="Gradient_w3ycu"]
+colors = PackedColorArray(0, 0, 0, 0.6666667, 0.3137255, 0.3137255, 0.3137255, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_olmn3"]
+gradient = SubResource("Gradient_w3ycu")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CurveTexture" id="CurveTexture_eq8pm"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nq22s"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 10.0
+spread = 180.0
+initial_velocity_min = 20.0
+initial_velocity_max = 60.0
+gravity = Vector3(0, -50, 0)
+damping_max = 50.000004
+scale_min = 2.0
+scale_max = 4.0
+alpha_curve = SubResource("CurveTexture_eq8pm")
+
+[node name="DeathPhantom" type="GPUParticles2D" unique_id=1860417171]
+z_index = 100
+emitting = false
+amount = 24
+texture = SubResource("GradientTexture2D_olmn3")
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_nq22s")
+script = ExtResource("1_w3ycu")

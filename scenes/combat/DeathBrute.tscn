@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://djffp1gncw3vf"]
+
+[ext_resource type="Script" uid="uid://g7h3vgibrjnu" path="res://scripts/EffectCleanup.gd" id="1_tn6cl"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_b3wvv"]
+size = Vector2(10, 10)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nq22s"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 10.0
+direction = Vector3(1, -1, 0)
+spread = 180.0
+initial_velocity_min = 100.0
+initial_velocity_max = 200.0
+gravity = Vector3(0, 500, 0)
+scale_min = 2.0
+scale_max = 4.0
+
+[node name="DeathBrute" type="GPUParticles2D" unique_id=1860417171]
+z_index = 100
+emitting = false
+amount = 10
+texture = SubResource("PlaceholderTexture2D_b3wvv")
+one_shot = true
+explosiveness = 1.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_nq22s")
+script = ExtResource("1_tn6cl")

@@ -9,7 +9,7 @@ class_name Enemy
 @export var loot_scene: PackedScene
 @export var drop_chance: float = 1.0 # Default 100% (1.0), but we will change this!
 @export var knockback_resistance: float = 0.0 
-
+@export var death_effect: PackedScene
 @export var special_drop_chance: float = 1.0 # Chance to drop PowerUp/Spell
 @export var special_drop_scene: PackedScene  # The PowerUp OR Spell Scene
 @export var available_drops: Array[String] = ["meteor", "nuke"] # Default list
@@ -45,10 +45,15 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 		if body.has_method("take_damage"):
 			body.take_damage(1)
 
-func take_damage(amount: int = 1) -> void:
+func take_damage(amount: int) -> void:
 	hp -= amount
 	if hp <= 0:
-		die()
+		# 1. Visuals
+		spawn_death_effect()
+		# Check your script for the exact name. It might be spawn_gem() or drop_loot()
+		call_deferred("spawn_loot")
+		# 3. Cleanup
+		queue_free()
 		
 func take_knockback(source_position: Vector2, force: float) -> void:
 	# 1. Calculate direction AWAY from the bullet
@@ -109,3 +114,18 @@ func spawn_loot() -> void:
 			var chosen_type = available_drops.pick_random()
 			print("***I Picked ", chosen_type)
 			pickup.call_deferred("setup", chosen_type)
+
+func spawn_death_effect() -> void:
+	if death_effect:
+		# 1. Create the object
+		var effect = death_effect.instantiate()
+		# 2. Add to scene FIRST (Let it initialize)
+		get_tree().current_scene.add_child(effect)
+		# 3. Move it to the correct spot SECOND
+		effect.global_position = global_position
+		# 4. KICKSTART (Crucial!)
+		# Since it might have tried to play at (0,0) the moment we added it,
+		# we force it to restart now that it is in the right place.
+		if effect is GPUParticles2D:
+			effect.restart()
+			effect.emitting = true
