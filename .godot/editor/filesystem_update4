@@ -18,3 +18,6 @@ res://scenes/actors/Phantom.tscn
 res://scenes/actors/Enemy.gd
 res://scenes/combat/DeathGoblin.tscn
 res://scenes/actors/Phantom.gd
+res://scenes/loot/ItemPickup.gd
+res://scenes/combat/NukeEffect.tscn
+res://scenes/combat/NukeEffect.gd

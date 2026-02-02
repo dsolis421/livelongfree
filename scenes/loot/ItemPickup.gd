@@ -22,10 +22,10 @@ func setup(type: String) -> void:
 		
 func _ready() -> void:
 	# Add a floating animation so it looks enticing
-	var tween = create_tween().set_loops()
+	var tween = create_tween()
 	tween.tween_property($Sprite2D, "position:y", -5.0, 1.0).as_relative().set_trans(Tween.TRANS_SINE)
 	tween.tween_property($Sprite2D, "position:y", 5.0, 1.0).as_relative().set_trans(Tween.TRANS_SINE)
-
+	tween.set_loops()
 	body_entered.connect(_on_body_entered)
 	
 	# Create a timer to check distance every 1 second

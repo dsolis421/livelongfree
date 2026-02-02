@@ -28,7 +28,7 @@ alpha_curve = SubResource("CurveTexture_eq8pm")
 [node name="DeathPhantom" type="GPUParticles2D" unique_id=1860417171]
 z_index = 100
 emitting = false
-amount = 24
+amount = 1
 texture = SubResource("GradientTexture2D_olmn3")
 lifetime = 2.0
 one_shot = true

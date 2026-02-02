@@ -24,7 +24,16 @@ offset_left = -20.0
 offset_top = -20.0
 offset_right = 20.0
 offset_bottom = 20.0
+pivot_offset = Vector2(20, 20)
 color = Color(0.60960835, 0.10811037, 0.10811037, 1)
+
+[node name="Eye" type="ColorRect" parent="ColorRect" unique_id=835238468]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 20.0
+offset_right = 35.0
+offset_bottom = 25.0
+color = Color(0, 0, 0, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1944004044]
 shape = SubResource("RectangleShape2D_ay0ne")

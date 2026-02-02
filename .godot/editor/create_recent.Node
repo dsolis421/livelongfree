@@ -1,5 +1,8 @@
-GPUParticles2D
+ColorRect
 AnimationPlayer
+TextureRect
+CanvasLayer
+GPUParticles2D
 Sprite2D
 CollisionShape2D
 Area2D
@@ -9,7 +12,3 @@ HBoxContainer
 ProgressBar
 VBoxContainer
 Panel
-Camera2D
-Timer
-VisibleOnScreenNotifier2D
-CanvasLayer

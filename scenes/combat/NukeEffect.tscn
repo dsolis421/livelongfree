@@ -1,0 +1,128 @@
+[gd_scene format=3 uid="uid://cx8upbpf6dtgs"]
+
+[ext_resource type="Script" uid="uid://bt4skh60x7yam" path="res://scenes/combat/NukeEffect.gd" id="1_v8toe"]
+
+[sub_resource type="Gradient" id="Gradient_e54sn"]
+offsets = PackedFloat32Array(0, 0.518018, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0icar"]
+gradient = SubResource("Gradient_e54sn")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Animation" id="Animation_pdaa2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.627451, 0, 0, 0.78431374)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(10, 10)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_3ny3d"]
+resource_name = "nuke_blast"
+length = 3.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.5, 2.5, 3.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.627451, 0, 0, 0), Color(0.627451, 0, 0, 0.78431374), Color(0.627451, 0, 0, 0.50980395), Color(0.627451, 0, 0, 0.50980395), Color(0.627451, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 0.31864014),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(30, 30)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mrxuy"]
+_data = {
+&"RESET": SubResource("Animation_pdaa2"),
+&"nuke_blast": SubResource("Animation_3ny3d")
+}
+
+[node name="NukeEffect" type="CanvasLayer" unique_id=526349438]
+layer = 10
+script = ExtResource("1_v8toe")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1312291787]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.627451, 0, 0, 0.78431374)
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=781812099]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(10, 10)
+pivot_offset = Vector2(32, 32)
+texture = SubResource("GradientTexture2D_0icar")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1751476194]
+libraries/ = SubResource("AnimationLibrary_mrxuy")

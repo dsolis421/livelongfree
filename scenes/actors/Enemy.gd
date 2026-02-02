@@ -38,6 +38,13 @@ func _physics_process(delta: float) -> void:
 		# Decay the knockback (Friction)
 		# This makes them slide to a stop smoothly
 		knockback_velocity = knockback_velocity.lerp(Vector2.ZERO, 10 * delta)
+		
+	# --- NEW: 360 ROTATION ---
+	# Only rotate if we are actually moving, otherwise they snap to 0 degrees when stopped
+	if velocity.length() > 0:
+		if visual:
+			# velocity.angle() returns the direction of movement in radians
+			visual.rotation = velocity.angle()
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	# Only kill it if it is the Player!

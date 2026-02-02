@@ -7,6 +7,7 @@ signal player_died
 @onready var gun_timer = $GunTimer
 @export var game_over_screen: PackedScene
 @export var explosion_scene: PackedScene
+@export var nuke_scene: PackedScene
 
 # --- SPELL CONFIGURATION ---
 @export_group("Spell Stats")
@@ -184,16 +185,15 @@ func cast_invincible() -> void:
 # --- SPELL 2: NUKE (Green) ---
 func cast_nuke() -> void:
 	print("NUKE TRIGGERED!")
-	# Get all enemies currently in the game
+	# 1. Spawn Visuals (The Scene we just made)
+	if nuke_scene:
+		var nuke_vfx = nuke_scene.instantiate()
+		get_tree().root.add_child(nuke_vfx) # Add to ROOT so it sits on top of everything
+	# 2. The Logic (Kill everyone)
 	var enemies = get_tree().get_nodes_in_group("enemy")
-	
-	# Loop through them and destroy them
 	for enemy in enemies:
 		if enemy.has_method("take_damage"):
-			# Deal massive damage (so they run their death logic/animations)
-			enemy.take_damage(nuke_damage) 
-			
-			# Optional: Add a screen shake here later!
+			enemy.take_damage(nuke_damage)
 
 # --- SPELL 3: METEOR SHOWER (Red) ---
 # This is the "Manager" function

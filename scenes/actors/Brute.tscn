@@ -4,8 +4,13 @@
 [ext_resource type="PackedScene" uid="uid://nsfu03fajja8" path="res://scenes/loot/ItemPickup.tscn" id="2_4ix3n"]
 [ext_resource type="PackedScene" uid="uid://djffp1gncw3vf" path="res://scenes/combat/DeathBrute.tscn" id="2_sbw3t"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sbw3t"]
+size = Vector2(50, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dkpe8"]
+size = Vector2(52, 62)
+
 [node name="Brute" unique_id=1413542967 instance=ExtResource("1_hij64")]
-scale = Vector2(2, 1.5)
 hp = 10
 movement_speed = 90.0
 damage = 2
@@ -18,4 +23,20 @@ special_drop_chance = 1.0
 special_drop_scene = ExtResource("2_4ix3n")
 
 [node name="ColorRect" parent="." index="0" unique_id=2128324598]
+offset_left = -25.0
+offset_top = -30.0
+offset_right = 25.0
+offset_bottom = 30.0
 color = Color(1, 0.49566668, 0.110000014, 1)
+
+[node name="Eye" parent="ColorRect" index="0" unique_id=835238468]
+offset_left = 35.0
+offset_top = 26.0
+offset_right = 43.0
+offset_bottom = 34.0
+
+[node name="CollisionShape2D" parent="." index="1" unique_id=1944004044]
+shape = SubResource("RectangleShape2D_sbw3t")
+
+[node name="CollisionShape2D" parent="Hitbox" parent_id_path=PackedInt32Array(1527609457) index="0" unique_id=1995205190]
+shape = SubResource("RectangleShape2D_dkpe8")
