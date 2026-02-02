@@ -4,10 +4,10 @@
 [ext_resource type="PackedScene" uid="uid://cfcqun17jlyjv" path="res://scenes/combat/DeathShatter.tscn" id="2_kyd6q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kyd6q"]
-size = Vector2(20, 50)
+size = Vector2(50, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lqgpg"]
-size = Vector2(22, 52)
+size = Vector2(52, 22)
 
 [node name="Sprinter" unique_id=1413542967 instance=ExtResource("1_xsveu")]
 hp = 2
@@ -17,18 +17,18 @@ knockback_resistance = -0.2
 death_effect = ExtResource("2_kyd6q")
 
 [node name="ColorRect" parent="." index="0" unique_id=2128324598]
-offset_left = -10.0
-offset_top = -25.0
-offset_right = 10.0
-offset_bottom = 25.0
-pivot_offset = Vector2(10, 25)
+offset_left = -25.0
+offset_top = -10.0
+offset_right = 25.0
+offset_bottom = 10.0
+pivot_offset = Vector2(25, 10)
 color = Color(2.131802, 0.4887087, 0.4887087, 1)
 
 [node name="Eye" parent="ColorRect" index="0" unique_id=835238468]
-offset_left = 12.0
-offset_top = 22.5
-offset_right = 17.0
-offset_bottom = 27.5
+offset_left = 22.5
+offset_top = 12.0
+offset_right = 27.5
+offset_bottom = 17.0
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1944004044]
 shape = SubResource("RectangleShape2D_kyd6q")
