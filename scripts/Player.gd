@@ -22,6 +22,9 @@ signal player_died
 @export var meteor_shake_intensity: float = 8.0
 # --- CONFIGURATION ---
 @export var movement_speed: float = 300.0
+# --- NEW: ANIMATION REF ---
+# We need to grab the sprite node to tell it what to do
+@onready var sprite = $AnimatedSprite2D
 
 var damage_multiplier: float = 1.0
 var cooldown_modifier: float = 1.0 # Lower is faster
@@ -38,6 +41,7 @@ const MAX_SPEED: float = 500.0 # Cap: Don't go faster than this
 func _physics_process(_delta: float) -> void:
 	move()
 	handle_screen_shake(_delta)
+	update_animation()
 	
 func move() -> void:
 	var direction: Vector2 = Vector2.ZERO
@@ -60,7 +64,22 @@ func move() -> void:
 
 	# 4. Godot Physics Move
 	move_and_slide()
-	
+
+# --- NEW FUNCTION: ANIMATION HANDLER ---
+func update_animation() -> void:
+	# 1. Safety Check: If the node is missing, don't crash
+	if not sprite:
+		return
+
+	# 2. Check if we are moving
+	if velocity.length() > 0:
+		sprite.play("run") # Ensure you named the animation "run" in the editor!
+		
+		# 3. Flip the sprite based on direction (Face Left/Right)
+		sprite.rotation = velocity.angle()
+	else:
+		sprite.play("idle") # Ensure you named the animation "idle"
+			
 func die() -> void:
 	player_died.emit()
 	print("Player has died!")
@@ -86,16 +105,26 @@ func take_damage(amount: int = 1) -> void:
 	# 2. If not invincible, we die (since we have 1 HP)
 	die()
 	
+# --- NEW REFERENCE ---
+@onready var detection_area = $EnemyDetectionArea
+
 func get_nearest_enemy():
-	var enemies = get_tree().get_nodes_in_group("enemy")
-	if enemies.is_empty():
+	# 1. OPTIMIZATION: Only ask for bodies currently inside the circle
+	var nearby_enemies = detection_area.get_overlapping_bodies()
+	
+	if nearby_enemies.is_empty():
 		return null
 	
 	var nearest_enemy = null
-	var min_dist = INF # Start with "Infinite" distance
+	var min_dist = INF
 	
-	for enemy in enemies:
-		# Calculate distance to this specific goblin
+	for enemy in nearby_enemies:
+		# 2. VALIDATION: Ensure it's actually an enemy!
+		# Sometimes walls or other things might be on the same layer.
+		if not enemy.is_in_group("enemy"):
+			continue
+			
+		# 3. Calculate distance (Standard logic)
 		var dist = global_position.distance_to(enemy.global_position)
 		if dist < min_dist:
 			min_dist = dist

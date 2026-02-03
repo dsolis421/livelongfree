@@ -4,12 +4,89 @@
 [ext_resource type="PackedScene" uid="uid://ddiyexie8mw2g" path="res://scenes/ui/GameOver.tscn" id="2_8iu4y"]
 [ext_resource type="PackedScene" uid="uid://2clnf1b15jy2" path="res://scenes/combat/Projectile.tscn" id="2_df4lg"]
 [ext_resource type="PackedScene" uid="uid://cx8upbpf6dtgs" path="res://scenes/combat/NukeEffect.tscn" id="4_vtocr"]
+[ext_resource type="Texture2D" uid="uid://bxe2ofoddtweh" path="res://assets/sprites/LLFPlayer.png" id="5_pe48s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8iu4y"]
 size = Vector2(40, 40)
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_df4lg"]
-size = Vector2(40, 40)
+[sub_resource type="AtlasTexture" id="AtlasTexture_5niig"]
+atlas = ExtResource("5_pe48s")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4aj10"]
+atlas = ExtResource("5_pe48s")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cbt8o"]
+atlas = ExtResource("5_pe48s")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ttitt"]
+atlas = ExtResource("5_pe48s")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a8g62"]
+atlas = ExtResource("5_pe48s")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jndii"]
+atlas = ExtResource("5_pe48s")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u4ili"]
+atlas = ExtResource("5_pe48s")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6cyea"]
+atlas = ExtResource("5_pe48s")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_phxw6"]
+atlas = ExtResource("5_pe48s")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yi6s0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5niig")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4aj10")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cbt8o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ttitt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a8g62")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jndii")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u4ili")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6cyea")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_phxw6")
+}],
+"loop": true,
+"name": &"run",
+"speed": 15.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pe48s"]
+size = Vector2(2000, 1200)
 
 [node name="Player" type="CharacterBody2D" unique_id=1378413890 groups=["player"]]
 script = ExtResource("1_xjuxa")
@@ -27,6 +104,19 @@ autostart = true
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1282083395]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=456871286]
-texture = SubResource("PlaceholderTexture2D_df4lg")
+visible = false
+region_enabled = true
+region_rect = Rect2(0, 0, 256, 33)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=989664943]
+sprite_frames = SubResource("SpriteFrames_yi6s0")
+animation = &"run"
+
+[node name="EnemyDetectionArea" type="Area2D" parent="." unique_id=100800656]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetectionArea" unique_id=1701485858]
+shape = SubResource("RectangleShape2D_pe48s")
 
 [connection signal="timeout" from="GunTimer" to="." method="_on_gun_timer_timeout"]

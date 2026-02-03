@@ -13,19 +13,13 @@
 [ext_resource type="PackedScene" uid="uid://b5krklryr84lh" path="res://scenes/actors/Brute.tscn" id="9_lhr70"]
 [ext_resource type="Script" uid="uid://cm0ska731efvc" path="res://scenes/ui/XPBar.gd" id="9_wp0k4"]
 [ext_resource type="PackedScene" uid="uid://xckxgfbsk16a" path="res://scenes/ui/ActiveItemHUD.tscn" id="10_wp0k4"]
+[ext_resource type="Texture2D" uid="uid://br4pm0m1yp1hy" path="res://assets/ground.jpg" id="13_mwfav"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bjd11"]
 bg_color = Color(0.35, 0.35, 0.35, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qmy6f"]
 bg_color = Color(0.4648739, 0.78235406, 0.4648739, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_rvslj"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0bbpv"]
-width = 1280
-height = 1280
-noise = SubResource("FastNoiseLite_rvslj")
 
 [node name="Main" type="Node2D" unique_id=1153333135]
 position = Vector2(640, 360)
@@ -92,13 +86,13 @@ text = "2"
 motion_mirroring = Vector2(1280, 1280)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer" unique_id=1052494166]
-texture = SubResource("NoiseTexture2D_0bbpv")
+texture = ExtResource("13_mwfav")
 centered = false
 
 [node name="Controls" type="CanvasLayer" parent="." unique_id=2031422744]
 
 [node name="VirtualJoystick" parent="Controls" unique_id=1603360565 instance=ExtResource("1_rvslj")]
-modulate = Color(1, 1, 1, 0.3137255)
+modulate = Color(1, 1, 1, 0.5137255)
 anchors_preset = 2
 anchor_top = 1.0
 anchor_right = 0.0

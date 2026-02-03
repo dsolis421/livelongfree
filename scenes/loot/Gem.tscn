@@ -5,8 +5,8 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_pdei0"]
 
 [sub_resource type="Gradient" id="Gradient_1dk5v"]
-offsets = PackedFloat32Array(0.5566038, 1)
-colors = PackedColorArray(0, 0, 0, 1, 1, 0, 0.4, 1)
+offsets = PackedFloat32Array(0.42137095, 0.7923387, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 0, 0.4, 1, 1, 0, 0.4, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_vfjke"]
 gradient = SubResource("Gradient_1dk5v")

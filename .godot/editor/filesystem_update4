@@ -1,2 +1,9 @@
 res://scenes/actors/Sprinter.tscn
 res://scenes/actors/Brute.tscn
+res://scenes/actors/Player.tscn
+res://scripts/Player.gd
+res://scenes/loot/Gem.tscn
+res://scenes/loot/ItemPickup.tscn
+res://scenes/actors/Phantom.tscn
+res://scenes/Main.tscn
+res://scenes/ui/VirtualJoystick.tscn
