@@ -15,3 +15,5 @@ res://scenes/actors/Boss.tscn
 res://scenes/actors/Enemy.tscn
 res://scenes/combat/BossBomb.gd
 res://scenes/combat/BossBomb.tscn
+res://scenes/ui/HUD.tscn
+res://scenes/ui/HUD.gd

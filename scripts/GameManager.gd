@@ -2,7 +2,12 @@ extends Node
 
 signal xp_updated(current: int, target: int)
 signal level_up_triggered
-signal boss_spawn_requested # NEW: Tells the Spawner to do its job
+signal boss_spawn_requested # Tells the Spawner to do its job
+signal boss_incoming_warning # Triggers the flashing text
+signal boss_health_initialized(max_hp: int) # Shows the bar
+signal boss_health_changed(new_hp: int) # Updates the bar
+signal boss_cleared_ui # Hides the bar
+signal boss_supernova_flash
 
 # --- CONFIGURATION ---
 const STARTING_LEVEL = 5 
@@ -71,10 +76,9 @@ func add_experience(amount: int) -> void:
 
 func trigger_boss_fight() -> void:
 	print("!!! BOSS GATE REACHED - LEVEL UP PAUSED !!!")
+	boss_incoming_warning.emit()
 	is_boss_active = true
-	pending_level_up = true # We owe them a level!
-	
-	# Tell the Spawner (and UI) to bring out the big guy
+	pending_level_up = true
 	boss_spawn_requested.emit()
 
 # This function is called by Boss.gd when it dies
@@ -82,6 +86,8 @@ func on_boss_died() -> void:
 	print("!!! BOSS DEFEATED - RESUMING PROGRESS !!!")
 	print("Pending Level Up Status: ", pending_level_up)
 	is_boss_active = false
+	
+	boss_cleared_ui.emit()
 	
 	# Pay the debt: Give the Level Up we withheld
 	if pending_level_up:
@@ -111,3 +117,12 @@ func clear_screen_for_levelup() -> void:
 	get_tree().call_group("enemy", "queue_free")
 	get_tree().call_group("loot", "queue_free")
 	get_tree().call_group("projectile", "queue_free")
+
+func report_boss_spawn(max_hp: int) -> void:
+	boss_health_initialized.emit(max_hp)
+	
+func report_boss_damage(current_hp: int) -> void:
+	boss_health_changed.emit(current_hp)
+
+func trigger_supernova() -> void:
+	boss_supernova_flash.emit()

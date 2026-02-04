@@ -17,10 +17,9 @@ knockback_resistance = -0.2
 death_effect = ExtResource("2_kyd6q")
 
 [node name="ColorRect" parent="." index="0" unique_id=2128324598 groups=["fodder"]]
-offset_left = -25.0
-offset_top = -10.0
-offset_right = 25.0
-offset_bottom = 10.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 50.0
 pivot_offset = Vector2(25, 10)
 color = Color(2.131802, 0.4887087, 0.4887087, 1)
 
