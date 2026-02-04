@@ -7,3 +7,11 @@ res://scenes/loot/ItemPickup.tscn
 res://scenes/actors/Phantom.tscn
 res://scenes/Main.tscn
 res://scenes/ui/VirtualJoystick.tscn
+res://scripts/GameManager.gd
+res://scenes/actors/Enemy.gd
+res://scenes/actors/Boss.gd
+res://scripts/EnemySpawner.gd
+res://scenes/actors/Boss.tscn
+res://scenes/actors/Enemy.tscn
+res://scenes/combat/BossBomb.gd
+res://scenes/combat/BossBomb.tscn

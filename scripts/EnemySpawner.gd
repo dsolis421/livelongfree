@@ -1,65 +1,89 @@
 extends Node2D
 
 # --- THE MENU ---
-# We now have slots for all 3 types
 @export var goblin_scene: PackedScene
 @export var sprinter_scene: PackedScene
 @export var brute_scene: PackedScene
 @export var phantom_scene: PackedScene
+@export var boss_scene: PackedScene 
 
 func _ready() -> void:
-	# Listen for level up to reset our rhythm
+	# Listen for standard level ups (to reset timer rhythm)
 	GameManager.level_up_triggered.connect(_on_level_up)
+	
+	# NEW: Listen for the Boss Request
+	GameManager.boss_spawn_requested.connect(spawn_boss)
 
 func _on_level_up() -> void:
-	# When level up happens, stop the timer.
-	# It will restart naturally when the game unpauses, 
-	# effectively giving the player the full 'wait_time' before the first enemy appears.
+	# Reset rhythm
 	$Timer.stop()
 	$Timer.start()
 	
 func _on_timer_timeout() -> void:
 	var player = get_tree().get_first_node_in_group("player")
-	if player == null:
-		return
+	if player == null: return
 
-	# 1. DECIDE WHICH ENEMY TO SPAWN
+	# --- BOSS FIGHT SPAWN REDUCTION ---
+	# If Boss is active, skip 75% of spawn cycles (Fodder throttle)
+	if GameManager.is_boss_active:
+		if randf() < 0.75: 
+			return 
+	# ----------------------------------
+
 	var enemy_choice = pick_enemy_by_level()
-	if enemy_choice == null:
-		return
+	if enemy_choice == null: return
 
-	# 2. INSTANTIATE IT
 	var enemy = enemy_choice.instantiate()
-
-	# 3. CALCULATE POSITION (Your existing "Donut" math)
-	var viewport_size = get_viewport_rect().size
-	var safe_distance = max(viewport_size.x, viewport_size.y) / 2 + 1000
-	var angle = randf() * TAU
-	var distance = randf_range(safe_distance, safe_distance + 300)
-	var spawn_offset = Vector2(cos(angle), sin(angle)) * distance
-	var spawn_pos = player.global_position + spawn_offset
 	
-	# 4. ADD TO WORLD
+	# Donut Spawn Logic
+	var viewport_size = get_viewport_rect().size
+	var safe_distance = max(viewport_size.x, viewport_size.y) / 2 + 1000 # Slightly tighter
+	var angle = randf() * TAU
+	var spawn_pos = player.global_position + (Vector2(cos(angle), sin(angle)) * safe_distance)
+	
 	enemy.global_position = spawn_pos
 	get_tree().current_scene.add_child(enemy)
 
-# --- THE BRAIN ---
-func pick_enemy_by_level() -> PackedScene:
-	var current_level = GameManager.level
-	var roll = randf() # Returns 0.0 to 1.0
+func spawn_boss() -> void:
+	if boss_scene == null:
+		print("ERROR: No Boss Scene assigned!")
+		return
+
+	print("--- SPAWNER RECEIVED BOSS COMMAND ---")
 	
-	# LEVEL 6+: Danger Zone (Brutes, Sprinters, Goblins)
+	var boss = boss_scene.instantiate()
+	
+	var player = get_tree().get_first_node_in_group("player")
+	if player:
+		# 1. Calculate Dynamic Safe Distance
+		# Get the screen dimensions
+		var viewport_size = get_viewport_rect().size
+		
+		# Take the largest dimension (width or height), cut it in half, 
+		# and add a healthy buffer (e.g., 400px) so he is DEFINITELY off-screen.
+		var safe_distance = max(viewport_size.x, viewport_size.y) / 2 + 800
+		
+		# 2. Pick a random angle
+		var angle = randf() * TAU
+		
+		# 3. Apply the distance
+		var offset = Vector2(cos(angle), sin(angle)) * safe_distance
+		boss.global_position = player.global_position + offset
+	
+	get_tree().current_scene.add_child(boss)
+
+func pick_enemy_by_level() -> PackedScene:
+	# Your existing logic remains exactly the same
+	var current_level = GameManager.level
+	var roll = randf() 
+	
 	if current_level >= 6:
-		if roll < 0.05: return phantom_scene    # 5% Chance (Very Rare)
-		elif roll < 0.15: return brute_scene    # 10% Chance
-		elif roll < 0.45: return sprinter_scene # 30% Chance
-		else: return goblin_scene               # 50% Chance
-		
-	# LEVEL 3+: Speed Zone (Sprinters, Goblins)
+		if roll < 0.05: return phantom_scene 
+		elif roll < 0.15: return brute_scene 
+		elif roll < 0.45: return sprinter_scene
+		else: return goblin_scene
 	elif current_level >= 3:
-		if roll < 0.2: return sprinter_scene   # 20% Chance
-		else: return goblin_scene              # 80% Chance
-		
-	# LEVEL 1-2: Tutorial Zone (Goblins only)
+		if roll < 0.2: return sprinter_scene
+		else: return goblin_scene
 	else:
 		return goblin_scene

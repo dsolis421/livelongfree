@@ -55,12 +55,10 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 func take_damage(amount: int) -> void:
 	hp -= amount
 	if hp <= 0:
-		# 1. Visuals
-		spawn_death_effect()
-		# Check your script for the exact name. It might be spawn_gem() or drop_loot()
-		call_deferred("spawn_loot")
-		# 3. Cleanup
-		queue_free()
+		# STOP! Do not queue_free here.
+		# Hand control over to the die() function.
+		# This allows the Boss script to intercept this moment!
+		die()
 		
 func take_knockback(source_position: Vector2, force: float) -> void:
 	# 1. Calculate direction AWAY from the bullet
@@ -75,18 +73,37 @@ func take_knockback(source_position: Vector2, force: float) -> void:
 	knockback_velocity = direction * final_force
 
 func die() -> void:
+	# This is the "Base" death logic for all enemies.
+	# The Boss script will override this, run its own code, 
+	# and then call super.die() to come back here.
+	
+	spawn_death_effect()
+	
 	if GameManager:
 		GameManager.kills += 1
-	spawn_loot()
+		
+	# Use call_deferred just to be safe with physics
+	call_deferred("spawn_loot")
 	queue_free()
 
 func spawn_loot() -> void:
+	# --- DEBUGGING ---
+	if GameManager.is_boss_active:
+		print("Enemy Died while Boss Active. My Groups: ", get_groups())
+		if is_in_group("fodder"):
+			print(">>> BLOCKED LOOT (Correct) <<<")
+			return
+		else:
+			print(">>> FAILED BLOCK: I am not in 'fodder' group! <<<")
+	# -----------------
+
+	# The Gatekeeper
+	if GameManager.is_boss_active and is_in_group("fodder"):
+		return
+
 	# 1. ATTEMPT GEM DROP (XP)
-	# Only run this if a loot_scene is actually assigned in Inspector!
 	if loot_scene != null:
 		if randf() <= drop_chance:
-			# ... [Insert your existing Gem Rarity Logic here] ...
-			# ... (Instantiate gem, call_deferred, etc.) ...
 			var roll = randf()
 			var type = 0 
 			if roll < 0.01: type = 3
@@ -98,28 +115,15 @@ func spawn_loot() -> void:
 			get_tree().current_scene.call_deferred("add_child", gem)
 			gem.set_deferred("global_position", global_position)
 
-	# 2. ATTEMPT SPECIAL DROP (Weapon/Spell)
-	# Only run this if a special scene is assigned!
+	# 2. ATTEMPT SPECIAL DROP
 	if special_drop_scene != null:
 		if randf() <= special_drop_chance:
 			print("---SPAWNING SPECIAL DROP")
-			print("---Name: ", name)
-			print("---Available Drop List: ", available_drops)
-			
 			var pickup = special_drop_scene.instantiate()
-			
-			# Add to scene FIRST so it exists
 			get_tree().current_scene.call_deferred("add_child", pickup)
 			pickup.set_deferred("global_position", global_position)
 			
-			# NOW we decide what it is
-			# If I am a Brute, maybe I only drop Weapons?
-			# If I am a Phantom, maybe I only drop Spells?
-			
-			# For now, let's pick randomly from a list suitable for this enemy
-			# We can create a new export variable for this list!
 			var chosen_type = available_drops.pick_random()
-			print("***I Picked ", chosen_type)
 			pickup.call_deferred("setup", chosen_type)
 
 func spawn_death_effect() -> void:

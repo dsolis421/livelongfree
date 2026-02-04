@@ -10,16 +10,16 @@ size = Vector2(40, 40)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jq30h"]
 size = Vector2(42, 42)
 
-[node name="Enemy" type="CharacterBody2D" unique_id=1413542967 groups=["enemy"]]
+[node name="Enemy" type="CharacterBody2D" unique_id=1413542967 groups=["enemy", "fodder"]]
 collision_layer = 5
 script = ExtResource("1_jq30h")
 movement_speed = 120.0
 loot_scene = ExtResource("2_ay0ne")
-drop_chance = 0.5
+drop_chance = 0.6
 death_effect = ExtResource("3_ktxhy")
 special_drop_chance = 0.0
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=2128324598]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2128324598 groups=["enemy"]]
 offset_left = -20.0
 offset_top = -20.0
 offset_right = 20.0
@@ -27,7 +27,7 @@ offset_bottom = 20.0
 pivot_offset = Vector2(20, 20)
 color = Color(0.60960835, 0.10811037, 0.10811037, 1)
 
-[node name="Eye" type="ColorRect" parent="ColorRect" unique_id=835238468]
+[node name="Eye" type="ColorRect" parent="ColorRect" unique_id=835238468 groups=["enemy"]]
 layout_mode = 0
 offset_left = 30.0
 offset_top = 20.0
@@ -35,12 +35,12 @@ offset_right = 35.0
 offset_bottom = 25.0
 color = Color(0, 0, 0, 1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1944004044]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1944004044 groups=["enemy"]]
 shape = SubResource("RectangleShape2D_ay0ne")
 
-[node name="Hitbox" type="Area2D" parent="." unique_id=1527609457]
+[node name="Hitbox" type="Area2D" parent="." unique_id=1527609457 groups=["enemy"]]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1995205190]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1995205190 groups=["enemy"]]
 shape = SubResource("RectangleShape2D_jq30h")
 
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

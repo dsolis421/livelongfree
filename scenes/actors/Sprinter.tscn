@@ -12,11 +12,11 @@ size = Vector2(52, 22)
 [node name="Sprinter" unique_id=1413542967 instance=ExtResource("1_xsveu")]
 hp = 2
 movement_speed = 250.0
-drop_chance = 0.6
+drop_chance = 0.7
 knockback_resistance = -0.2
 death_effect = ExtResource("2_kyd6q")
 
-[node name="ColorRect" parent="." index="0" unique_id=2128324598]
+[node name="ColorRect" parent="." index="0" unique_id=2128324598 groups=["fodder"]]
 offset_left = -25.0
 offset_top = -10.0
 offset_right = 25.0
@@ -30,8 +30,10 @@ offset_top = 12.0
 offset_right = 27.5
 offset_bottom = 17.0
 
-[node name="CollisionShape2D" parent="." index="1" unique_id=1944004044]
+[node name="CollisionShape2D" parent="." index="1" unique_id=1944004044 groups=["fodder"]]
 shape = SubResource("RectangleShape2D_kyd6q")
 
-[node name="CollisionShape2D" parent="Hitbox" parent_id_path=PackedInt32Array(1527609457) index="0" unique_id=1995205190]
+[node name="Hitbox" parent="." index="2" unique_id=1527609457 groups=["fodder"]]
+
+[node name="CollisionShape2D" parent="Hitbox" index="0" unique_id=1995205190 groups=["fodder"]]
 shape = SubResource("RectangleShape2D_lqgpg")
