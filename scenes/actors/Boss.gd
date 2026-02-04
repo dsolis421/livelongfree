@@ -52,8 +52,8 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 	# Visual Rotation (Keep facing direction of travel)
-	if velocity.length() > 0 and visual:
-		visual.rotation = velocity.angle()
+	if velocity.length() > 0:
+		rotation = velocity.angle()
 
 # --- STATE LOGIC HANDLERS ---
 
@@ -162,7 +162,7 @@ func prepare_attack() -> void:
 	# 2. Face the Player
 	if player and visual:
 		var to_player = global_position.direction_to(player.global_position)
-		visual.rotation = to_player.angle()
+		rotation = to_player.angle()
 	# 3. Wind Up (Flash Yellow/Orange)
 	if visual:
 		var tween = create_tween()
