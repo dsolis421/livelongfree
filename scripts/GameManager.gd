@@ -24,9 +24,18 @@ var target_experience: int = STARTING_TARGET_XP
 # --- STATE FLAGS ---
 var is_boss_active: bool = false
 var pending_level_up: bool = false # NEW: Remembers we owe the player a level up
+# --- SAVE SYSTEM SETTINGS ---
+var save_path: String = "user://savegame.json"
 
+# Default Records (Will be overwritten if a save file exists)
+var save_data: Dictionary = {
+	"high_level": 1,
+	"high_kills": 0,
+	"best_time": 0.0
+}
 func _ready() -> void:
 	reset()
+	load_game()
 
 func _process(delta: float) -> void:
 	time_elapsed += delta
@@ -126,3 +135,55 @@ func report_boss_damage(current_hp: int) -> void:
 
 func trigger_supernova() -> void:
 	boss_supernova_flash.emit()
+
+func check_and_save_records(current_level: int, current_kills: int, current_time: float) -> void:
+	print("Checking for new records...")
+	var dirty = false # "Dirty" means data changed and needs saving
+	
+	# 1. Check Level
+	if current_level > save_data["high_level"]:
+		print("NEW RECORD: Level ", current_level)
+		save_data["high_level"] = current_level
+		dirty = true
+		
+	# 2. Check Kills
+	if current_kills > save_data["high_kills"]:
+		print("NEW RECORD: Kills ", current_kills)
+		save_data["high_kills"] = current_kills
+		dirty = true
+		
+	# 3. Check Time
+	if current_time > save_data["best_time"]:
+		print("NEW RECORD: Time ", current_time)
+		save_data["best_time"] = current_time
+		dirty = true
+		
+	# 4. Save to Disk if anything changed
+	if dirty:
+		save_game()
+	else:
+		print("No new records set.")
+
+func save_game() -> void:
+	var file = FileAccess.open(save_path, FileAccess.WRITE)
+	if file:
+		file.store_string(JSON.stringify(save_data))
+		print("Game Saved Successfully: ", save_data)
+
+func load_game() -> void:
+	if FileAccess.file_exists(save_path):
+		var file = FileAccess.open(save_path, FileAccess.READ)
+		var json = JSON.new()
+		var parse_result = json.parse(file.get_as_text())
+		
+		if parse_result == OK:
+			var loaded_data = json.get_data()
+			# Safety Merging: Only update keys that actually exist
+			if "high_level" in loaded_data: save_data["high_level"] = int(loaded_data["high_level"])
+			if "high_kills" in loaded_data: save_data["high_kills"] = int(loaded_data["high_kills"])
+			if "best_time" in loaded_data: save_data["best_time"] = float(loaded_data["best_time"])
+			print("Game Loaded: ", save_data)
+		else:
+			print("JSON Parse Error. Starting with default records.")
+	else:
+		print("No save file found. Starting fresh.")

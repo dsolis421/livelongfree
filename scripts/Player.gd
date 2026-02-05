@@ -84,6 +84,8 @@ func die() -> void:
 	player_died.emit()
 	print("Player has died!")
 	# 1. Instantiate the Game Over UI
+	GameManager.check_and_save_records(GameManager.level, GameManager.kills, GameManager.time_elapsed)
+	
 	if game_over_screen:
 		var screen = game_over_screen.instantiate()
 		get_tree().root.add_child(screen)

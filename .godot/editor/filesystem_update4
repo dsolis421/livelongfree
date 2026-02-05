@@ -17,3 +17,5 @@ res://scenes/combat/BossBomb.gd
 res://scenes/combat/BossBomb.tscn
 res://scenes/ui/HUD.tscn
 res://scenes/ui/HUD.gd
+res://scenes/ui/MainMenu.tscn
+res://scenes/ui/MainMenu.gd
