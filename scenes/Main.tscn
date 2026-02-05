@@ -30,7 +30,7 @@ glow_bloom = 0.02
 glow_blend_mode = 2
 
 [node name="Main" type="Node2D" unique_id=1153333135]
-position = Vector2(640, 360)
+position = Vector2(360, 640)
 
 [node name="Player" parent="." unique_id=1378413890 node_paths=PackedStringArray("joystick") instance=ExtResource("2_0bbpv")]
 explosion_scene = ExtResource("2_qmy6f")
@@ -90,11 +90,14 @@ text = "2"
 [node name="GameOver" parent="CanvasLayer" unique_id=250668618 instance=ExtResource("1_c01mt")]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=136562145]
+offset = Vector2(-100, -40)
+transform = Transform2D(1, 0, 0, 1, -100, -40)
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" unique_id=566181047]
-motion_mirroring = Vector2(1280, 1280)
+motion_mirroring = Vector2(1500, 1500)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer" unique_id=1052494166]
+scale = Vector2(1, 1.5)
 texture = ExtResource("13_mwfav")
 centered = false
 

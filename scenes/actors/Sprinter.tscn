@@ -17,17 +17,25 @@ knockback_resistance = -0.2
 death_effect = ExtResource("2_kyd6q")
 
 [node name="ColorRect" parent="." index="0" unique_id=2128324598 groups=["fodder"]]
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 50.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -10.0
+offset_right = 25.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
 pivot_offset = Vector2(25, 10)
-color = Color(2.131802, 0.4887087, 0.4887087, 1)
+color = Color(0, 0.668694, 1.8067696, 1)
 
 [node name="Eye" parent="ColorRect" index="0" unique_id=835238468]
-offset_left = 22.5
-offset_top = 12.0
-offset_right = 27.5
-offset_bottom = 17.0
+offset_left = 0.0
+offset_top = 10.0
+offset_right = 5.0
+offset_bottom = 15.0
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1944004044 groups=["fodder"]]
 shape = SubResource("RectangleShape2D_kyd6q")

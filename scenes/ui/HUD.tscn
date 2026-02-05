@@ -22,30 +22,36 @@ bg_color = Color(0.73333335, 0, 0, 1)
 [node name="HUD" type="CanvasLayer" unique_id=2066269178]
 script = ExtResource("1_kw0id")
 
-[node name="TopBar" type="MarginContainer" parent="." unique_id=1914842132]
-anchors_preset = 10
+[node name="SafeArea" type="MarginContainer" parent="." unique_id=2127647817]
+anchors_preset = 15
 anchor_right = 1.0
-offset_bottom = 34.0
+anchor_bottom = 1.0
 grow_horizontal = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 20
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TopBar" unique_id=451630119]
+[node name="TopBar" type="MarginContainer" parent="SafeArea" unique_id=1914842132]
 layout_mode = 2
 
-[node name="ScoreLabel" type="Label" parent="TopBar/HBoxContainer" unique_id=1569117900]
+[node name="HBoxContainer" type="HBoxContainer" parent="SafeArea/TopBar" unique_id=451630119]
 layout_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="SafeArea/TopBar/HBoxContainer" unique_id=1569117900]
+layout_mode = 2
+size_flags_vertical = 0
 text = "KILLS: 0"
 label_settings = SubResource("LabelSettings_hc4fa")
 
-[node name="Control" type="Control" parent="TopBar/HBoxContainer" unique_id=1177358828]
+[node name="Control" type="Control" parent="SafeArea/TopBar/HBoxContainer" unique_id=1177358828]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TimerLabel" type="Label" parent="TopBar/HBoxContainer" unique_id=429517275]
+[node name="TimerLabel" type="Label" parent="SafeArea/TopBar/HBoxContainer" unique_id=429517275]
 layout_mode = 2
+size_flags_vertical = 0
 text = "00:00"
 label_settings = SubResource("LabelSettings_kw0id")
 
@@ -77,17 +83,16 @@ label_settings = SubResource("LabelSettings_atyv1")
 horizontal_alignment = 1
 
 [node name="BossHealthBar" type="ProgressBar" parent="." unique_id=1262113850]
-visible = false
-anchors_preset = 7
-anchor_left = 0.5
+anchors_preset = 3
+anchor_left = 1.0
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -300.0
-offset_top = -145.0
-offset_right = 300.0
-offset_bottom = -125.0
-grow_horizontal = 2
+offset_left = -370.0
+offset_top = -180.0
+offset_right = -70.0
+offset_bottom = -160.0
+grow_horizontal = 0
 grow_vertical = 0
 theme_override_styles/background = SubResource("StyleBoxFlat_kw0id")
 theme_override_styles/fill = SubResource("StyleBoxFlat_atyv1")

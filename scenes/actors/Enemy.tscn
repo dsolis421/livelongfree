@@ -25,7 +25,7 @@ offset_top = -20.0
 offset_right = 20.0
 offset_bottom = 20.0
 pivot_offset = Vector2(20, 20)
-color = Color(0.60960835, 0.10811037, 0.10811037, 1)
+color = Color(0, 0, 0.6039216, 1)
 
 [node name="Eye" type="ColorRect" parent="ColorRect" unique_id=835238468 groups=["enemy"]]
 layout_mode = 0

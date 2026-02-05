@@ -3,7 +3,8 @@
 [ext_resource type="Script" uid="uid://g7h3vgibrjnu" path="res://scripts/EffectCleanup.gd" id="1_w3ycu"]
 
 [sub_resource type="Gradient" id="Gradient_w3ycu"]
-colors = PackedColorArray(0, 0, 0, 0.6666667, 0.3137255, 0.3137255, 0.3137255, 0)
+offsets = PackedFloat32Array(0.2962963, 0.7366255)
+colors = PackedColorArray(0.60784316, 0.3254902, 1, 0.5882353, 0.3137255, 0.3137255, 0.3137255, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_olmn3"]
 gradient = SubResource("Gradient_w3ycu")

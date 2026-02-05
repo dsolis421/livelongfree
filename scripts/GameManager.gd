@@ -10,7 +10,7 @@ signal boss_cleared_ui # Hides the bar
 signal boss_supernova_flash
 
 # --- CONFIGURATION ---
-const STARTING_LEVEL = 5 
+const STARTING_LEVEL = 6
 const STARTING_XP = 0
 const STARTING_TARGET_XP = 50
 

@@ -36,12 +36,35 @@ func _on_timer_timeout() -> void:
 	var enemy = enemy_choice.instantiate()
 	
 	# Donut Spawn Logic
-	var viewport_size = get_viewport_rect().size
-	var safe_distance = max(viewport_size.x, viewport_size.y) / 2 + 1000 # Slightly tighter
-	var angle = randf() * TAU
-	var spawn_pos = player.global_position + (Vector2(cos(angle), sin(angle)) * safe_distance)
+	# NEW: Rectangular Spawn Logic (Fits Portrait Mode)
 	
-	enemy.global_position = spawn_pos
+	# 1. Get the real world size of the screen (Accounting for Zoom!)
+	var camera = get_viewport().get_camera_2d()
+	var zoom = camera.zoom if camera else Vector2.ONE
+	var view_size = get_viewport_rect().size / zoom
+	
+	# 2. Add a buffer so they spawn slightly off-screen
+	var buffer = 500 
+	var half_w = (view_size.x / 2) + buffer
+	var half_h = (view_size.y / 2) + buffer
+
+	# 3. Pick a random edge (0=Top, 1=Bottom, 2=Left, 3=Right)
+	var side = randi() % 4
+	var spawn_offset = Vector2.ZERO
+
+	match side:
+		0: # Top Edge
+			spawn_offset = Vector2(randf_range(-half_w, half_w), -half_h)
+		1: # Bottom Edge
+			spawn_offset = Vector2(randf_range(-half_w, half_w), half_h)
+		2: # Left Edge
+			spawn_offset = Vector2(-half_w, randf_range(-half_h, half_h))
+		3: # Right Edge
+			spawn_offset = Vector2(half_w, randf_range(-half_h, half_h))
+
+	# 4. Apply position relative to player
+	enemy.global_position = player.global_position + spawn_offset
+	
 	get_tree().current_scene.add_child(enemy)
 
 func spawn_boss() -> void:

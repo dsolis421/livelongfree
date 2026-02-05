@@ -86,7 +86,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pe48s"]
-size = Vector2(2000, 1200)
+size = Vector2(1200, 2000)
 
 [node name="Player" type="CharacterBody2D" unique_id=1378413890 groups=["player"]]
 script = ExtResource("1_xjuxa")
@@ -102,6 +102,12 @@ wait_time = 0.5
 autostart = true
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1282083395]
+zoom = Vector2(0.8, 0.8)
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_horizontal_offset = 0.02
+drag_vertical_offset = 0.1
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=456871286]
 visible = false

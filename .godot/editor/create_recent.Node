@@ -1,10 +1,10 @@
+MarginContainer
 Label
 Button
 VBoxContainer
 PanelContainer
 CenterContainer
 HBoxContainer
-MarginContainer
 ColorRect
 TextureRect
 Control

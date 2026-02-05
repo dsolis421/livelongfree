@@ -27,8 +27,8 @@ func _on_play_pressed() -> void:
 	# RESET the Game Session State
 	# (Crucial: otherwise you start level 1 with level 5 stats!)
 	# GameManager.score = 0
-	GameManager.level = 1
-	GameManager.experience = 0
+	GameManager.level = GameManager.STARTING_LEVEL
+	GameManager.experience = GameManager.STARTING_XP
 	GameManager.time_elapsed = 0.0
 	GameManager.kills = 0
 	GameManager.is_boss_active = false

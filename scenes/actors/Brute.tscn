@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://b5krklryr84lh"]
 
 [ext_resource type="PackedScene" uid="uid://cgna31p5cx674" path="res://scenes/actors/Enemy.tscn" id="1_hij64"]
-[ext_resource type="Script" uid="uid://jya3f3cf7bhg" path="res://scenes/actors/Boss.gd" id="2_4ix3n"]
 [ext_resource type="PackedScene" uid="uid://djffp1gncw3vf" path="res://scenes/combat/DeathBrute.tscn" id="2_sbw3t"]
 [ext_resource type="PackedScene" uid="uid://nsfu03fajja8" path="res://scenes/loot/ItemPickup.tscn" id="4_dkpe8"]
 
@@ -12,9 +11,9 @@ size = Vector2(60, 60)
 size = Vector2(62, 62)
 
 [node name="Brute" unique_id=1413542967 instance=ExtResource("1_hij64")]
-script = ExtResource("2_4ix3n")
 hp = 10
 movement_speed = 100.0
+xp_value = 0
 loot_scene = null
 drop_chance = 1.0
 death_effect = ExtResource("2_sbw3t")

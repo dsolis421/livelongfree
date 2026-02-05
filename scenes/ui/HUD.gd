@@ -1,7 +1,7 @@
 extends CanvasLayer
 
-@onready var score_label = $TopBar/HBoxContainer/ScoreLabel
-@onready var timer_label = $TopBar/HBoxContainer/TimerLabel
+@onready var score_label = $SafeArea/TopBar/HBoxContainer/ScoreLabel
+@onready var timer_label = $SafeArea/TopBar/HBoxContainer/TimerLabel
 @onready var boss_health_bar = $BossHealthBar
 @onready var boss_warning_label = $BossWarningLabel
 @onready var flash_rect = $FlashRect
