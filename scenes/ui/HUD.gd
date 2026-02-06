@@ -62,11 +62,16 @@ func _process(delta: float) -> void:
 	score_label.text = "KILLS: " + str(GameManager.kills)
 	
 	# 2. Format Time (Minutes:Seconds)
-	var minutes = int(GameManager.time_elapsed / 60)
-	var seconds = int(GameManager.time_elapsed) % 60
-	
+	# var minutes = int(GameManager.time_elapsed / 60)
+	# var seconds = int(GameManager.time_elapsed) % 60
+	var time = GameManager.time_remaining
+	if time < 0: time = 0
+	var mins = floor(time / 60)
+	var secs = int(time) % 60
 	# "%02d" is a fancy way to say "add a zero if it's less than 10" (e.g., 05 instead of 5)
-	timer_label.text = "%02d:%02d" % [minutes, seconds]
+	# timer_label.text = "%02d:%02d" % [minutes, seconds]
+	$SafeArea/TopBar/HBoxContainer/TimerLabel.text = "%02d:%02d" % [mins, secs]
+	$SafeArea/TopBar/HBoxContainer/GoldLabel.text = "Gold: %d" % GameManager.gold_current_run
 
 func _on_supernova() -> void:
 	var tween = create_tween()

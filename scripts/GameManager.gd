@@ -13,13 +13,18 @@ signal boss_supernova_flash
 const STARTING_LEVEL = 6
 const STARTING_XP = 0
 const STARTING_TARGET_XP = 50
+const STAGE_TIME_LIMIT: float = 300.0 # 5 Minutes (in seconds)
 
 # Global Variables
+var time_remaining: float = STAGE_TIME_LIMIT
+var victory_triggered: bool = false
 var time_elapsed: float = 0.0
 var kills: int = 0
 var level: int = STARTING_LEVEL
 var experience: int = STARTING_XP
 var target_experience: int = STARTING_TARGET_XP
+var gold_current_run: int = 0  # Tracks gold collected in THIS specific game
+var gold_total: int = 0        # Tracks your life-time savings (loaded from save file)
 
 # --- STATE FLAGS ---
 var is_boss_active: bool = false
@@ -38,7 +43,12 @@ func _ready() -> void:
 	load_game()
 
 func _process(delta: float) -> void:
+	if get_tree().paused: return
+	time_remaining -= delta
 	time_elapsed += delta
+	
+	if time_remaining <= 0 and not victory_triggered:
+		trigger_victory()
 
 func reset() -> void:
 	time_elapsed = 0.0
@@ -51,7 +61,10 @@ func reset() -> void:
 	pending_level_up = false
 	
 	xp_updated.emit(experience, target_experience)
-
+	time_remaining = STAGE_TIME_LIMIT
+	victory_triggered = false
+	gold_current_run = 0
+	
 func add_experience(amount: int) -> void:
 	# If boss is active, we can either CAP the XP or let it overflow.
 	# Let's let it overflow (save it for next level), but NOT trigger level up yet.
@@ -116,7 +129,7 @@ func level_up() -> void:
 	clear_screen_for_levelup()
 	level += 1
 	
-	target_experience = int(target_experience * 1.25)
+	target_experience = int(target_experience * 1.1)
 	level_up_triggered.emit()
 	xp_updated.emit(experience, target_experience)
 	print("LEVEL UP!!! Now Level: ", level)
@@ -140,6 +153,17 @@ func check_and_save_records(current_level: int, current_kills: int, current_time
 	print("Checking for new records...")
 	var dirty = false # "Dirty" means data changed and needs saving
 	
+	# 1. Ensure the key exists (for older save files)
+	if not save_data.has("total_gold"):
+		save_data["total_gold"] = 0
+	
+	# 2. Deposit the gold from this run
+	if gold_current_run > 0:
+		save_data["total_gold"] += gold_current_run
+		gold_total = save_data["total_gold"] # Update local tracker
+		print("Gold Deposited: ", gold_current_run, " | New Total: ", gold_total)
+		dirty = true # Force a save because our bank balance changed
+		
 	# 1. Check Level
 	if current_level > save_data["high_level"]:
 		print("NEW RECORD: Level ", current_level)
@@ -187,3 +211,21 @@ func load_game() -> void:
 			print("JSON Parse Error. Starting with default records.")
 	else:
 		print("No save file found. Starting fresh.")
+
+func add_gold(amount: int) -> void:
+	gold_current_run += amount
+	# emit_signal("gold_updated", gold_current_run) # useful for UI later
+	
+func trigger_victory() -> void:
+	victory_triggered = true
+	print("VICTORY! The rescue chopper has arrived!")
+	check_and_save_records(level, kills, STAGE_TIME_LIMIT)
+	# 1. Pause the mayhem
+	get_tree().paused = true
+	
+	# 2. Kill all enemies (Visual polish - Optional)
+	get_tree().call_group("enemy", "queue_free")
+	
+	# 3. Show Victory Screen (We will build this scene next)
+	var win_screen = load("res://scenes/ui/VictoryScreen.tscn").instantiate()
+	get_tree().root.add_child(win_screen)

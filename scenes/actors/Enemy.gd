@@ -45,12 +45,16 @@ func _physics_process(delta: float) -> void:
 		rotation = velocity.angle()
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
+	
 	# Only kill it if it is the Player!
 	if body.name == "Player":
 		if body.has_method("take_damage"):
 			body.take_damage(1)
 
 func take_damage(amount: int) -> void:
+	print("---I took damage from something!---")
+	print_stack()
+	print("-----------------------------------")
 	hp -= amount
 	if hp <= 0:
 		# STOP! Do not queue_free here.
@@ -71,59 +75,54 @@ func take_knockback(source_position: Vector2, force: float) -> void:
 	knockback_velocity = direction * final_force
 
 func die() -> void:
-	# This is the "Base" death logic for all enemies.
-	# The Boss script will override this, run its own code, 
-	# and then call super.die() to come back here.
-	
+	# 1. Visuals & Score
 	spawn_death_effect()
-	
 	if GameManager:
 		GameManager.kills += 1
 		
-	# Use call_deferred just to be safe with physics
-	call_deferred("spawn_loot")
+	# 2. DECISION TIME: What do I drop?
+	# If I have a special drop (like a Brute), do that.
+	if special_drop_scene != null:
+		spawn_special_loot()
+	# Otherwise, do the standard Coin/Gem drop (like a Goblin).
+	else:
+		spawn_standard_loot()
+
 	queue_free()
 
-func spawn_loot() -> void:
-	# --- DEBUGGING ---
-	if GameManager.is_boss_active:
-		print("Enemy Died while Boss Active. My Groups: ", get_groups())
-		if is_in_group("fodder"):
-			print(">>> BLOCKED LOOT (Correct) <<<")
-			return
-		else:
-			print(">>> FAILED BLOCK: I am not in 'fodder' group! <<<")
-	# -----------------
+func spawn_special_loot() -> void:
+	# Check the chance (usually 1.0 for Brutes)
+	if randf() <= special_drop_chance:
+		var pickup = special_drop_scene.instantiate()
+		
+		# Add to scene safely
+		get_tree().current_scene.call_deferred("add_child", pickup)
+		pickup.set_deferred("global_position", global_position)
+		
+		# Pick a random item (Nuke, Magnet, etc.)
+		if available_drops.size() > 0:
+			var chosen_type = available_drops.pick_random()
+			# We use call_deferred to be safe, just like with position
+			pickup.call_deferred("setup", chosen_type)
 
-	# The Gatekeeper
+func spawn_standard_loot() -> void:
+	# 1. The Gatekeeper: Stop fodder from dropping loot during Boss fights
 	if GameManager.is_boss_active and is_in_group("fodder"):
 		return
 
-	# 1. ATTEMPT GEM DROP (XP)
-	if loot_scene != null:
-		if randf() <= drop_chance:
-			var roll = randf()
-			var type = 0 
-			if roll < 0.01: type = 3
-			elif roll < 0.06: type = 2
-			elif roll < 0.26: type = 1
-			
-			var gem = loot_scene.instantiate()
-			gem.setup(type)
-			get_tree().current_scene.call_deferred("add_child", gem)
-			gem.set_deferred("global_position", global_position)
+	# 2. Load the scene (Using the path we confirmed works!)
+	var loot = load("res://scenes/loot/Gem.tscn").instantiate()
+	
+	# 3. Coin vs Gem Logic
+	if randf() < 0.10: # 10% Chance for Coin
+		loot.setup(loot.TYPE.GOLD)
+	else:
+		loot.setup(loot.TYPE.COMMON)
 
-	# 2. ATTEMPT SPECIAL DROP
-	if special_drop_scene != null:
-		if randf() <= special_drop_chance:
-			print("---SPAWNING SPECIAL DROP")
-			var pickup = special_drop_scene.instantiate()
-			get_tree().current_scene.call_deferred("add_child", pickup)
-			pickup.set_deferred("global_position", global_position)
-			
-			var chosen_type = available_drops.pick_random()
-			pickup.call_deferred("setup", chosen_type)
-
+	# 4. Add to scene safely (The fix for "Ghost Gems")
+	get_tree().current_scene.call_deferred("add_child", loot)
+	loot.set_deferred("global_position", global_position)
+	
 func spawn_death_effect() -> void:
 	if death_effect:
 		# 1. Create the object

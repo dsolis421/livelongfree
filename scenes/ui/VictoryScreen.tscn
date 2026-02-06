@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://n3lotir0jmo4"]
+
+[ext_resource type="Script" uid="uid://cxecjkjyj8lpo" path="res://scenes/ui/VictoryScreen.gd" id="1_kruri"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_57v1k"]
+font_size = 50
+font_color = Color(0, 0.75686276, 0, 1)
+shadow_color = Color(0, 0, 0, 0.39215687)
+
+[node name="VictoryScreen" type="CanvasLayer" unique_id=250668618]
+process_mode = 3
+script = ExtResource("1_kruri")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=542354878]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.012617188, 0.012617188, 0.012617188, 0.49019608)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=251739827]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=202753810]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer" unique_id=638911852]
+layout_mode = 2
+text = "MISSION ACCOMPLISHED"
+label_settings = SubResource("LabelSettings_57v1k")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=527434688]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = " Return to Base "
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]

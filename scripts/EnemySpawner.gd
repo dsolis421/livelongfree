@@ -44,7 +44,7 @@ func _on_timer_timeout() -> void:
 	var view_size = get_viewport_rect().size / zoom
 	
 	# 2. Add a buffer so they spawn slightly off-screen
-	var buffer = 500 
+	var buffer = 700 
 	var half_w = (view_size.x / 2) + buffer
 	var half_h = (view_size.y / 2) + buffer
 

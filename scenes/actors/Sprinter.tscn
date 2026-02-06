@@ -10,6 +10,7 @@ size = Vector2(50, 20)
 size = Vector2(52, 22)
 
 [node name="Sprinter" unique_id=1413542967 instance=ExtResource("1_xsveu")]
+collision_mask = 7
 hp = 2
 movement_speed = 250.0
 drop_chance = 0.7
@@ -41,6 +42,8 @@ offset_bottom = 15.0
 shape = SubResource("RectangleShape2D_kyd6q")
 
 [node name="Hitbox" parent="." index="2" unique_id=1527609457 groups=["fodder"]]
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" parent="Hitbox" index="0" unique_id=1995205190 groups=["fodder"]]
 shape = SubResource("RectangleShape2D_lqgpg")

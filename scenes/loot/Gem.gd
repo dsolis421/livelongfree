@@ -1,27 +1,27 @@
 extends Area2D
 
 # We define the "flavors" of loot
-enum TYPE { COMMON, RARE, EPIC, LEGENDARY }
+# Added GOLD to the list
+enum TYPE { COMMON, RARE, EPIC, LEGENDARY, GOLD }
 
-# Configuration for each type (Color + XP Value)
-# You can tweak these numbers later!
+# Configuration for each type
 var stats = {
-	TYPE.COMMON:    {"color": Color.WHITE,       "xp": 10},
-	TYPE.RARE:      {"color": Color.CYAN,        "xp": 50},
-	TYPE.EPIC:      {"color": Color.MAGENTA,     "xp": 200},
-	TYPE.LEGENDARY: {"color": Color.ORANGE,      "xp": 1000}
+	TYPE.COMMON:    {"color": Color.WHITE,       "val": 10,   "is_gold": false},
+	TYPE.RARE:      {"color": Color.CYAN,        "val": 50,   "is_gold": false},
+	TYPE.EPIC:      {"color": Color.MAGENTA,     "val": 100,  "is_gold": false},
+	TYPE.LEGENDARY: {"color": Color.ORANGE,      "val": 200, "is_gold": false},
+	TYPE.GOLD:      {"color": Color(1, 0.85, 0), "val": 1,    "is_gold": true} 
+	# Note: Gold value is usually low (1-10) because you collect lots of it!
 }
 
-var xp_value: int = 10
+var current_value: int = 10
+var is_currency: bool = false
 
 func _ready() -> void:
-	# 1. AUTO-GROUPING (Performance)
-	# This ensures the GameManager can wipe this gem on Level Up
+	# 1. AUTO-GROUPING
 	add_to_group("loot")
 	
-	# 2. DISTANCE CHECK TIMER (Performance)
-	# Instead of checking every single frame (expensive!),
-	# we create a timer to check only once every 2 seconds.
+	# 2. DISTANCE CHECK TIMER
 	var timer = Timer.new()
 	timer.wait_time = 2.0 
 	timer.autostart = true
@@ -30,30 +30,37 @@ func _ready() -> void:
 
 func _check_distance_from_player() -> void:
 	var player = get_tree().get_first_node_in_group("player")
-	
-	# If player is dead or missing, stop checking
-	if not player:
-		return
+	if not player: return
 		
-	# Calculate distance
 	var dist = global_position.distance_to(player.global_position)
-	
-	# 1500px is roughly 1.5 screens away. 
-	# If it's that far, the player probably left it behind.
 	if dist > 1500.0:
 		queue_free()
 
 func setup(type: int) -> void:
-	# 1. Set the visual color
-	$Sprite2D.modulate = stats[type]["color"]
+	# 1. Get the data from our config
+	var data = stats.get(type, stats[TYPE.COMMON]) # Fallback to COMMON if error
 	
-	# 2. Set the internal value
-	xp_value = stats[type]["xp"]
+	# 2. Apply Visuals
+	$Sprite2D.modulate = data["color"]
+	
+	# Optional: If you have a specific "Coin" sprite, you could swap it here:
+	# if data["is_gold"]:
+	#    $Sprite2D.texture = load("res://assets/coin.png")
+	
+	# 3. Apply Internal Logic
+	current_value = data["val"]
+	is_currency = data["is_gold"]
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.name == "Player":
-		# Deposit the XP
-		GameManager.add_experience(xp_value)
+	if body.is_in_group("player"): # Safer than checking name == "Player"
 		
-		# Optional Sound Effect could go here later)
+		# --- THE SPLIT LOGIC ---
+		if is_currency:
+			# It's Gold!
+			GameManager.add_gold(current_value)
+			# Optional: Play "Ching" sound
+		else:
+			# It's XP!
+			GameManager.add_experience(current_value)
+			# Optional: Play "Ping" sound
 		queue_free()

@@ -11,6 +11,7 @@ size = Vector2(120, 120)
 size = Vector2(122, 122)
 
 [node name="Boss" unique_id=1413542967 instance=ExtResource("1_vm5jf")]
+collision_mask = 7
 script = ExtResource("2_ltkqj")
 boss_bullet_scene = ExtResource("3_vm5jf")
 hp = 20
@@ -36,7 +37,10 @@ offset_bottom = 68.0
 [node name="CollisionShape2D" parent="." index="1" unique_id=1944004044]
 shape = SubResource("RectangleShape2D_sbw3t")
 
-[node name="CollisionShape2D" parent="Hitbox" parent_id_path=PackedInt32Array(1527609457) index="0" unique_id=1995205190]
+[node name="Hitbox" parent="." index="2" unique_id=1527609457]
+collision_mask = 3
+
+[node name="CollisionShape2D" parent="Hitbox" index="0" unique_id=1995205190]
 shape = SubResource("RectangleShape2D_dkpe8")
 
 [node name="BrainTimer" type="Timer" parent="." index="3" unique_id=1550154071]

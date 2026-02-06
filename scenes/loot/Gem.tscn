@@ -4,25 +4,24 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pdei0"]
 
-[sub_resource type="Gradient" id="Gradient_1dk5v"]
-offsets = PackedFloat32Array(0.42137095, 0.7923387, 1)
-colors = PackedColorArray(0, 0, 0, 1, 1, 0, 0.4, 1, 1, 0, 0.4, 0)
+[sub_resource type="Gradient" id="Gradient_7pbjj"]
+offsets = PackedFloat32Array(0, 0.6666667)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_vfjke"]
-gradient = SubResource("Gradient_1dk5v")
-width = 24
-height = 24
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pdei0"]
+gradient = SubResource("Gradient_7pbjj")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.9059829, 0.20512821)
 
 [node name="Gem" type="Area2D" unique_id=874650658]
+collision_layer = 16
+collision_mask = 2
 script = ExtResource("1_7pbjj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1737201008]
 shape = SubResource("CircleShape2D_pdei0")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1831406894]
-texture = SubResource("GradientTexture2D_vfjke")
+texture = SubResource("GradientTexture2D_pdei0")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

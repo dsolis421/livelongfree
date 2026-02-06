@@ -11,7 +11,8 @@ size = Vector2(40, 40)
 size = Vector2(42, 42)
 
 [node name="Enemy" type="CharacterBody2D" unique_id=1413542967 groups=["enemy", "fodder"]]
-collision_layer = 5
+collision_layer = 4
+collision_mask = 7
 script = ExtResource("1_jq30h")
 movement_speed = 120.0
 loot_scene = ExtResource("2_ay0ne")
@@ -39,6 +40,8 @@ color = Color(0, 0, 0, 1)
 shape = SubResource("RectangleShape2D_ay0ne")
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=1527609457 groups=["enemy"]]
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1995205190 groups=["enemy"]]
 shape = SubResource("RectangleShape2D_jq30h")

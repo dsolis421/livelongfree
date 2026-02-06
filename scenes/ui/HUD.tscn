@@ -55,6 +55,12 @@ size_flags_vertical = 0
 text = "00:00"
 label_settings = SubResource("LabelSettings_kw0id")
 
+[node name="GoldLabel" type="Label" parent="SafeArea/TopBar/HBoxContainer" unique_id=1698846639]
+layout_mode = 2
+size_flags_vertical = 0
+text = "GOLD: 0"
+label_settings = SubResource("LabelSettings_hc4fa")
+
 [node name="FlashRect" type="ColorRect" parent="." unique_id=267558605]
 modulate = Color(1, 1, 1, 0)
 z_index = 1
