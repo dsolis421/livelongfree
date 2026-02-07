@@ -20,7 +20,8 @@
 [ext_resource type="Texture2D" uid="uid://br4pm0m1yp1hy" path="res://assets/ground.jpg" id="13_mwfav"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_1nqs0"]
-frequency = 0.05
+frequency = 0.02
+fractal_type = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nfivy"]
 texture = ExtResource("3_bb450")
@@ -51,7 +52,7 @@ glow_blend_mode = 2
 position = Vector2(360, 640)
 script = ExtResource("1_cvmbd")
 
-[node name="WorldGenerator" type="Node2D" parent="." unique_id=2014433057 node_paths=PackedStringArray("ground_layer", "player")]
+[node name="WorldGenerator" type="Node2D" parent="." unique_id=2014433057 node_paths=PackedStringArray("ground_layer", "player") groups=["world_generator"]]
 script = ExtResource("2_bb450")
 ground_layer = NodePath("../GroundLayer")
 noise = SubResource("FastNoiseLite_1nqs0")

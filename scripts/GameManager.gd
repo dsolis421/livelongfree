@@ -67,6 +67,7 @@ func reset() -> void:
 	target_experience = STARTING_TARGET_XP
 	
 	boss_has_spawned = false
+	is_boss_active = false
 	is_game_over = false
 	
 	xp_updated.emit(experience, target_experience)

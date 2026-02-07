@@ -82,3 +82,24 @@ func generate_chunk(chunk_coord: Vector2i) -> void:
 			
 			# Paint the tile
 			ground_layer.set_cell(Vector2i(global_x, global_y), 0, atlas_coord)
+
+# This allows other scripts (like EnemySpawner) to ask "Is this a wall?"
+# even if the wall hasn't been physically created yet.
+func is_position_wall(global_pos: Vector2) -> bool:
+	if not ground_layer or not noise:
+		return false # Safety check
+		
+	# 1. Convert Pixel Position -> Tile Coordinate
+	# We must divide by the tile size (40) to match the loop in generate_chunk
+	var tile_pos = ground_layer.local_to_map(global_pos)
+	
+	# 2. Query the Noise
+	# This is the EXACT same math used in generate_chunk
+	var noise_val = noise.get_noise_2d(tile_pos.x, tile_pos.y)
+	
+	# 3. Check the Threshold
+	# Must match the "if noise_val > 0.4" logic in generate_chunk
+	if noise_val > 0.4:
+		return true # It IS a wall (or will be)
+	
+	return false # It is safe floor
