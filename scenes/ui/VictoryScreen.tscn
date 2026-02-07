@@ -37,10 +37,17 @@ label_settings = SubResource("LabelSettings_57v1k")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=527434688]
+[node name="NextSector" type="Button" parent="CenterContainer/VBoxContainer" unique_id=73957395]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 24
+text = " Next Sector "
+
+[node name="ReturnToBase" type="Button" parent="CenterContainer/VBoxContainer" unique_id=527434688]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 24
 text = " Return to Base "
 
-[connection signal="pressed" from="CenterContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/NextSector" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ReturnToBase" to="." method="_on_button_pressed"]

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://sli6no0beg7x"]
 
 [ext_resource type="PackedScene" uid="uid://ddiyexie8mw2g" path="res://scenes/ui/GameOver.tscn" id="1_c01mt"]
+[ext_resource type="Script" uid="uid://brmfh6r114gce" path="res://scenes/Main.gd" id="1_cvmbd"]
 [ext_resource type="PackedScene" uid="uid://br82q10ty1k2e" path="res://scenes/ui/VirtualJoystick.tscn" id="1_rvslj"]
 [ext_resource type="PackedScene" uid="uid://djx0wt86xpxae" path="res://scenes/actors/Player.tscn" id="2_0bbpv"]
 [ext_resource type="PackedScene" uid="uid://cjfv4p0uq6fbx" path="res://scenes/combat/Explosion.tscn" id="2_qmy6f"]
@@ -31,6 +32,7 @@ glow_blend_mode = 2
 
 [node name="Main" type="Node2D" unique_id=1153333135]
 position = Vector2(360, 640)
+script = ExtResource("1_cvmbd")
 
 [node name="Player" parent="." unique_id=1378413890 node_paths=PackedStringArray("joystick") instance=ExtResource("2_0bbpv")]
 explosion_scene = ExtResource("2_qmy6f")
@@ -55,33 +57,21 @@ autostart = true
 
 [node name="XPBar" type="ProgressBar" parent="CanvasLayer" unique_id=40867681]
 custom_minimum_size = Vector2(0, 20)
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -150.0
-offset_top = 25.0
-offset_right = 150.0
-offset_bottom = 45.0
-grow_horizontal = 2
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -340.0
+offset_top = -150.0
+offset_right = -40.0
+offset_bottom = -130.0
+grow_horizontal = 0
+grow_vertical = 0
 theme_override_styles/background = SubResource("StyleBoxFlat_bjd11")
 theme_override_styles/fill = SubResource("StyleBoxFlat_qmy6f")
 show_percentage = false
 script = ExtResource("9_wp0k4")
-
-[node name="CurrentLevelLbl" type="Label" parent="CanvasLayer/XPBar" unique_id=102981994]
-layout_mode = 0
-offset_left = -45.0
-offset_right = -5.0
-offset_bottom = 23.0
-text = "1"
-horizontal_alignment = 2
-
-[node name="NextLevelLbl" type="Label" parent="CanvasLayer/XPBar" unique_id=586461845]
-layout_mode = 0
-offset_left = 305.0
-offset_right = 345.0
-offset_bottom = 23.0
-text = "2"
 
 [node name="ActiveItemHUD" parent="CanvasLayer" unique_id=1798283823 instance=ExtResource("10_wp0k4")]
 

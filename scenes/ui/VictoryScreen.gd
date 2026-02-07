@@ -1,16 +1,35 @@
 extends CanvasLayer
 
 func _ready() -> void:
-	# Ensure this screen creates a clean slate feel
-	# (Optional: Play a victory sound here!)
-	pass
+	# find_child searches through all children, grandchildren, etc.
+	# to find these buttons, so it works regardless of your container structure.
+	var next_btn = find_child("NextSector", true, false)
+	var return_btn = find_child("ReturnToBase", true, false)
+	
+	if next_btn:
+		next_btn.pressed.connect(_on_next_mission_pressed)
+	else:
+		print("Error: Could not find 'NextSector'")
+	
+	if return_btn:
+		return_btn.pressed.connect(_on_return_pressed)
 
-func _on_return_button_pressed() -> void:
-	# 1. Unpause the game (so the Menu can run)
+func _on_next_mission_pressed() -> void:
+	print("Loading Next Mission...")
+	
+	# 1. Reset Game State
+	GameManager.reset()
+	
+	# 2. IMPORTANT: Unpause!
 	get_tree().paused = false
 	
-	# 2. Reset the Manager for the next run (Important!)
-	GameManager.reset() # We need to make sure this function exists and resets the timer!
+	# 3. Reload Main Scene (Triggers Insertion Drone)
+	get_tree().change_scene_to_file("res://scenes/Main.tscn")
+	queue_free()
+
+func _on_return_pressed() -> void:
+	print("Returning to Base...")
 	
-	# 3. Go to Menu
+	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scenes/ui/MainMenu.tscn")
+	queue_free()

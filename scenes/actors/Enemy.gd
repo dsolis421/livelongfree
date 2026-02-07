@@ -52,9 +52,6 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 			body.take_damage(1)
 
 func take_damage(amount: int) -> void:
-	print("---I took damage from something!---")
-	print_stack()
-	print("-----------------------------------")
 	hp -= amount
 	if hp <= 0:
 		# STOP! Do not queue_free here.

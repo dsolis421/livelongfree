@@ -24,15 +24,10 @@ func _ready() -> void:
 	play_btn.pressed.connect(_on_play_pressed)
 
 func _on_play_pressed() -> void:
-	# RESET the Game Session State
-	# (Crucial: otherwise you start level 1 with level 5 stats!)
-	# GameManager.score = 0
-	GameManager.level = GameManager.STARTING_LEVEL
-	GameManager.experience = GameManager.STARTING_XP
-	GameManager.time_elapsed = 0.0
-	GameManager.kills = 0
-	GameManager.is_boss_active = false
-	GameManager.pending_level_up = false
+	# 1. DELEGATE CLEANUP
+	# Instead of resetting 10 variables manually, ask the Manager to reset itself.
+	# This handles level, xp, timer, kills, gold, and flags automatically.
+	GameManager.reset()
 	
-	# Launch Game
+	# 2. Launch Game
 	get_tree().change_scene_to_file("res://scenes/Main.tscn")

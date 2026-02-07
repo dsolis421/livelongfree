@@ -198,29 +198,47 @@ func take_damage(amount: int) -> void:
 	GameManager.report_boss_damage(hp)
 	
 func die() -> void:
+	# 1. Prevent Double-Death
+	# If hp is 0 AND we already hid the visual (exploded), stop running.
 	if hp <= 0 and not visual.visible: 
 		return
-	print("!!! BOSS DIE FUNCTION CALLED !!!")
-	print("!!! BOSS SUPERNOVA SEQUENCE STARTED !!!")
+
+	# 2. Disable Physics immediately (Stop hurting the player)
 	$CollisionShape2D.set_deferred("disabled", true)
 	set_physics_process(false)
-	
 	if brain_timer: brain_timer.stop()
+	
 	# --- THE CINEMATIC SEQUENCE ---
-	Engine.time_scale = 0.2
+	
+	# 3. Slow Motion Start
+	Engine.time_scale = 0.2 
+	
+	# 4. Charge Up (White Flash & Scale)
 	var tween = create_tween().set_parallel(true)
-	tween.tween_property(visual, "modulate", Color(10, 10, 10, 1), 1.5)
-	tween.tween_property(visual, "scale", Vector2(1.5, 1.5), 1.5)
+	tween.tween_property(visual, "modulate", Color(10, 10, 10, 1), 1.5) # Super bright white
+	tween.tween_property(visual, "scale", Vector2(1.5, 1.5), 1.5)       # Expand
+	
+	# 5. Screen Shake
 	var shake_tween = create_tween()
 	for i in range(10):
 		var offset = Vector2(randf_range(-5, 5), randf_range(-5, 5))
 		shake_tween.tween_property(visual, "position", offset, 0.05)
-	await get_tree().create_timer(1.5, true, false, true).timeout
-	GameManager.trigger_supernova()
-	visual.visible = false
-	Engine.time_scale = 1.0
-	await get_tree().create_timer(2.0).timeout
-	# 1. Notify the Manager to resume the game flow
-	GameManager.on_boss_died()
-	queue_free()
+		
+	# 6. Wait for the "Boom" (adjusted for time_scale)
+	# The 'true' arguments allow the timer to ignore the time_scale slowdown
+	await get_tree().create_timer(3.5, true, false, true).timeout
 	
+	# 7. THE EXPLOSION
+	GameManager.trigger_supernova() # Triggers the UI white flash
+	visual.visible = false          # Hide the boss sprite
+	Engine.time_scale = 1.0         # Restore normal game speed
+	
+	# 8. Brief Pause (The "Silence" after the boom)
+	# I reduced this from 2.0s to 1.0s so the Drone arrives sooner.
+	await get_tree().create_timer(1.0).timeout
+	
+	# 9. TRIGGER EXTRACTION
+	# This calls the function in GameManager that kills enemies and calls the Drone.
+	GameManager.on_boss_died()
+	
+	queue_free()

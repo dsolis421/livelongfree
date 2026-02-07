@@ -14,10 +14,11 @@ func _ready() -> void:
 	# NEW: Listen for the Boss Request
 	GameManager.boss_spawn_requested.connect(spawn_boss)
 
-func _on_level_up() -> void:
+func _on_level_up(new_level: int) -> void:
 	# Reset rhythm
 	$Timer.stop()
 	$Timer.start()
+	pass
 	
 func _on_timer_timeout() -> void:
 	var player = get_tree().get_first_node_in_group("player")

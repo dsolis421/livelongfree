@@ -1,3 +1,5 @@
+Sprite2D
+Node2D
 MarginContainer
 Label
 Button
@@ -10,5 +12,3 @@ TextureRect
 Control
 WorldEnvironment
 AnimationPlayer
-ProgressBar
-CollisionShape2D

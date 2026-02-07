@@ -8,7 +8,7 @@ func _ready() -> void:
 	GameManager.level_up_triggered.connect(show_options)
 
 # This function will be called by the GameManager later
-func show_options() -> void:
+func show_options(_new_level: int) -> void:
 	visible = true
 	get_tree().paused = true # FREEZE THE GAME
 
