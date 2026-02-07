@@ -35,6 +35,16 @@ func _ready() -> void:
 	timer.timeout.connect(_check_distance)
 	add_child(timer)
 	
+func _process(delta: float) -> void:
+	# ... (Existing rotation/bobbing animation code) ...
+
+	# --- CLEANUP LOGIC ---
+	var player = get_tree().get_first_node_in_group("player")
+	if player:
+		# 2000px allows a bit more leeway for rare items
+		if global_position.distance_to(player.global_position) > 2000.0:
+			queue_free()
+			
 func _check_distance() -> void:
 	var player = get_tree().get_first_node_in_group("player")
 	if not player: return

@@ -1,7 +1,16 @@
 [gd_scene format=3 uid="uid://bnuke7grfywry"]
 
 [ext_resource type="Script" uid="uid://bedh6gk6e1174" path="res://scenes/ui/MainMenu.gd" id="1_6jbdy"]
-[ext_resource type="Texture2D" uid="uid://br4pm0m1yp1hy" path="res://assets/ground.jpg" id="1_vjtqc"]
+
+[sub_resource type="Gradient" id="Gradient_vjtqc"]
+offsets = PackedFloat32Array(0, 0.62068963, 0.7126437, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.09803922, 0.09803922, 0.09803922, 1, 0.078431375, 0.078431375, 0.078431375, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6jbdy"]
+gradient = SubResource("Gradient_vjtqc")
+width = 800
+height = 1300
+fill = 1
 
 [sub_resource type="LabelSettings" id="LabelSettings_6jbdy"]
 
@@ -23,7 +32,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_vjtqc")
+texture = SubResource("GradientTexture2D_6jbdy")
 expand_mode = 1
 stretch_mode = 3
 

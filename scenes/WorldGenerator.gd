@@ -8,7 +8,7 @@ extends Node2D
 # --- CHUNK SETTINGS ---
 const CHUNK_SIZE: int = 32              # Size of one chunk in tiles (32x32)
 const RENDER_DISTANCE: int = 2          # Radius of chunks to load (2 = 5x5 grid)
-
+const UNLOAD_DISTANCE: int = 4
 # --- STATE ---
 var active_chunks: Dictionary = {}      # Stores coordinates of currently loaded chunks
 var current_chunk_coord: Vector2i       # Player's current chunk coordinate
@@ -17,13 +17,28 @@ func _ready() -> void:
 	# 1. Setup Noise (if not set in editor)
 	if not noise:
 		noise = FastNoiseLite.new()
-		noise.seed = randi()
-		noise.frequency = 0.05      # Lower = Larger "blobs" of terrain
-		noise.fractal_octaves = 3   # Detail level
+		# noise.seed = randi()
+		# noise.frequency = 0.05      # Lower = Larger "blobs" of terrain
+		#noise.fractal_octaves = FastNoiseLite.FRACTAL_NONE   # Detail level
+	
+	randomize() 
+	noise.seed = randi() # Pick a random integer
+	
+	print("WorldGenerator: New World Seed -> ", noise.seed)
+	add_to_group("world_generator")
 
 	# 2. Initial Load
 	update_chunks()
-
+	
+	if player:
+		# Check if (0,0) is safe. If not, find the nearest safe spot.
+		var safe_start = find_safe_start_location()
+		
+		# If we found a spot that isn't (0,0), move the player!
+		if safe_start != Vector2.ZERO:
+			print("WorldGenerator: (0,0) was a wall. Moving player to ", safe_start)
+			player.global_position = safe_start
+			
 func _process(_delta: float) -> void:
 	if not player: return
 	
@@ -42,19 +57,29 @@ func _process(_delta: float) -> void:
 		update_chunks()
 
 func update_chunks() -> void:
-	var required_chunks: Array[Vector2i] = []
-	
-	# 1. Identify which chunks SHOULD be visible
+	# --- 1. LOAD NEW CHUNKS ---
 	for x in range(current_chunk_coord.x - RENDER_DISTANCE, current_chunk_coord.x + RENDER_DISTANCE + 1):
 		for y in range(current_chunk_coord.y - RENDER_DISTANCE, current_chunk_coord.y + RENDER_DISTANCE + 1):
-			required_chunks.append(Vector2i(x, y))
+			var chunk_coord = Vector2i(x, y)
+			if not active_chunks.has(chunk_coord):
+				generate_chunk(chunk_coord)
+				active_chunks[chunk_coord] = true
 	
-	# 2. Load missing chunks
-	for chunk_coord in required_chunks:
-		if not active_chunks.has(chunk_coord):
-			generate_chunk(chunk_coord)
-			active_chunks[chunk_coord] = true
-			
+	# --- 2. UNLOAD OLD CHUNKS (The New Garbage Collector) ---
+	var chunks_to_remove: Array[Vector2i] = []
+	
+	for chunk_coord in active_chunks.keys():
+		# Calculate distance from player's current chunk
+		var distance = Vector2(chunk_coord).distance_to(Vector2(current_chunk_coord))
+		
+		# If it's too far away, mark it for death
+		if distance > UNLOAD_DISTANCE:
+			chunks_to_remove.append(chunk_coord)
+	
+	# Process the death list
+	for chunk_coord in chunks_to_remove:
+		unload_chunk(chunk_coord)
+	print("Active Chunks: ", active_chunks.size())
 	# 3. Unload old chunks (Optional: Memory Cleanup)
 	# For now, we just keep them to prevent re-generation lag, but 
 	# in a real run we would delete chunks far away.
@@ -83,6 +108,19 @@ func generate_chunk(chunk_coord: Vector2i) -> void:
 			# Paint the tile
 			ground_layer.set_cell(Vector2i(global_x, global_y), 0, atlas_coord)
 
+func unload_chunk(chunk_coord: Vector2i) -> void:
+	# We "erase" the tiles by setting them to -1 (empty)
+	for x in range(CHUNK_SIZE):
+		for y in range(CHUNK_SIZE):
+			var global_x = (chunk_coord.x * CHUNK_SIZE) + x
+			var global_y = (chunk_coord.y * CHUNK_SIZE) + y
+			
+			# -1 tells Godot to remove the tile completely
+			ground_layer.set_cell(Vector2i(global_x, global_y), -1)
+	
+	# Remove from our tracking dictionary
+	active_chunks.erase(chunk_coord)
+	
 # This allows other scripts (like EnemySpawner) to ask "Is this a wall?"
 # even if the wall hasn't been physically created yet.
 func is_position_wall(global_pos: Vector2) -> bool:
@@ -103,3 +141,27 @@ func is_position_wall(global_pos: Vector2) -> bool:
 		return true # It IS a wall (or will be)
 	
 	return false # It is safe floor
+
+func find_safe_start_location() -> Vector2:
+	var search_radius = 0.0
+	var max_radius = 1000.0
+	
+	# We spiral outward looking for a valid floor tile
+	while search_radius < max_radius:
+		# Check 8 points around the current radius (or just 1 if radius is 0)
+		var steps = max(1, int(search_radius / 10)) # More checks as circle gets bigger
+		
+		for i in range(steps):
+			var angle = (TAU / steps) * i
+			var offset = Vector2(cos(angle), sin(angle)) * search_radius
+			var check_pos = Vector2.ZERO + offset # Checking relative to (0,0)
+			
+			# Ask the Noise: "Is this a wall?"
+			if not is_position_wall(check_pos):
+				return check_pos # Found it! This spot is safe.
+		
+		# Expand the search ring by 40px (roughly one tile)
+		search_radius += 40.0
+	
+	# Fallback: If the world is 100% walls (unlikely), return 0,0
+	return Vector2.ZERO
