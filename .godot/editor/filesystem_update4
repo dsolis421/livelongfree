@@ -24,3 +24,4 @@ res://scenes/ui/VictoryScreen.tscn
 res://scenes/ui/VictoryScreen.gd
 res://scenes/combat/BossBomb.tscn
 res://scenes/ui/XPBar.gd
+res://scenes/WorldGenerator.gd

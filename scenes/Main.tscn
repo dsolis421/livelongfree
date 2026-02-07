@@ -4,8 +4,10 @@
 [ext_resource type="Script" uid="uid://brmfh6r114gce" path="res://scenes/Main.gd" id="1_cvmbd"]
 [ext_resource type="PackedScene" uid="uid://br82q10ty1k2e" path="res://scenes/ui/VirtualJoystick.tscn" id="1_rvslj"]
 [ext_resource type="PackedScene" uid="uid://djx0wt86xpxae" path="res://scenes/actors/Player.tscn" id="2_0bbpv"]
+[ext_resource type="Script" uid="uid://bl0o8kjg5nw25" path="res://scenes/WorldGenerator.gd" id="2_bb450"]
 [ext_resource type="PackedScene" uid="uid://cjfv4p0uq6fbx" path="res://scenes/combat/Explosion.tscn" id="2_qmy6f"]
 [ext_resource type="PackedScene" uid="uid://cgna31p5cx674" path="res://scenes/actors/Enemy.tscn" id="3_0bbpv"]
+[ext_resource type="Texture2D" uid="uid://dhe3qma8nxxru" path="res://assets/sprites/tile_proto.png" id="3_bb450"]
 [ext_resource type="Script" uid="uid://bevfo8jg6sw65" path="res://scripts/EnemySpawner.gd" id="3_rarhs"]
 [ext_resource type="PackedScene" uid="uid://prmueubsccmx" path="res://scenes/ui/HUD.tscn" id="5_vcsgt"]
 [ext_resource type="PackedScene" uid="uid://cg1lfl38v4s4t" path="res://scenes/actors/Phantom.tscn" id="6_bjd11"]
@@ -16,6 +18,21 @@
 [ext_resource type="Script" uid="uid://cm0ska731efvc" path="res://scenes/ui/XPBar.gd" id="9_wp0k4"]
 [ext_resource type="PackedScene" uid="uid://xckxgfbsk16a" path="res://scenes/ui/ActiveItemHUD.tscn" id="10_wp0k4"]
 [ext_resource type="Texture2D" uid="uid://br4pm0m1yp1hy" path="res://assets/ground.jpg" id="13_mwfav"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1nqs0"]
+frequency = 0.05
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nfivy"]
+texture = ExtResource("3_bb450")
+texture_region_size = Vector2i(40, 40)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-20, -20, 20, -20, 20, 20, -20, 20)
+1:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_1nqs0"]
+tile_size = Vector2i(40, 40)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_nfivy")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bjd11"]
 bg_color = Color(0.35, 0.35, 0.35, 1)
@@ -33,6 +50,15 @@ glow_blend_mode = 2
 [node name="Main" type="Node2D" unique_id=1153333135]
 position = Vector2(360, 640)
 script = ExtResource("1_cvmbd")
+
+[node name="WorldGenerator" type="Node2D" parent="." unique_id=2014433057 node_paths=PackedStringArray("ground_layer", "player")]
+script = ExtResource("2_bb450")
+ground_layer = NodePath("../GroundLayer")
+noise = SubResource("FastNoiseLite_1nqs0")
+player = NodePath("../Player")
+
+[node name="GroundLayer" type="TileMapLayer" parent="." unique_id=716858734]
+tile_set = SubResource("TileSet_1nqs0")
 
 [node name="Player" parent="." unique_id=1378413890 node_paths=PackedStringArray("joystick") instance=ExtResource("2_0bbpv")]
 explosion_scene = ExtResource("2_qmy6f")
@@ -80,6 +106,7 @@ script = ExtResource("9_wp0k4")
 [node name="GameOver" parent="CanvasLayer" unique_id=250668618 instance=ExtResource("1_c01mt")]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=136562145]
+visible = false
 offset = Vector2(-100, -40)
 transform = Transform2D(1, 0, 0, 1, -100, -40)
 
