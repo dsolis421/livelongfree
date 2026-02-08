@@ -44,25 +44,17 @@ func _physics_process(_delta: float) -> void:
 	update_animation()
 	
 func move() -> void:
-	var direction: Vector2 = Vector2.ZERO
+	# 1. Get the input (Helper checks Joystick first, then Keyboard)
+	var direction = get_game_input()
 	
-	# 1. Check Joystick Input
-	if joystick:
-		direction = joystick.get_output()
-
-	# 2. Check Keyboard Input (For testing on PC without joystick)
-	# If joystick is not moving (zero), we check WASD/Arrow keys
-	if direction == Vector2.ZERO:
-		direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	
-	# 3. Apply Velocity
+	# 2. Apply Velocity
 	if direction.length() > 0:
 		velocity = direction * movement_speed
 	else:
-		# Slow down instantly if no input
+		# Stop instantly if no input
 		velocity = Vector2.ZERO
 
-	# 4. Godot Physics Move
+	# 3. Godot Physics Move
 	move_and_slide()
 
 # --- NEW FUNCTION: ANIMATION HANDLER ---
@@ -312,3 +304,19 @@ func handle_screen_shake(delta: float) -> void:
 				
 func apply_shake(amount: float) -> void:
 	current_shake_strength = amount
+	
+func get_game_input() -> Vector2:
+	# 1. Try Keyboard/Gamepad (The "Input Map" settings)
+	# var input = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	var input = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	# 2. If no keyboard input, check the Virtual Joystick
+	# Only do this if the keyboard isn't being used (input is ZERO)
+	if input == Vector2.ZERO:
+		# Find the joystick using the Group we set up
+		var joystick = get_tree().get_first_node_in_group("virtual_joystick")
+		
+		# If the joystick exists in the scene, ask it for data
+		if joystick and joystick.has_method("get_output"):
+			input = joystick.get_output()
+			
+	return input

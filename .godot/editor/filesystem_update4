@@ -7,3 +7,6 @@ res://scenes/ui/LevelUpScreen.tscn
 res://scenes/ui/VictoryScreen.tscn
 res://scenes/ui/MainMenu.tscn
 res://scenes/Main.tscn
+res://scenes/ui/VirtualJoystick.tscn
+res://scripts/Player.gd
+res://scenes/ui/VirtualJoystick.gd
