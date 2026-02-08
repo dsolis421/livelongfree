@@ -11,24 +11,34 @@ class_name VirtualJoystick
 var _touch_index: int = -1
 
 func _ready() -> void:
-	# Ensure the joystick is centered and hidden at start
+	# 1. FORCE PIVOT TO CENTER
+	# This ensures that rotation happens "in place" rather than swinging the sprite around.
+	if joystick_base:
+		joystick_base.pivot_offset = joystick_base.size / 2
+		
+	if joystick_tip:
+		joystick_tip.pivot_offset = joystick_tip.size / 2
+		
+	# 2. Reset visibility
 	_reset_joystick()
-	modulate.a = 0.0 # Start invisible
-
+	modulate.a = 0.0
+	process_mode = Node.PROCESS_MODE_PAUSABLE
+	
 func _input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
 		if event.pressed:
 			if _touch_index == -1:
-				# 1. Move Base to Finger (Global Position)
-				# We center it on the finger using global coordinates
+				# 1. Move Base to Finger
 				if joystick_base:
+					# Use the same logic for placement (Control node usually isn't rotated, just the texture)
 					global_position = event.position - (joystick_base.size / 2)
-					
-					# IMPORTANT: If the base is rotated, the pivot offset MUST be center
-					# or the rotation will look wobbly. Ensure Pivot Offset is set!
 				
 				_touch_index = event.index
-				modulate.a = 0.35 # Show joystick
+				modulate.a = 0.35
+				
+				# --- ADD THIS: FORCE CENTER ON SPAWN ---
+				# Ensures the tip is dead center the moment it appears
+				_update_tip_position(Vector2.ZERO)
 		
 		elif event.index == _touch_index:
 			_reset_joystick()
@@ -47,7 +57,9 @@ func _input(event: InputEvent) -> void:
 
 func _get_global_base_center() -> Vector2:
 	if joystick_base:
-		return joystick_base.global_position + (joystick_base.size / 2)
+		# Correct way for Control Nodes:
+		# Multiply the Global Transform matrix by the Local Center vector
+		return joystick_base.get_global_transform() * (joystick_base.size / 2)
 	return global_position
 
 func _update_tip_position(global_vector: Vector2) -> void:

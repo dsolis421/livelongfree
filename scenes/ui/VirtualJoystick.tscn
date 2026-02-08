@@ -25,6 +25,8 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 
 [node name="VirtualJoystick" type="Control" unique_id=1603360565 node_paths=PackedStringArray("joystick_base", "joystick_tip") groups=["virtual_joystick"]]
+process_mode = 1
+z_index = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,17 +40,8 @@ joystick_tip = NodePath("Base/Tip")
 
 [node name="Base" type="TextureRect" parent="." unique_id=1298742603]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = -100.0
-offset_right = 50.0
-offset_bottom = 50.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 150.0
+offset_bottom = 150.0
 rotation = 0.7853982
 pivot_offset = Vector2(75, 75)
 texture = SubResource("GradientTexture2D_vkx60")
@@ -57,15 +50,7 @@ texture = SubResource("GradientTexture2D_vkx60")
 modulate = Color(0, 0, 0, 1)
 self_modulate = Color(0, 0, 0, 1)
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -35.0
-offset_top = -35.0
-offset_right = 35.0
-offset_bottom = 35.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 70.0
+offset_bottom = 70.0
+pivot_offset = Vector2(35, 35)
 texture = SubResource("GradientTexture2D_r3sd0")

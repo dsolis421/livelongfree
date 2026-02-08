@@ -8,6 +8,7 @@ font_color = Color(0.7529412, 0, 0, 1)
 
 [node name="GameOver" type="CanvasLayer" unique_id=250668618]
 process_mode = 3
+layer = 200
 script = ExtResource("1_kp3qx")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=542354878]

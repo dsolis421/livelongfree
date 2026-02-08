@@ -12,6 +12,7 @@ shadow_color = Color(0, 0, 0, 0.39215687)
 
 [node name="VictoryScreen" type="CanvasLayer" unique_id=250668618]
 process_mode = 3
+layer = 200
 script = ExtResource("1_kruri")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=542354878]
