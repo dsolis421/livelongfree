@@ -49,6 +49,8 @@ offset_right = 50.0
 offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
+rotation = 0.7853982
+pivot_offset = Vector2(75, 75)
 texture = SubResource("GradientTexture2D_vkx60")
 
 [node name="Tip" type="TextureRect" parent="Base" unique_id=990157562]
