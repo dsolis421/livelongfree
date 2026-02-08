@@ -42,7 +42,7 @@ func _input(event: InputEvent) -> void:
 				global_position = event.position - (size / 2)
 				
 				# B. Make it visible
-				modulate.a = 0.7 
+				modulate.a = 0.5
 				
 				# C. Start tracking this specific finger/mouse click
 				_touch_index = event.index
