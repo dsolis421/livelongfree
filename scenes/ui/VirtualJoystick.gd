@@ -15,30 +15,49 @@ var _touch_index: int = -1
 func _ready() -> void:
 	# Force center the stick immediately when the game loads
 	_reset_joystick()
-
-func _input(event: InputEvent) -> void:
-	if event is InputEventScreenTouch:
-		if event.pressed:
-			if _touch_index == -1:
-				# Input logic uses GLOBAL coordinates (Screen space)
-				var global_center = _get_global_base_center()
-				var distance = event.position.distance_to(global_center)
-				
-				# Check if touch is inside the base radius
-				if distance < clamp_distance * 1.5:
-					_touch_index = event.index
-		
-		elif event.index == _touch_index:
-			# Finger lifted
+	modulate.a = 0.0
+	
+func _notification(what: int) -> void:
+	# 1. If the joystick itself gets hidden/shown (e.g. by a parent menu)
+	if what == NOTIFICATION_VISIBILITY_CHANGED:
+		if not is_visible_in_tree():
 			_reset_joystick()
 
+	# 2. If the game window loses focus (User alt-tabs or a system popup appears)
+	elif what == NOTIFICATION_APPLICATION_FOCUS_OUT:
+		_reset_joystick()
+		
+	# 3. If the node is paused (Mode: Process)
+	elif what == NOTIFICATION_PAUSED:
+		_reset_joystick()
+
+func _input(event: InputEvent) -> void:
+	# 1. HANDLE TOUCH START (Click)
+	if event is InputEventScreenTouch:
+		if event.pressed:
+			# Only activate if we aren't already dragging another finger
+			if _touch_index == -1:
+				# A. Snap the Base to the finger position
+				# (We subtract half size to center the joystick on the cursor)
+				global_position = event.position - (size / 2)
+				
+				# B. Make it visible
+				modulate.a = 0.5
+				
+				# C. Start tracking this specific finger/mouse click
+				_touch_index = event.index
+		
+		# 2. HANDLE TOUCH END (Release)
+		elif event.index == _touch_index:
+			_reset_joystick()
+
+	# 3. HANDLE DRAGGING
 	elif event is InputEventScreenDrag:
 		if event.index == _touch_index:
-			# Calculate the vector from the GLOBAL center to the finger
 			var global_center = _get_global_base_center()
 			var vector = event.position - global_center
 			
-			# Clamp the movement
+			# Clamp the distance so the tip doesn't leave the base
 			if vector.length() > clamp_distance:
 				vector = vector.normalized() * clamp_distance
 			
@@ -67,6 +86,9 @@ func _update_tip_position(vector: Vector2) -> void:
 func _reset_joystick() -> void:
 	_touch_index = -1
 	_update_tip_position(Vector2.ZERO)
+	
+	# Fade out or Hide when released
+	modulate.a = 0.0 # Change to 0.2 if you want a faint ghost of the joystick
 
 # --- PUBLIC API ---
 func get_output() -> Vector2:

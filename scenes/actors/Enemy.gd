@@ -25,7 +25,15 @@ var knockback_velocity: Vector2 = Vector2.ZERO
 
 func _physics_process(delta: float) -> void:
 	if player == null: return
+	# If we are too far away, vanish instantly.
+	# 2000px is about 2-3 screens away.
+	var dist_to_player = global_position.distance_to(player.global_position)
 	
+	if dist_to_player > 2000.0:
+		# CRITICAL: Do not despawn the Boss!
+		if not is_in_group("boss"):
+			queue_free()
+			return
 	# 1. Base Direction (To Player)
 	var direction = (player.global_position - global_position).normalized()
 	

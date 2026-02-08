@@ -28,6 +28,16 @@ func _ready() -> void:
 	timer.timeout.connect(_check_distance_from_player)
 	add_child(timer)
 
+func _process(delta: float) -> void:
+	# If you have existing magnet logic here, keep it!
+	
+	# --- CLEANUP LOGIC ---
+	var player = get_tree().get_first_node_in_group("player")
+	if player:
+		# 1500px is about 1.5 screens away. If the player left it behind, delete it.
+		if global_position.distance_to(player.global_position) > 1500.0:
+			queue_free()
+			
 func _check_distance_from_player() -> void:
 	var player = get_tree().get_first_node_in_group("player")
 	if not player: return

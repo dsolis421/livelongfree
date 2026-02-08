@@ -24,13 +24,14 @@ height = 70
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="VirtualJoystick" type="Control" unique_id=1603360565 node_paths=PackedStringArray("joystick_base", "joystick_tip")]
+[node name="VirtualJoystick" type="Control" unique_id=1603360565 node_paths=PackedStringArray("joystick_base", "joystick_tip") groups=["virtual_joystick"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_1m7mg")
 joystick_base = NodePath("Base")
 joystick_tip = NodePath("Base/Tip")
