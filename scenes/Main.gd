@@ -53,9 +53,9 @@ func _start_game_logic() -> void:
 	if player:
 		player.set_physics_process(true)
 		
-	# 2. Reset the Timer
-	# (So the 3 seconds of animation don't eat into the mission time)
-	GameManager.start_new_run()
+	# 2. Start the Mission (Manager handles logic)
+	# CHANGED: Use the new unified function
+	GameManager.start_mission_logic()
 	
 	# 3. Start Spawners (Optional)
 	# If your spawner has a "start" function, call it here.

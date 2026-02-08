@@ -2,6 +2,7 @@ extends Control
 
 # References to our Stat Labels
 @onready var kills_label = $MainLayout/RightColumn/StatsPanel/VBoxContainer/KillsLabel
+@onready var repo_button = $MainLayout/RightColumn/RepoButton
 
 func _ready() -> void:
 	# 1. Update Labels directly from GameData (The new source of truth)
@@ -21,12 +22,13 @@ func _ready() -> void:
 	var play_btn = $MainLayout/RightColumn/PlayButton
 	if not play_btn.pressed.is_connected(_on_play_pressed):
 		play_btn.pressed.connect(_on_play_pressed)
+	
+	repo_button.pressed.connect(_on_repo_pressed)
+
 
 func _on_play_pressed() -> void:
-	# 1. DELEGATE CLEANUP
-	# Use the new function name!
-	# This ensures we start at Level 1 with 0 Gold and 0 XP.
-	GameManager.start_new_run()
-	
-	# 2. Launch Game
-	get_tree().change_scene_to_file("res://scenes/Main.tscn")
+	GameManager.start_new_game_from_menu()
+
+func _on_repo_pressed():
+	# Go to the Store Scene
+	get_tree().change_scene_to_file("res://scenes/ui/RepoStore.tscn")

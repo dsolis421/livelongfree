@@ -43,13 +43,8 @@ func _on_player_died() -> void:
 	get_tree().paused = true
 
 func _on_button_pressed() -> void:
-	# 1. HARD RESET
-	# We use start_new_run() because the player died. 
-	# They must start over from Level 1 with 0 Gold.
-	GameManager.start_new_run()
-	
-	# 2. Unpause
+	# 1. Unpause the game (Critical!)
 	get_tree().paused = false
 	
-	# 3. Reload Scene
-	get_tree().reload_current_scene()
+	# 2. Tell GameManager to wipe stats and load the map
+	GameManager.start_new_game_from_menu()

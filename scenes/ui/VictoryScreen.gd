@@ -39,7 +39,7 @@ func _on_next_mission_pressed() -> void:
 	print("Loading Next Mission...")
 	
 	# 1. Reset Game State
-	GameManager.advance_to_next_sector()
+	GameManager.continue_to_next_sector()
 	
 	# 2. IMPORTANT: Unpause!
 	get_tree().paused = false

@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://cy13fu5xxrfl6"]
+
+[ext_resource type="Script" uid="uid://diefs60vu5xe6" path="res://scenes/ui/RepoStore.gd" id="1_m4dye"]
+[ext_resource type="PackedScene" uid="uid://dlvmo5lc3uwwa" path="res://scenes/ui/UpgradeItem.tscn" id="2_5m2y2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5m2y2"]
+font_size = 36
+
+[sub_resource type="LabelSettings" id="LabelSettings_v20v2"]
+font_size = 32
+font_color = Color(1, 0.84313726, 0, 1)
+
+[node name="RepoStore" type="CanvasLayer" unique_id=2119109134]
+script = ExtResource("1_m4dye")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=789620407]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=897651114]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1638280661]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="HeaderLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=282905399]
+layout_mode = 2
+text = "Welcome to Source Control"
+label_settings = SubResource("LabelSettings_5m2y2")
+horizontal_alignment = 1
+
+[node name="BankLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=249024246]
+layout_mode = 2
+text = "Net Worth: 0"
+label_settings = SubResource("LabelSettings_v20v2")
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer" unique_id=881003113]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer" unique_id=1118741862]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="UpgradeList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer" unique_id=1943052351]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="UpgradeItem" parent="MarginContainer/VBoxContainer/ScrollContainer/UpgradeList" unique_id=1602326425 instance=ExtResource("2_5m2y2")]
+layout_mode = 2
+upgrade_key = "buffer"
+
+[node name="UpgradeItem2" parent="MarginContainer/VBoxContainer/ScrollContainer/UpgradeList" unique_id=674823722 instance=ExtResource("2_5m2y2")]
+layout_mode = 2
+upgrade_key = "magnet"
+
+[node name="UpgradeItem3" parent="MarginContainer/VBoxContainer/ScrollContainer/UpgradeList" unique_id=698242278 instance=ExtResource("2_5m2y2")]
+layout_mode = 2
+upgrade_key = "damage"
+
+[node name="ReturnButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=2101019344]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Return to Base"
