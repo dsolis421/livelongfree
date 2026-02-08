@@ -1,33 +1,32 @@
 extends Control
 
 # References to our Stat Labels
-@onready var level_label = $MainLayout/RightColumn/StatsPanel/VBoxContainer/LevelLabel
 @onready var kills_label = $MainLayout/RightColumn/StatsPanel/VBoxContainer/KillsLabel
-@onready var time_label = $MainLayout/RightColumn/StatsPanel/VBoxContainer/TimeLabel
 
 func _ready() -> void:
-	# 1. Load the data from GameManager
-	var data = GameManager.save_data
+	# 1. Update Labels directly from GameData (The new source of truth)
+	GameData.load_game()
+	print("DEBUG: Loaded Gold: ", GameData.gold)
+	print("DEBUG: Loaded Kills: ", GameData.high_kills)
+	# Display Gold
+	if has_node("MainLayout/RightColumn/StatsPanel/VBoxContainer/GoldLabel"):
+		$MainLayout/RightColumn/StatsPanel/VBoxContainer/GoldLabel.text = "Net Worth: " + str(GameData.gold)
 	
-	# 2. Update Text
-	level_label.text = "Peak Level: " + str(data["high_level"])
-	kills_label.text = "Peak Kills: " + str(data["high_kills"])
-	
-	# Format time (Seconds -> MM:SS)
-	var time = data["best_time"]
-	var minutes = int(time / 60)
-	var seconds = int(time) % 60
-	time_label.text = "Best Time: %02d:%02d" % [minutes, seconds]
-	
+	# Display High Kills (Your new Score)
+	# Assuming you have a label named 'KillsLabel' or similar
+	if has_node("MainLayout/RightColumn/StatsPanel/VBoxContainer/KillsLabel"):
+		$MainLayout/RightColumn/StatsPanel/VBoxContainer/KillsLabel.text = "Most Kills: " + str(GameData.high_kills)
+
 	# 3. Connect Play Button
 	var play_btn = $MainLayout/RightColumn/PlayButton
-	play_btn.pressed.connect(_on_play_pressed)
+	if not play_btn.pressed.is_connected(_on_play_pressed):
+		play_btn.pressed.connect(_on_play_pressed)
 
 func _on_play_pressed() -> void:
 	# 1. DELEGATE CLEANUP
-	# Instead of resetting 10 variables manually, ask the Manager to reset itself.
-	# This handles level, xp, timer, kills, gold, and flags automatically.
-	GameManager.reset()
+	# Use the new function name!
+	# This ensures we start at Level 1 with 0 Gold and 0 XP.
+	GameManager.start_new_run()
 	
 	# 2. Launch Game
 	get_tree().change_scene_to_file("res://scenes/Main.tscn")

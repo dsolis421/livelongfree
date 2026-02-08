@@ -1,5 +1,5 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1770560548
+::res://::1770560992
 GameSpec.md::TextFile::-1::1769617624::0::1::::<><><>0<>0<><>::
 icon.svg::CompressedTexture2D::6003226096522664481::1769617510::1769617514::1::::<><><>0<>0<>c7a04c3f1c084dd415a4de03e0781cd2<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 ::res://app/::1769613466
@@ -97,7 +97,7 @@ ItemPickup.tscn::PackedScene::949954424275245741::1770396776::0::1::::<><><>0<>0
 ::res://scenes/objects/::1770414136
 Drone.gd::GDScript::7631172062499012821::1770414136::0::1::::<>Node2D<><>0<>0<><>::
 Drone.tscn::PackedScene::3285120685172667288::1770414136::0::1::::<><><>0<>0<><>::uid://dgyuj3asqo4qr::::res://scenes/objects/Drone.gd
-::res://scenes/ui/::1770560252
+::res://scenes/ui/::1770560579
 ActiveItemHUD.gd::GDScript::8229628427807907734::1769907557::0::1::::<>Control<><>0<>0<><>::
 ActiveItemHUD.tscn::PackedScene::1619120725304378198::1769881137::0::1::::<><><>0<>0<><>::uid://dpiq1pgkt1ecc::::res://scenes/ui/ActiveItemHUD.gd
 GameOver.gd::GDScript::3637048958206600989::1769723461::0::1::::<>CanvasLayer<><>0<>0<><>::
@@ -110,8 +110,8 @@ MainMenu.gd::GDScript::2673849902070868533::1770406275::0::1::::<>Control<><>0<>
 MainMenu.tscn::PackedScene::3340779209968086114::1770518368::0::1::::<><><>0<>0<><>::uid://bedh6gk6e1174::::res://scenes/ui/MainMenu.gd
 VictoryScreen.gd::GDScript::6395580328448391696::1770415433::0::1::::<>CanvasLayer<><>0<>0<><>::
 VictoryScreen.tscn::PackedScene::970951443551461153::1770518368::0::1::::<><><>0<>0<><>::uid://cxecjkjyj8lpo::::res://scenes/ui/VictoryScreen.gd
-VirtualJoystick.gd::GDScript::2252344885380303400::1770560252::0::1::::VirtualJoystick<>Control<><>0<>0<><>::
-VirtualJoystick.tscn::PackedScene::3649424828054390706::1770560252::0::1::::<><><>0<>0<><>::uid://7db15u7mf5rg::::res://scenes/ui/VirtualJoystick.gd
+VirtualJoystick.gd::GDScript::2252344885380303400::1770560579::0::1::::VirtualJoystick<>Control<><>0<>0<><>::
+VirtualJoystick.tscn::PackedScene::3649424828054390706::1770560579::0::1::::<><><>0<>0<><>::uid://7db15u7mf5rg::::res://scenes/ui/VirtualJoystick.gd
 XPBar.gd::GDScript::5667827749443772064::1770417189::0::1::::<>ProgressBar<><>0<>0<><>::
 ::res://scripts/::1770518368
 EffectCleanup.gd::GDScript::487669283761487754::1769985240::0::1::::<>GPUParticles2D<><>0<>0<><>::

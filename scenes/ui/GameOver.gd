@@ -1,21 +1,55 @@
 extends CanvasLayer
 
-func _ready() -> void:
-	# Ensure it is hidden when the game starts/restarts
-	visible = false 
-	# Also ensure the game isn't paused by mistake
-	get_tree().paused = false 
+# --- UI REFERENCES ---
+# Adjust these paths if your hierarchy changes!
+@onready var run_stats_label: Label = $CenterContainer/VBoxContainer/RunStatsLabel
+@onready var gold_label: Label = $CenterContainer/VBoxContainer/GoldLabel
+@onready var total_label: Label = $CenterContainer/VBoxContainer/TotalLabel
+@onready var reboot_button: Button = $CenterContainer/VBoxContainer/Button
 
+func _ready() -> void:
+	# 1. Start Hidden
+	visible = false 
+	
+	# 2. Ensure game is running normally at start
+	get_tree().paused = false 
+	
+	# 3. Connect Button (Safety check)
+	if not reboot_button.pressed.is_connected(_on_button_pressed):
+		reboot_button.pressed.connect(_on_button_pressed)
+
+# Call this function when the Player emits the 'died' signal
+# OR call this from Player.gd: get_tree().root.get_node("Main/GameOver")._on_player_died()
 func _on_player_died() -> void:
-	# This function listens for the player's death signal
-	print("GAME OVER SCREEN ACTIVATED") # <--- Add this
+	print("GAME OVER SCREEN ACTIVATED")
+	
+	# 1. UPDATE STATS
+	# We pull the specific numbers from our Managers
+	if run_stats_label:
+		run_stats_label.text = "Targets Neutralized: " + str(GameManager.kills)
+		
+	if gold_label:
+		gold_label.text = "Bounty Collected: " + str(GameManager.gold_current_run)
+		
+	if total_label:
+		# GameData should have been saved/updated by Player.die() just before this
+		var true_total = GameData.gold + GameManager.gold_current_run
+		total_label.text = "Total Net Worth: " + str(true_total)
+	
+	# 2. SHOW SCREEN
 	visible = true
+	
+	# 3. PAUSE GAME (Stops enemies from moving/attacking)
 	get_tree().paused = true
 
 func _on_button_pressed() -> void:
-	# Reset the manager
-	GameManager.reset()
-	# Unpause BEFORE reloading (critical!)
+	# 1. HARD RESET
+	# We use start_new_run() because the player died. 
+	# They must start over from Level 1 with 0 Gold.
+	GameManager.start_new_run()
+	
+	# 2. Unpause
 	get_tree().paused = false
-	# Reload the entire scene
+	
+	# 3. Reload Scene
 	get_tree().reload_current_scene()

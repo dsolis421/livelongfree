@@ -1,2 +1,15 @@
 res://scenes/ui/VirtualJoystick.tscn
+res://scripts/autoloads/GameData.gd
+res://scripts/GameManager.gd
+res://scenes/ui/MainMenu.gd
+res://scenes/ui/MainMenu.tscn
+res://scripts/Player.gd
+res://scenes/Main.tscn
+res://scenes/ui/HUD.tscn
+res://scenes/ui/HUD.gd
+res://scenes/ui/GameOver.tscn
+res://scenes/ui/GameOver.gd
+res://scenes/ui/VictoryScreen.tscn
+res://scenes/ui/VictoryScreen.gd
+res://scenes/Main.gd
 res://scenes/ui/VirtualJoystick.gd

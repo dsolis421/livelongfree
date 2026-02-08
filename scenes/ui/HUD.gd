@@ -76,7 +76,7 @@ func _process(delta: float) -> void:
 	# 3. UPDATE GOLD
 	# We check if gold_label is valid just in case you haven't added the node yet
 	if gold_label:
-		gold_label.text = "Gold: " + str(GameManager.gold_current_run)
+		gold_label.text = "Bounty: " + str(GameManager.gold_current_run)
 
 func _on_supernova() -> void:
 	var tween = create_tween()

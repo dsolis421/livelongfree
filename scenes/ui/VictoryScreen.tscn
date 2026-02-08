@@ -2,9 +2,12 @@
 
 [ext_resource type="Script" uid="uid://cxecjkjyj8lpo" path="res://scenes/ui/VictoryScreen.gd" id="1_kruri"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_kruri"]
+font_size = 36
+font_color = Color(0, 0.7137255, 0.007843138, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_57v1k"]
-font_size = 50
-font_color = Color(0, 0.75686276, 0, 1)
+font_size = 15
 shadow_color = Color(0, 0, 0, 0.39215687)
 
 [node name="VictoryScreen" type="CanvasLayer" unique_id=250668618]
@@ -33,6 +36,27 @@ theme_override_constants/separation = 20
 [node name="Label" type="Label" parent="CenterContainer/VBoxContainer" unique_id=638911852]
 layout_mode = 2
 text = "SCAN COMPLETE"
+label_settings = SubResource("LabelSettings_kruri")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RunStatsLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=245643430]
+layout_mode = 2
+text = "Threats Neutralized: "
+label_settings = SubResource("LabelSettings_57v1k")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GoldLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1415697527]
+layout_mode = 2
+text = "Bounty Collected: "
+label_settings = SubResource("LabelSettings_57v1k")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TotalLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=592370708]
+layout_mode = 2
+text = "Net Worth: "
 label_settings = SubResource("LabelSettings_57v1k")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -41,7 +65,7 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 24
-text = " Next Directory"
+text = " Next Directory "
 
 [node name="ReturnToBase" type="Button" parent="CenterContainer/VBoxContainer" unique_id=527434688]
 layout_mode = 2

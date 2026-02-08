@@ -55,7 +55,7 @@ func _start_game_logic() -> void:
 		
 	# 2. Reset the Timer
 	# (So the 3 seconds of animation don't eat into the mission time)
-	GameManager.reset()
+	GameManager.start_new_run()
 	
 	# 3. Start Spawners (Optional)
 	# If your spawner has a "start" function, call it here.

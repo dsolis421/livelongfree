@@ -28,7 +28,7 @@ func _input(event: InputEvent) -> void:
 					# or the rotation will look wobbly. Ensure Pivot Offset is set!
 				
 				_touch_index = event.index
-				modulate.a = 0.5 # Show joystick
+				modulate.a = 0.35 # Show joystick
 		
 		elif event.index == _touch_index:
 			_reset_joystick()

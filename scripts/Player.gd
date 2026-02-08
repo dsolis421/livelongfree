@@ -76,18 +76,15 @@ func die() -> void:
 	player_died.emit()
 	print("Player has died!")
 	# 1. Instantiate the Game Over UI
-	GameManager.check_and_save_records(GameManager.level, GameManager.kills, GameManager.time_elapsed)
+	GameManager.save_game()
 	
 	if game_over_screen:
 		var screen = game_over_screen.instantiate()
 		get_tree().root.add_child(screen)
 
-	# 2. Pause the game so everything stops moving
 	get_tree().paused = true
 
-	# 3. Optional: Delete the player or hide them
 	queue_free()
-
 # This function is called by Enemies when they touch you.
 # We accept an 'amount' argument to be future-proof, even if we don't use it yet.
 func take_damage(amount: int = 1) -> void:

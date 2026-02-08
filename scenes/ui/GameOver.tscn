@@ -36,6 +36,18 @@ label_settings = SubResource("LabelSettings_57v1k")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="RunStatsLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=854300174]
+layout_mode = 2
+text = "Threats Neutralized: "
+
+[node name="GoldLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1999393994]
+layout_mode = 2
+text = "Bounty Collected:"
+
+[node name="TotalLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1155561611]
+layout_mode = 2
+text = "Net Worth:"
+
 [node name="Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=527434688]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32

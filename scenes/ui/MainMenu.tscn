@@ -81,9 +81,9 @@ layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 9
 
-[node name="LevelLabel" type="Label" parent="MainLayout/RightColumn/StatsPanel/VBoxContainer" unique_id=696701902]
+[node name="GoldLabel" type="Label" parent="MainLayout/RightColumn/StatsPanel/VBoxContainer" unique_id=696701902]
 layout_mode = 2
-text = "Peak Level: 0"
+text = "Net Worth: 0"
 label_settings = SubResource("LabelSettings_6jbdy")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -92,12 +92,6 @@ vertical_alignment = 1
 layout_mode = 2
 text = "Peek Kills: 0"
 label_settings = SubResource("LabelSettings_iwbf0")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TimeLabel" type="Label" parent="MainLayout/RightColumn/StatsPanel/VBoxContainer" unique_id=1971906307]
-layout_mode = 2
-text = "Best Time: 00:00"
 horizontal_alignment = 1
 vertical_alignment = 1
 

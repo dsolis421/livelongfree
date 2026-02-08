@@ -1,9 +1,9 @@
+Label
 RayCast2D
 TileMapLayer
 Node2D
 Sprite2D
 MarginContainer
-Label
 Button
 VBoxContainer
 PanelContainer
