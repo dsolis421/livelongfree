@@ -2,6 +2,14 @@ extends CharacterBody2D
 
 class_name Enemy
 
+enum EnemyRole { 
+	FODDER,   # Default, small enemies
+	ELITE,    # Tougher, maybe special abilities
+	BOSS      # The big bad
+}
+
+const LOOT_SCENE = preload("res://scenes/loot/Gem.tscn")
+
 @export_group("Loot Settings")
 @export var hp: int = 3
 @export var movement_speed: float = 150.0 
@@ -14,6 +22,7 @@ class_name Enemy
 @export var special_drop_chance: float = 1.0 
 @export var special_drop_scene: PackedScene 
 @export var available_drops: Array[String] = ["meteor", "nuke"] 
+@export var role: EnemyRole = EnemyRole.FODDER
 
 # We track knockback separately so we can decay it over time
 var knockback_velocity: Vector2 = Vector2.ZERO
@@ -22,6 +31,32 @@ var knockback_velocity: Vector2 = Vector2.ZERO
 @onready var player = get_tree().get_first_node_in_group("player")
 @onready var left_ray = $LeftRay
 @onready var right_ray = $RightRay
+
+func _ready() -> void:
+	# --- 3. APPLY IDENTITY BASED ON ROLE ---
+	# We assign the group dynamically. This prevents inheritance conflicts.
+	
+	match role:
+		EnemyRole.FODDER:
+			add_to_group("fodder")
+			# Optional: Scale down or set low HP here if generic
+			
+		EnemyRole.ELITE:
+			add_to_group("elite")
+			# Optional: Add a visual glow or boost HP
+			
+		EnemyRole.BOSS:
+			add_to_group("boss")
+			print("Role is BOSS. Extending whiskers...")
+			
+			# EXTEND WHISKERS (Logic moved here directly)
+			if left_ray: left_ray.target_position *= 4.0
+			if right_ray: right_ray.target_position *= 4.0
+
+	# --- 4. KEEP "ENEMY" GROUP ---
+	# Ensures generic collision logic (bullets hitting enemies) always works
+	if not is_in_group("enemy"):
+		add_to_group("enemy")
 
 func _physics_process(delta: float) -> void:
 	if player == null: return
@@ -122,12 +157,21 @@ func spawn_standard_loot() -> void:
 	if GameManager.is_boss_active and is_in_group("fodder"):
 		return
 
-	var loot = load("res://scenes/loot/Gem.tscn").instantiate()
-	
-	if randf() < 0.10: 
+	var loot = LOOT_SCENE.instantiate()
+
+	if randf() < 0.10:
 		loot.setup(loot.TYPE.GOLD)
 	else:
-		loot.setup(loot.TYPE.COMMON)
+		var roll = randf() # Returns 0.0 to 1.0
+		
+		if roll < 0.05:      # 1% Chance
+			loot.setup(loot.TYPE.LEGENDARY)
+		elif roll < 0.1:    # 4% Chance (0.01 to 0.05)
+			loot.setup(loot.TYPE.EPIC)
+		elif roll < 0.25:    # 20% Chance (0.05 to 0.25)
+			loot.setup(loot.TYPE.RARE)
+		else:                # 75% Chance (The rest)
+			loot.setup(loot.TYPE.COMMON)
 
 	get_tree().current_scene.call_deferred("add_child", loot)
 	loot.set_deferred("global_position", global_position)

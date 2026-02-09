@@ -24,7 +24,6 @@ func _ready() -> void:
 	randomize() 
 	noise.seed = randi() # Pick a random integer
 	
-	print("WorldGenerator: New World Seed -> ", noise.seed)
 	add_to_group("world_generator")
 
 	# 2. Initial Load
@@ -79,7 +78,6 @@ func update_chunks() -> void:
 	# Process the death list
 	for chunk_coord in chunks_to_remove:
 		unload_chunk(chunk_coord)
-	print("Active Chunks: ", active_chunks.size())
 	# 3. Unload old chunks (Optional: Memory Cleanup)
 	# For now, we just keep them to prevent re-generation lag, but 
 	# in a real run we would delete chunks far away.

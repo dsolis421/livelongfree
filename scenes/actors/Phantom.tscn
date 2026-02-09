@@ -13,10 +13,10 @@ death_effect = ExtResource("3_q5s0s")
 special_drop_chance = 1.0
 special_drop_scene = ExtResource("3_n74la")
 available_drops = Array[String](["invincible"])
+role = 1
 
 [node name="ColorRect" parent="." index="0" unique_id=2128324598]
 color = Color(0.60784316, 0.3254902, 1, 0.6901961)
 
 [node name="Hitbox" parent="." index="2" unique_id=1527609457]
-collision_layer = 0
 collision_mask = 0

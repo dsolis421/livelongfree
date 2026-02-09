@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bnuke7grfywry"]
 
 [ext_resource type="Script" uid="uid://bedh6gk6e1174" path="res://scenes/ui/MainMenu.gd" id="1_6jbdy"]
+[ext_resource type="Theme" uid="uid://da2h212h2jmb6" path="res://assets/fonts/MainTheme.tres" id="2_6jbdy"]
 
 [sub_resource type="Gradient" id="Gradient_vjtqc"]
 offsets = PackedFloat32Array(0, 0.62068963, 0.7126437, 1)
@@ -60,7 +61,7 @@ size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="MainLayout/LeftColumn" unique_id=1709618541]
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 60
 text = "LIVE
 LONG
 FREE"
@@ -108,6 +109,7 @@ custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme = ExtResource("2_6jbdy")
 theme_override_font_sizes/font_size = 30
 text = "Go to Repo"
 

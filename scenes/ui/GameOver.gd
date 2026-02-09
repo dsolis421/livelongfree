@@ -43,8 +43,9 @@ func _on_player_died() -> void:
 	get_tree().paused = true
 
 func _on_button_pressed() -> void:
-	# 1. Unpause the game (Critical!)
-	get_tree().paused = false
+	# 1. Helper stops the clock, unpauses, and changes scene
+	GameManager.return_to_main_menu()
 	
-	# 2. Tell GameManager to wipe stats and load the map
-	GameManager.start_new_game_from_menu()
+	# 2. Since this screen was added to 'root' (outside the scene), 
+	# we must destroy it manually so it doesn't get stuck on top of the menu.
+	queue_free()

@@ -10,7 +10,7 @@ size = Vector2(60, 60)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dkpe8"]
 size = Vector2(62, 62)
 
-[node name="Brute" unique_id=1413542967 instance=ExtResource("1_hij64")]
+[node name="Brute" unique_id=1413542967 groups=["elite"] instance=ExtResource("1_hij64")]
 hp = 10
 movement_speed = 100.0
 xp_value = 0
@@ -19,6 +19,7 @@ drop_chance = 0.0
 death_effect = ExtResource("2_sbw3t")
 special_drop_chance = 1.0
 special_drop_scene = ExtResource("4_dkpe8")
+role = 1
 
 [node name="ColorRect" parent="." index="0" unique_id=2128324598]
 offset_left = -30.0

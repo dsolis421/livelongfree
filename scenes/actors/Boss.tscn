@@ -11,7 +11,6 @@ size = Vector2(120, 120)
 size = Vector2(122, 122)
 
 [node name="Boss" unique_id=1413542967 instance=ExtResource("1_vm5jf")]
-collision_mask = 7
 script = ExtResource("2_ltkqj")
 boss_bullet_scene = ExtResource("3_vm5jf")
 hp = 20
@@ -19,6 +18,7 @@ movement_speed = 250.0
 loot_scene = null
 drop_chance = 0.0
 death_effect = null
+role = 2
 
 [node name="ColorRect" parent="." index="0" unique_id=2128324598]
 offset_left = -60.0

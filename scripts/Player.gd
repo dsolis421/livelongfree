@@ -74,7 +74,7 @@ func _apply_global_upgrades() -> void:
 		var magnet_shape = get_node_or_null("MagnetArea/CollisionShape2D")
 		if magnet_shape and magnet_shape.shape is CircleShape2D:
 			magnet_shape.shape.radius *= (1.0 + (magnet_level * 0.1))
-			print("Repo Upgrade: Magnet Radius Increased")
+			print("Repo Upgrade: Magnet Radius Increased to ", magnet_shape.shape.radius)
 
 # --- PHYSICS LOOP ---
 func _physics_process(delta: float) -> void:
@@ -113,6 +113,10 @@ func get_game_input() -> Vector2:
 
 # UPDATED: Accepts float and subtracts HP
 func take_damage(amount: float = 1.0) -> void:
+	# If the boss is dead, the game is over (Victory state). Don't take damage.
+	if GameManager.is_game_over:
+		return
+	
 	if is_invincible:
 		print("Damage Blocked! (Invincible)")
 		return 
@@ -124,6 +128,15 @@ func take_damage(amount: float = 1.0) -> void:
 		die()
 
 func die() -> void:
+	set_physics_process(false)
+	await get_tree().create_timer(0.1).timeout
+	if GameManager.is_game_over:
+		print("Player died, but Victory was already triggered. cancelling Game Over.")
+		queue_free()
+		return
+	
+	GameManager.on_player_died()
+	
 	player_died.emit()
 	print("Player has died!")
 	GameManager.save_game()

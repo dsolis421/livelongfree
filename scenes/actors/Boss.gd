@@ -17,6 +17,7 @@ var is_attacking: bool = false
 @onready var brain_timer = $BrainTimer
 
 func _ready() -> void:
+	super._ready()
 	# 1. Global Flags
 	GameManager.is_boss_active = true
 	print("--- BOSS FIGHT STARTED ---")
@@ -24,9 +25,6 @@ func _ready() -> void:
 	GameManager.report_boss_spawn(hp)
 	
 	# 2. Cleanup Groups (Safety measure)
-	if is_in_group("fodder"): remove_from_group("fodder")
-	if not is_in_group("elite"): add_to_group("elite")
-	
 	# 3. Connect the Brain
 	if brain_timer:
 		brain_timer.timeout.connect(_on_brain_decision)
@@ -116,7 +114,7 @@ func _on_brain_decision() -> void:
 
 func change_state(new_state: State) -> void:
 	current_state = new_state
-	print("Boss switched to state: ", State.keys()[new_state])
+	# print("Boss switched to state: ", State.keys()[new_state])
 	# --- RESET FLAGS ---
 	is_dashing_active = false
 	is_attacking = false
@@ -172,7 +170,7 @@ func prepare_attack() -> void:
 		
 func fire_shotgun() -> void:
 	if not is_attacking or not player or not boss_bullet_scene: return
-	print(">>> BOSS FIRES SHOTGUN <<<")
+	# print(">>> BOSS FIRES SHOTGUN <<<")
 	# Calculate direction to player
 	var main_dir = global_position.direction_to(player.global_position)
 	# Fire 5 bullets in a spread (-30 to +30 degrees)

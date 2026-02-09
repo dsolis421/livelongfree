@@ -1,0 +1,6 @@
+[gd_resource type="Theme" format=3 uid="uid://da2h212h2jmb6"]
+
+[ext_resource type="FontFile" uid="uid://bqcjvi183u68q" path="res://assets/fonts/Tektur-VariableFont_wdth,wght.ttf" id="1_jhbt3"]
+
+[resource]
+default_font = ExtResource("1_jhbt3")

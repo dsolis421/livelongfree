@@ -89,6 +89,7 @@ animations = [{
 size = Vector2(1200, 2000)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pe48s"]
+resource_local_to_scene = true
 radius = 50.0
 
 [node name="Player" type="CharacterBody2D" unique_id=1378413890 groups=["player"]]
@@ -131,8 +132,9 @@ collision_mask = 4
 shape = SubResource("RectangleShape2D_pe48s")
 
 [node name="MagnetArea" type="Area2D" parent="." unique_id=1396142131]
-collision_layer = 0
-collision_mask = 16
+collision_layer = 2
+collision_mask = 0
+monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MagnetArea" unique_id=609254923]
 shape = SubResource("CircleShape2D_pe48s")

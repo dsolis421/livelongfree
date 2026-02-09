@@ -7,7 +7,7 @@ var stats = {
 	TYPE.COMMON:    {"color": Color.WHITE,       "val": 10,   "is_gold": false},
 	TYPE.RARE:      {"color": Color.CYAN,        "val": 50,   "is_gold": false},
 	TYPE.EPIC:      {"color": Color.MAGENTA,     "val": 100,  "is_gold": false},
-	TYPE.LEGENDARY: {"color": Color.ORANGE,      "val": 200,  "is_gold": false},
+	TYPE.LEGENDARY: {"color": Color.GREEN,      "val": 200,  "is_gold": false},
 	TYPE.GOLD:      {"color": Color(1, 0.85, 0), "val": 1,    "is_gold": true} 
 }
 
@@ -22,9 +22,7 @@ var target: Node2D = null  # The player, once magnetized
 func _ready() -> void:
 	# 1. GROUPS
 	add_to_group("loot")
-	
-	# 2. EXPLICIT CONNECTIONS (The One Place)
-	# We connect these manually so we don't need to check the Editor
+
 	body_entered.connect(_on_body_entered)
 	area_entered.connect(_on_area_entered)
 	
@@ -63,14 +61,13 @@ func setup(type: int) -> void:
 # --- MAGNET DETECTION ---
 func _on_area_entered(area: Area2D) -> void:
 	# If we are already flying, ignore other areas
+	print("Gem hit area: ", area.name)
 	if target: return
 		
 	# Check for the Magnet
 	if area.name == "MagnetArea":
-		# Set the target to the Player (the Area's parent)
 		target = area.get_parent()
-		
-		# Optional: Add a little "jerk" motion or sound here if you want
+		speed += 100.0 # Initial boost
 
 # --- ACTUAL PICKUP ---
 func _on_body_entered(body: Node2D) -> void:

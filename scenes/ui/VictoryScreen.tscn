@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://n3lotir0jmo4"]
 
 [ext_resource type="Script" uid="uid://cxecjkjyj8lpo" path="res://scenes/ui/VictoryScreen.gd" id="1_kruri"]
+[ext_resource type="Theme" uid="uid://da2h212h2jmb6" path="res://assets/fonts/MainTheme.tres" id="2_fh53a"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kruri"]
 font_size = 36
@@ -29,6 +30,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_fh53a")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=202753810]
 layout_mode = 2

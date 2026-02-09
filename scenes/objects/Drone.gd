@@ -20,7 +20,7 @@ func start_insertion(player: Node2D) -> void:
 	global_position = drop_zone + Vector2(0, -800)
 	visible = true
 	
-	print("DROPSHIP INBOUND...")
+	print("Drone Insertion!")
 
 	# 2. ANIMATION SEQUENCE
 	var tween = create_tween()
@@ -55,7 +55,7 @@ func start_extraction(player: Node2D) -> void:
 	global_position = player.global_position + Vector2(0, -800)
 	visible = true
 	
-	print("DRONE INBOUND!")
+	print("Drone Extraction!")
 	
 	# 2. Disable Player Controls (So they don't wander off)
 	if player.has_method("set_physics_process"):

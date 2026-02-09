@@ -156,3 +156,23 @@ func save_game() -> void:
 		GameData.high_kills = kills
 
 	GameData.save_game()
+	
+# --- PLAYER DEATH & MENU LOGIC ---
+
+# 1. STOP THE CLOCK (Call this from Player.gd -> die())
+func on_player_died() -> void:
+	print("--- PLAYER DIED: STOPPING CLOCK ---")
+	# This flag stops the _process loop immediately so the timer freezes
+	is_game_over = true 
+
+# 2. SAFE RETURN (Call this from GameOverScreen or VictoryScreen buttons)
+func return_to_main_menu() -> void:
+	print("--- RETURNING TO MENU ---")
+	
+	# Double check the flag is set so the timer is dead
+	is_game_over = true 
+	
+	# IMPORTANT: Unpause the tree, or the Main Menu will be frozen!
+	get_tree().paused = false 
+	
+	get_tree().change_scene_to_file("res://scenes/ui/MainMenu.tscn")

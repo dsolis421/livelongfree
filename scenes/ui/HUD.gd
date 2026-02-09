@@ -65,16 +65,20 @@ func _process(delta: float) -> void:
 	
 	# Clamp to 0 so it doesn't show negative numbers
 	if time < 0: 
-		time = 0
+		time = 0.0 # Keep as float!
 	
-	# Update the text using the cached variable
-	timer_label.text = format_time(int(time))
+	# --- THE NEW BIOS FORMATTING ---
+	var minutes = int(time / 60)
+	var seconds = int(time) % 60
+	var milliseconds = int((time - int(time)) * 1000)
+	
+	# Format: MM:SS:mmm (e.g., 01:05:432)
+	timer_label.text = "%02d:%02d:%03d" % [minutes, seconds, milliseconds]
 	
 	# 2. UPDATE SCORE (Kills)
 	score_label.text = "Kills: " + str(GameManager.kills)
 	
 	# 3. UPDATE GOLD
-	# We check if gold_label is valid just in case you haven't added the node yet
 	if gold_label:
 		gold_label.text = "Bounty: " + str(GameManager.gold_current_run)
 
@@ -85,7 +89,7 @@ func _on_supernova() -> void:
 	# Fade out slowly
 	tween.tween_property(flash_rect, "modulate:a", 0.0, 1.5)
 
-func format_time(seconds: int) -> String:
-	var minutes = seconds / 60
-	var secs = seconds % 60
-	return "%02d:%02d" % [minutes, secs]
+#func format_time(seconds: int) -> String:
+#	var minutes = seconds / 60
+#	var secs = seconds % 60
+#	return "%02d:%02d" % [minutes, secs]
