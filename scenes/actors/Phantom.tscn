@@ -5,7 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://nsfu03fajja8" path="res://scenes/loot/ItemPickup.tscn" id="3_n74la"]
 [ext_resource type="PackedScene" uid="uid://cx1i5tfrv4ajw" path="res://scenes/combat/DeathPhantom.tscn" id="3_q5s0s"]
 
-[node name="Phantom" unique_id=1413542967 instance=ExtResource("1_mleiq")]
+[node name="Phantom" unique_id=1413542967 groups=["enemy"] instance=ExtResource("1_mleiq")]
+collision_mask = 2
 script = ExtResource("2_p7m8u")
 movement_speed = 170.0
 loot_scene = null
@@ -20,3 +21,4 @@ color = Color(0.60784316, 0.3254902, 1, 0.6901961)
 
 [node name="Hitbox" parent="." index="2" unique_id=1527609457]
 collision_mask = 0
+monitoring = false

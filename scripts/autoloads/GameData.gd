@@ -6,19 +6,19 @@ const UPGRADE_CONFIG = {
 	"buffer": { 
 		"name": "Data Buffer", 
 		"description": "Start with temporary extra integrity.",
-		"base_cost": 50,
+		"base_cost": 15,
 		"cost_multiplier": 1.5, 
 		"max_level": 10
 	},
 	"magnet": {
 		"name": "Matter Siphon",
-		"base_cost": 30,
+		"base_cost": 10,
 		"cost_multiplier": 1.2, 
 		"max_level": 20
 	},
 	"damage": {
 		"name": "Weapon Overclock",
-		"base_cost": 100,
+		"base_cost": 20,
 		"cost_multiplier": 2.0, 
 		"max_level": 5
 	}

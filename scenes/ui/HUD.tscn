@@ -2,11 +2,22 @@
 
 [ext_resource type="Script" uid="uid://cjt3iiiu7d0vf" path="res://scenes/ui/HUD.gd" id="1_kw0id"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ig75s"]
+bg_color = Color(0.6, 0.6, 0.6, 0.47058824)
+expand_margin_left = 15.0
+
 [sub_resource type="LabelSettings" id="LabelSettings_hc4fa"]
 font_size = 24
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ll6g"]
+bg_color = Color(0.6, 0.6, 0.6, 0.47058824)
+
 [sub_resource type="LabelSettings" id="LabelSettings_kw0id"]
 font_size = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ed8p"]
+bg_color = Color(0.6, 0.6, 0.6, 0.47058824)
+expand_margin_right = 15.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_atyv1"]
 font_size = 20
@@ -43,6 +54,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_ig75s")
 text = "KILLS: 0"
 label_settings = SubResource("LabelSettings_hc4fa")
 
@@ -50,6 +62,7 @@ label_settings = SubResource("LabelSettings_hc4fa")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_6ll6g")
 text = "00:00"
 label_settings = SubResource("LabelSettings_kw0id")
 horizontal_alignment = 1
@@ -59,6 +72,7 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_4ed8p")
 text = "CRYPTO: 0"
 label_settings = SubResource("LabelSettings_hc4fa")
 horizontal_alignment = 2
