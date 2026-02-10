@@ -34,18 +34,18 @@ tile_size = Vector2i(40, 40)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_nfivy")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bjd11"]
-bg_color = Color(0.35, 0.35, 0.35, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qmy6f"]
-bg_color = Color(0.4648739, 0.78235406, 0.4648739, 1)
-
 [sub_resource type="Environment" id="Environment_3p2gp"]
 background_mode = 3
 glow_enabled = true
 glow_intensity = 0.12
 glow_bloom = 0.02
 glow_blend_mode = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bjd11"]
+bg_color = Color(0.35, 0.35, 0.35, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qmy6f"]
+bg_color = Color(0.4648739, 0.78235406, 0.4648739, 1)
 
 [node name="Main" type="Node2D" unique_id=1153333135]
 position = Vector2(360, 640)
@@ -76,6 +76,9 @@ boss_scene = ExtResource("8_3p2gp")
 
 [node name="Timer" type="Timer" parent="EnemySpawner" unique_id=1323218654]
 autostart = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1166950624]
+environment = SubResource("Environment_3p2gp")
 
 [node name="Controls" type="CanvasLayer" parent="." unique_id=2031422744]
 process_mode = 3
@@ -121,9 +124,6 @@ script = ExtResource("9_wp0k4")
 process_mode = 3
 
 [node name="GameOver" parent="CanvasLayer" unique_id=250668618 instance=ExtResource("1_c01mt")]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1166950624]
-environment = SubResource("Environment_3p2gp")
 
 [connection signal="player_died" from="Player" to="CanvasLayer/GameOver" method="_on_player_died"]
 [connection signal="timeout" from="EnemySpawner/Timer" to="EnemySpawner" method="_on_timer_timeout"]

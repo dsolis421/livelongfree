@@ -42,6 +42,24 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 focus_mode = 0
 
+[node name="Slot4" type="Button" parent="HBoxContainer" unique_id=1217616026]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+focus_mode = 0
+
+[node name="Slot5" type="Button" parent="HBoxContainer" unique_id=858537476]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+focus_mode = 0
+
+[node name="Slot6" type="Button" parent="HBoxContainer" unique_id=162195826]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+focus_mode = 0
+
 [connection signal="pressed" from="HBoxContainer/Slot1" to="." method="_on_slot_1_pressed"]
 [connection signal="pressed" from="HBoxContainer/Slot2" to="." method="_on_slot_2_pressed"]
 [connection signal="pressed" from="HBoxContainer/Slot3" to="." method="_on_slot_3_pressed"]
+[connection signal="pressed" from="HBoxContainer/Slot4" to="." method="_on_slot_4_pressed"]
+[connection signal="pressed" from="HBoxContainer/Slot5" to="." method="_on_slot_5_pressed"]
+[connection signal="pressed" from="HBoxContainer/Slot6" to="." method="_on_slot_6_pressed"]

@@ -21,6 +21,12 @@ const UPGRADE_CONFIG = {
 		"base_cost": 20,
 		"cost_multiplier": 2.0, 
 		"max_level": 5
+	},
+	"slots": {
+		"name": "Expansion Slot",
+		"description": "Unlock a new Active Item Slot.",
+		"fixed_costs": [10,20,30,40,50],
+		"max_level": 5        # 1 Base + 5 Upgrades = 6 Total
 	}
 }
 
@@ -30,8 +36,10 @@ var high_kills: int = 0
 var upgrades: Dictionary = {
 	"speed": 0,
 	"magnet": 0,
-	"damage": 0
+	"damage": 0,
+	"slots": 0
 }
+var unlocked_active_slots: int = 1
 
 func _ready() -> void:
 	# Print path for debugging
@@ -51,7 +59,7 @@ func generate_content_string(data: Dictionary) -> String:
 	upgrade_str += str(int(ups.get("damage", 0)))
 	upgrade_str += str(int(ups.get("magnet", 0)))
 	upgrade_str += str(int(ups.get("speed", 0)))
-	
+	upgrade_str += str(int(ups.get("slots", 0)))
 	# 3. Combine with Secret Key
 	return base_str + upgrade_str + SECRET_KEY
 
@@ -134,6 +142,12 @@ func get_upgrade_cost(type: String) -> int:
 	# Check if maxed out
 	if level >= config.max_level:
 		return -1 
+	
+	if config.has("fixed_costs"):
+		var prices = config["fixed_costs"]
+		if level < prices.size():
+			return prices[level]
+		return -1
 		
 	# Formula: Base * (Multiplier ^ Level)
 	# Level 0 = Base Cost. Level 1 = Base * Multiplier.

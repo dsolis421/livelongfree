@@ -74,6 +74,10 @@ upgrade_key = "magnet"
 layout_mode = 2
 upgrade_key = "damage"
 
+[node name="UpgradeItem4" parent="MarginContainer/VBoxContainer/ScrollContainer/UpgradeList" unique_id=1749609874 instance=ExtResource("2_5m2y2")]
+layout_mode = 2
+upgrade_key = "slots"
+
 [node name="ReturnButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=2101019344]
 custom_minimum_size = Vector2(200, 60)
 layout_mode = 2

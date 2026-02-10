@@ -1,5 +1,4 @@
+res://scenes/ui/RepoStore.tscn
+res://scenes/ui/ActiveItemHUD.gd
+res://scripts/autoloads/GameData.gd
 res://scenes/Main.tscn
-res://scenes/combat/Projectile.gd
-res://scenes/combat/Projectile.tscn
-res://scripts/Player.gd
-res://scenes/loot/Gem.gd
