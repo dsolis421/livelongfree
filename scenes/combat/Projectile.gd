@@ -20,10 +20,8 @@ func _physics_process(delta: float) -> void:
 	position += direction * speed * delta
 
 func _on_body_entered(body: Node2D) -> void:
-	print("------------> BULLET HIT") # (Removed debug prints to clean up console)
 	
 	if body is TileMapLayer or body is TileMap or body is StaticBody2D:
-		print("BULLET HIT A WALL")
 		queue_free() # Destroy bullet
 	
 	if body.is_in_group("enemy"):

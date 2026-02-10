@@ -53,8 +53,7 @@ func _apply_global_upgrades() -> void:
 	# A. BUFFER (Extra HP)
 	var buffer_level = GameData.get_upgrade_level("buffer")
 	if buffer_level > 0:
-		# Example: Level 5 = +50 HP
-		var bonus_hp = buffer_level * 10.0
+		var bonus_hp = buffer_level * 2
 		max_hp += bonus_hp
 		current_hp += bonus_hp
 		print("Repo Upgrade: Buffer Applied (+", bonus_hp, " HP)")
@@ -63,7 +62,7 @@ func _apply_global_upgrades() -> void:
 	var damage_level = GameData.get_upgrade_level("damage")
 	if damage_level > 0:
 		# Example: Level 1 = 1.1x Damage
-		damage_multiplier = 1.0 + (damage_level * 0.1)
+		damage_multiplier = 1.0 + (damage_level * 0.5)
 		print("Repo Upgrade: Damage Multiplier set to ", damage_multiplier)
 
 	# C. MAGNET (Collection Range)

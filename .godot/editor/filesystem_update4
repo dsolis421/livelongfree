@@ -1,3 +1,5 @@
 res://scenes/Main.tscn
 res://scenes/combat/Projectile.gd
 res://scenes/combat/Projectile.tscn
+res://scripts/Player.gd
+res://scenes/loot/Gem.gd

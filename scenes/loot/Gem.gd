@@ -8,7 +8,7 @@ var stats = {
 	TYPE.RARE:      {"color": Color.CYAN,        "val": 50,   "is_gold": false},
 	TYPE.EPIC:      {"color": Color.MAGENTA,     "val": 100,  "is_gold": false},
 	TYPE.LEGENDARY: {"color": Color.GREEN,      "val": 200,  "is_gold": false},
-	TYPE.GOLD:      {"color": Color(1, 0.85, 0), "val": 1,    "is_gold": true} 
+	TYPE.GOLD:      {"color": Color(1, 0.85, 0), "val": 20,    "is_gold": true} 
 }
 
 # --- STATE VARIABLES ---
