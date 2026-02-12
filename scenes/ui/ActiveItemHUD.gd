@@ -6,7 +6,6 @@ const MAX_SLOTS = 6
 # Use preloads if you have icons, otherwise use text for now
 const ICON_LOCKED = preload("res://assets/LLF_ActiveLock.png")
 const ICON_OPEN = preload("res://assets/LLF_ActiveDir.png")  
-# const ICON_NUKE = preload("res://assets/icons/nuke.png") ... etc
 
 # --- STATE ---
 # Expanded to 6 slots. null = empty.
@@ -80,7 +79,7 @@ func update_ui() -> void:
 			btn.modulate = Color(0.5, 0.5, 0.5, 0.5) # Grayed out
 		# CASE 2: EMPTY UNLOCKED SLOT
 		elif item == null:
-			# btn.text = "EXE"
+			btn.text = ""
 			btn.disabled = true
 			btn.icon = ICON_OPEN 
 			btn.modulate = Color(1, 1, 1, 0.5) # Faint

@@ -94,7 +94,7 @@ _data = {
 &"explode": SubResource("Animation_iqftq")
 }
 
-[node name="Explosion2" type="Area2D" unique_id=2073065831]
+[node name="Explosion" type="Area2D" unique_id=2073065831]
 script = ExtResource("1_iqftq")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=739523850]

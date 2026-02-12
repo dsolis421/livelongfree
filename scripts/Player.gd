@@ -7,8 +7,7 @@ signal player_died
 @export var projectile_scene: PackedScene
 @export var game_over_screen: PackedScene
 @export var explosion_scene: PackedScene
-@export var nuke_scene: PackedScene
-
+@export var purge_scene: PackedScene
 # --- NODES ---
 @onready var gun_timer = $GunTimer
 @onready var sprite = $AnimatedSprite2D
@@ -24,7 +23,7 @@ var current_hp: float
 # --- SPELL CONFIGURATION ---
 @export_group("Spell Stats")
 @export var invincible_duration: float = 5.0
-@export var nuke_damage: int = 50
+@export var purge_damage: int = 50
 @export var meteor_damage: int = 10
 @export var meteor_impact_radius: float = 150.0 
 # --- SCREEN SHAKE ---
@@ -204,8 +203,8 @@ func apply_upgrade(type: String) -> void:
 
 func activate_power_weapon(type: String) -> void:
 	match type:
-		"invincible": cast_invincible()
-		"Purge": cast_nuke()
+		"SysRoot": cast_invincible()
+		"Purge": cast_purge()
 		"SigKill": cast_meteor()
 
 func cast_invincible() -> void:
@@ -217,14 +216,16 @@ func cast_invincible() -> void:
 	is_invincible = false
 	self.modulate = original_modulate
 
-func cast_nuke() -> void:
-	if nuke_scene:
-		var nuke_vfx = nuke_scene.instantiate()
-		get_tree().root.add_child(nuke_vfx) 
+func cast_purge() -> void:
+	print("Here goes CAST PURGE")
+	if purge_scene:
+		print("Here is PURGE SCENE")
+		var purge_vfx = purge_scene.instantiate()
+		get_tree().root.add_child(purge_vfx) 
 	var enemies = get_tree().get_nodes_in_group("enemy")
 	for enemy in enemies:
 		if enemy.has_method("take_damage"):
-			enemy.take_damage(nuke_damage)
+			enemy.take_damage(purge_damage)
 
 func cast_meteor() -> void:
 	for i in range(3):

@@ -13,10 +13,8 @@ func _ready() -> void:
 func deal_damage() -> void:
 	# Get everything inside the red circle
 	var bodies = get_overlapping_bodies()
-	print("Explosion touching ", bodies.size(), " objects.") # Debug
 	for body in bodies:
 		if body.is_in_group("enemy") and body.has_method("take_damage"):
-			print("BOOM! Hit enemy: ", body.name) # DEBUG
 			body.take_damage(damage)
 
 # This function will be called at the end of the animation

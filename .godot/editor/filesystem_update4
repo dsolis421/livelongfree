@@ -1,4 +1,4 @@
-res://scenes/loot/ItemPickup.tscn
-res://scenes/loot/ItemPickup.gd
-res://scenes/ui/LevelUpScreen.tscn
-res://scenes/actors/Phantom.tscn
+res://scenes/actors/Player.tscn
+res://scenes/combat/PurgeEffect.tscn
+res://scripts/Player.gd
+res://scenes/combat/PurgeEffect.gd

@@ -1,8 +1,7 @@
 extends Area2D
 
-# The specific type of this item (meteor, nuke, heal)
 var item_type: String = ""
-const ICON_NUKE = preload("res://assets/LLF_purge.png")
+const ICON_PURGE = preload("res://assets/LLF_purge.png")
 const ICON_METEOR = preload("res://assets/LLF_sigkill.png")
 const ICON_ROOT = preload("res://assets/LLF_Root.png")
 # Fallback texture if something goes wrong
@@ -15,7 +14,7 @@ var item_data = {
 		"color": Color(1.0, 1.0, 0.2, 1.0), # Red Glow
 	},
 	"Purge": {
-		"icon": ICON_NUKE,
+		"icon": ICON_PURGE,
 		"color": Color(0.2, 1.0, 1.0, 1.0), # Green Glow
 	},
 	"SysRoot": {

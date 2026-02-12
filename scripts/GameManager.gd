@@ -14,7 +14,7 @@ signal extraction_requested
 # --- CONFIGURATION ---
 const STARTING_XP = 0
 const STARTING_TARGET_XP = 10
-const STAGE_TIME_LIMIT: float = 60.0
+const STAGE_TIME_LIMIT: float = 120.0
 
 # --- SESSION DATA ---
 var kills: int = 0          # Your Score

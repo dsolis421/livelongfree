@@ -21,7 +21,7 @@ const LOOT_SCENE = preload("res://scenes/loot/Gem.tscn")
 @export var death_effect: PackedScene
 @export var special_drop_chance: float = 1.0 
 @export var special_drop_scene: PackedScene 
-@export var available_drops: Array[String] = ["meteor", "nuke"] 
+@export var available_drops: Array[String] = ["meteor", "Purge"] 
 @export var role: EnemyRole = EnemyRole.FODDER
 
 # We track knockback separately so we can decay it over time
