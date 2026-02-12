@@ -4,7 +4,7 @@ extends Area2D
 var item_type: String = ""
 const ICON_NUKE = preload("res://assets/LLF_purge.png")
 const ICON_METEOR = preload("res://assets/LLF_sigkill.png")
-# const ICON_SHIELD = preload("res://assets/pickups/icon_shield.png")
+const ICON_ROOT = preload("res://assets/LLF_Root.png")
 # Fallback texture if something goes wrong
 const ICON_DEFAULT = preload("res://assets/LLF_ActiveDir.png")
 # Visual settings for each type (Color for now, Texture later)
@@ -12,20 +12,20 @@ const ICON_DEFAULT = preload("res://assets/LLF_ActiveDir.png")
 var item_data = {
 	"SigKill": {
 		"icon": ICON_METEOR,
-		"color": Color(1.0, 0.2, 0.2, 0.3), # Red Glow
+		"color": Color(1.0, 1.0, 0.2, 1.0), # Red Glow
 	},
 	"Purge": {
 		"icon": ICON_NUKE,
-		"color": Color(0.2, 1.0, 0.2, 0.3), # Green Glow
+		"color": Color(0.2, 1.0, 1.0, 1.0), # Green Glow
 	},
-	"invincible": {
-		"icon": ICON_DEFAULT,
-		"color": Color(1.0, 1.0, 0.0, 0.3), # Gold Glow
+	"SysRoot": {
+		"icon": ICON_ROOT,
+		"color": Color(1.0, 0.0, 1.0, 1.0), # Gold Glow
 	}
 }
 
 @onready var sprite = $Sprite2D
-@onready var glow = $GlowSprite # Make sure you added this node!
+@onready var particles = $GlitchParticles
 
 func setup(type: String) -> void:
 	item_type = type
@@ -37,11 +37,11 @@ func setup(type: String) -> void:
 		# 1. Set the Icon
 		sprite.texture = data["icon"]
 		sprite.modulate = Color.WHITE # Reset modulation so we see the actual PNG colors!
-		glow.modulate = data["color"]
+		particles.modulate = data["color"]
 	else:
 		# Fallback for unknown items
 		sprite.texture = ICON_DEFAULT
-		glow.modulate = Color(0.5,0.5,0.5,0.3)
+		particles.modulate = Color.WHITE
 		
 func _ready() -> void:
 	# Add a floating animation so it looks enticing

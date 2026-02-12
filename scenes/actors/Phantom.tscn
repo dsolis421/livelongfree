@@ -13,7 +13,7 @@ loot_scene = null
 death_effect = ExtResource("3_q5s0s")
 special_drop_chance = 1.0
 special_drop_scene = ExtResource("3_n74la")
-available_drops = Array[String](["invincible"])
+available_drops = Array[String](["SysRoot"])
 role = 1
 
 [node name="ColorRect" parent="." index="0" unique_id=2128324598]
