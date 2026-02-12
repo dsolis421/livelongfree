@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://bnuke7grfywry"]
 
 [ext_resource type="Script" uid="uid://bedh6gk6e1174" path="res://scenes/ui/MainMenu.gd" id="1_6jbdy"]
+[ext_resource type="FontFile" uid="uid://culw22xs6a7cs" path="res://assets/fonts/Orbitron-VariableFont_wght.ttf" id="2_2ysvc"]
 [ext_resource type="Theme" uid="uid://da2h212h2jmb6" path="res://assets/fonts/MainTheme.tres" id="2_6jbdy"]
+[ext_resource type="FontFile" uid="uid://yyvjy3sfm4jx" path="res://assets/fonts/DotGothic16-Regular.ttf" id="3_xpiny"]
 
 [sub_resource type="Gradient" id="Gradient_vjtqc"]
 offsets = PackedFloat32Array(0, 0.62068963, 0.7126437, 1)
@@ -13,9 +15,18 @@ width = 800
 height = 1300
 fill = 1
 
+[sub_resource type="LabelSettings" id="LabelSettings_2ysvc"]
+font = ExtResource("2_2ysvc")
+font_size = 60
+font_color = Color(0, 0.9529412, 1, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_6jbdy"]
+font = ExtResource("3_xpiny")
+font_size = 24
 
 [sub_resource type="LabelSettings" id="LabelSettings_iwbf0"]
+font = ExtResource("3_xpiny")
+font_size = 24
 
 [node name="MainMenu" type="Control" unique_id=1379807569]
 layout_mode = 3
@@ -61,10 +72,10 @@ size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="MainLayout/LeftColumn" unique_id=1709618541]
 layout_mode = 2
-theme_override_font_sizes/font_size = 60
 text = "LIVE
 LONG
 FREE"
+label_settings = SubResource("LabelSettings_2ysvc")
 
 [node name="RightColumn" type="VBoxContainer" parent="MainLayout" unique_id=1100007085]
 layout_mode = 2
@@ -101,6 +112,7 @@ custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_2ysvc")
 theme_override_font_sizes/font_size = 30
 text = "Play"
 
@@ -110,6 +122,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("2_6jbdy")
+theme_override_fonts/font = ExtResource("2_2ysvc")
 theme_override_font_sizes/font_size = 30
 text = "Go to Repo"
 
@@ -121,8 +134,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -84.5
-offset_top = -23.0
+offset_top = -80.0
 offset_right = 84.5
+offset_bottom = -57.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "Numb Thumb Studios"

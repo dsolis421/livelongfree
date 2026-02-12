@@ -11,7 +11,7 @@ func _ready() -> void:
 	GameManager.level_up_triggered.connect(_on_level_up)
 	GameManager.boss_spawn_requested.connect(spawn_boss)
 
-func _on_level_up(new_level: int) -> void:
+func _on_level_up(_level: int) -> void:
 	# Reset rhythm on level up
 	$Timer.stop()
 	$Timer.start()

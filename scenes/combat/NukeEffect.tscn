@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://bt4skh60x7yam" path="res://scenes/combat/NukeEffect.gd" id="1_v8toe"]
 
 [sub_resource type="Gradient" id="Gradient_e54sn"]
-offsets = PackedFloat32Array(0, 0.518018, 1)
-colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+offsets = PackedFloat32Array(0, 0.48507464, 0.518018, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 1, 0, 0.7411765, 0.5176471, 1, 0.73333335, 1, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_0icar"]
 gradient = SubResource("Gradient_e54sn")
@@ -23,7 +23,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0.627451, 0, 0, 0.78431374)]
+"values": [Color(0.50980395, 1, 0.21960784, 0.78431374)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -63,7 +63,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.5, 2.5, 3.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
-"values": [Color(0.627451, 0, 0, 0), Color(0.627451, 0, 0, 0.78431374), Color(0.627451, 0, 0, 0.50980395), Color(0.627451, 0, 0, 0.50980395), Color(0.627451, 0, 0, 0)]
+"values": [Color(0.627451, 0, 0, 0), Color(0.3647059, 1, 0.68235296, 0.78431374), Color(0, 1, 0, 0.50980395), Color(0, 0.1764706, 0, 0.50980395), Color(0.627451, 0, 0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -106,7 +106,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.627451, 0, 0, 0.78431374)
+color = Color(0.50980395, 1, 0.21960784, 0.78431374)
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=781812099]
 anchors_preset = 8

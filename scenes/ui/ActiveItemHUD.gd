@@ -4,7 +4,8 @@ extends Control
 const MAX_SLOTS = 6
 
 # Use preloads if you have icons, otherwise use text for now
-# const ICON_LOCKED = preload("res://assets/ui/lock.png") 
+const ICON_LOCKED = preload("res://assets/LLF_ActiveLock.png")
+const ICON_OPEN = preload("res://assets/LLF_ActiveDir.png")  
 # const ICON_NUKE = preload("res://assets/icons/nuke.png") ... etc
 
 # --- STATE ---
@@ -73,22 +74,21 @@ func update_ui() -> void:
 		
 		# CASE 1: LOCKED SLOT
 		if i >= unlocked_count:
-			btn.text = "LOCKED"
+			# btn.text = "LOCKED"
 			btn.disabled = true
-			# btn.icon = ICON_LOCKED
+			btn.icon = ICON_LOCKED
 			btn.modulate = Color(0.5, 0.5, 0.5, 0.5) # Grayed out
-			
 		# CASE 2: EMPTY UNLOCKED SLOT
 		elif item == null:
-			btn.text = "Empty"
+			# btn.text = "EXE"
 			btn.disabled = true
-			btn.icon = null 
+			btn.icon = ICON_OPEN 
 			btn.modulate = Color(1, 1, 1, 0.5) # Faint
-			
 		# CASE 3: FILLED SLOT
 		else:
 			btn.text = item # Or use icons here
 			btn.disabled = false
+			btn.icon = null
 			btn.modulate = Color.WHITE
 
 func _on_slot_1_pressed() -> void:

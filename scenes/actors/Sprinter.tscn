@@ -29,13 +29,7 @@ offset_bottom = 10.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(25, 10)
-color = Color(0, 0.668694, 1.8067696, 1)
-
-[node name="Eye" parent="ColorRect" index="0" unique_id=835238468]
-offset_left = 0.0
-offset_top = 10.0
-offset_right = 5.0
-offset_bottom = 15.0
+color = Color(1, 0.84313726, 0, 1)
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1944004044]
 shape = SubResource("RectangleShape2D_kyd6q")

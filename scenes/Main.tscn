@@ -38,14 +38,14 @@ sources/0 = SubResource("TileSetAtlasSource_nfivy")
 background_mode = 3
 glow_enabled = true
 glow_intensity = 0.12
-glow_bloom = 0.02
+glow_bloom = 0.19
 glow_blend_mode = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bjd11"]
-bg_color = Color(0.35, 0.35, 0.35, 1)
+bg_color = Color(0, 0.32244235, 0.3400644, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qmy6f"]
-bg_color = Color(0.4648739, 0.78235406, 0.4648739, 1)
+bg_color = Color(0, 0.9529412, 1, 1)
 
 [node name="Main" type="Node2D" unique_id=1153333135]
 position = Vector2(360, 640)

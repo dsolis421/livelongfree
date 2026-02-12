@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://dtfafc4a4oy5y" path="res://scenes/combat/Explosion.gd" id="1_iqftq"]
 
 [sub_resource type="Gradient" id="Gradient_ehlej"]
-offsets = PackedFloat32Array(0, 0.5045045, 1)
-colors = PackedColorArray(0.8156863, 0.62352943, 0, 1, 0.78431374, 0, 0, 1, 1, 1, 1, 0)
+offsets = PackedFloat32Array(0.14925373, 0.4552239, 0.6268657, 0.80597013)
+colors = PackedColorArray(1, 0.13333334, 0.1254902, 1, 1, 0.58431375, 0.11764706, 0.7058824, 0.7607843, 0.36862746, 0.16078432, 1, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_iqftq"]
 gradient = SubResource("Gradient_ehlej")

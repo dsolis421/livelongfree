@@ -1,10 +1,25 @@
 [gd_scene format=3 uid="uid://ddiyexie8mw2g"]
 
 [ext_resource type="Script" uid="uid://br22wuxw4w126" path="res://scenes/ui/GameOver.gd" id="1_kp3qx"]
+[ext_resource type="FontFile" uid="uid://culw22xs6a7cs" path="res://assets/fonts/Orbitron-VariableFont_wght.ttf" id="2_57v1k"]
+[ext_resource type="FontFile" uid="uid://yyvjy3sfm4jx" path="res://assets/fonts/DotGothic16-Regular.ttf" id="3_05upv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_57v1k"]
+font = ExtResource("2_57v1k")
 font_size = 64
-font_color = Color(0.7529412, 0, 0, 1)
+font_color = Color(0.78039217, 0, 0.22352941, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_pxa5g"]
+font = ExtResource("3_05upv")
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_tnwko"]
+font = ExtResource("3_05upv")
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_fb0mb"]
+font = ExtResource("3_05upv")
+font_size = 24
 
 [node name="GameOver" type="CanvasLayer" unique_id=250668618]
 process_mode = 3
@@ -28,7 +43,7 @@ grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=202753810]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 25
 
 [node name="Label" type="Label" parent="CenterContainer/VBoxContainer" unique_id=638911852]
 layout_mode = 2
@@ -40,17 +55,21 @@ vertical_alignment = 1
 [node name="RunStatsLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=854300174]
 layout_mode = 2
 text = "Threats Neutralized: "
+label_settings = SubResource("LabelSettings_pxa5g")
 
 [node name="GoldLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1999393994]
 layout_mode = 2
 text = "Bounty Collected:"
+label_settings = SubResource("LabelSettings_tnwko")
 
 [node name="TotalLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1155561611]
 layout_mode = 2
 text = "Net Worth:"
+label_settings = SubResource("LabelSettings_fb0mb")
 
 [node name="Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=527434688]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_57v1k")
 theme_override_font_sizes/font_size = 32
 text = "Return to Repo"
 

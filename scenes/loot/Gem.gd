@@ -61,7 +61,6 @@ func setup(type: int) -> void:
 # --- MAGNET DETECTION ---
 func _on_area_entered(area: Area2D) -> void:
 	# If we are already flying, ignore other areas
-	print("Gem hit area: ", area.name)
 	if target: return
 		
 	# Check for the Magnet

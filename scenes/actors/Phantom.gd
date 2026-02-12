@@ -8,7 +8,7 @@ func _ready() -> void:
 	# We wait until it actually arrives so it doesn't despawn while traveling.
 	pass
 	
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if player == null:
 		return
 		

@@ -205,8 +205,8 @@ func apply_upgrade(type: String) -> void:
 func activate_power_weapon(type: String) -> void:
 	match type:
 		"invincible": cast_invincible()
-		"nuke": cast_nuke()
-		"meteor": cast_meteor()
+		"Purge": cast_nuke()
+		"SigKill": cast_meteor()
 
 func cast_invincible() -> void:
 	if is_invincible: return

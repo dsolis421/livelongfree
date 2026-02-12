@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://prmueubsccmx"]
 
 [ext_resource type="Script" uid="uid://cjt3iiiu7d0vf" path="res://scenes/ui/HUD.gd" id="1_kw0id"]
+[ext_resource type="FontFile" uid="uid://yyvjy3sfm4jx" path="res://assets/fonts/DotGothic16-Regular.ttf" id="2_atyv1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ig75s"]
 bg_color = Color(0.6, 0.6, 0.6, 0.47058824)
@@ -13,6 +14,7 @@ font_size = 24
 bg_color = Color(0.6, 0.6, 0.6, 0.47058824)
 
 [sub_resource type="LabelSettings" id="LabelSettings_kw0id"]
+font = ExtResource("2_atyv1")
 font_size = 24
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ed8p"]

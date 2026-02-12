@@ -2,33 +2,37 @@
 
 [ext_resource type="Script" uid="uid://u4idrtjqa144" path="res://scenes/loot/ItemPickup.gd" id="1_t1jmj"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_r0d0g"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_qfhrj"]
+radius = 20.0
 
 [sub_resource type="Gradient" id="Gradient_t1jmj"]
-offsets = PackedFloat32Array(0, 0.2339833, 0.35376045, 0.5793872, 0.8718663)
-colors = PackedColorArray(0, 1, 0, 1, 0, 0.23529412, 0, 0.67058825, 1, 0, 1, 0.52156866, 0, 0, 0, 0.4, 0.012617188, 0.012617188, 0.012617188, 0)
+offsets = PackedFloat32Array(0, 0.29104477, 0.7201493)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.74509805, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_qfhrj"]
 gradient = SubResource("Gradient_t1jmj")
-fill = 2
+width = 80
+height = 80
+fill = 1
 fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(1, 1)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_qfhrj"]
-radius = 20.0
+[sub_resource type="LabelSettings" id="LabelSettings_r0d0g"]
 
 [node name="ItemPickup" type="Area2D" unique_id=2101372479]
 collision_layer = 16
 collision_mask = 2
 script = ExtResource("1_t1jmj")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=740024824]
+shape = SubResource("CircleShape2D_qfhrj")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=852212872 groups=["loot"]]
+
+[node name="GlowSprite" type="Sprite2D" parent="." unique_id=1787577762]
+texture = SubResource("GradientTexture2D_qfhrj")
+
 [node name="Label" type="Label" parent="." unique_id=1947437185]
+visible = false
 offset_right = 57.0
 offset_bottom = 23.0
 label_settings = SubResource("LabelSettings_r0d0g")
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=852212872 groups=["loot"]]
-texture = SubResource("GradientTexture2D_qfhrj")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=740024824]
-shape = SubResource("CircleShape2D_qfhrj")

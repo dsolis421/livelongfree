@@ -58,7 +58,7 @@ func _on_boss_cleared() -> void:
 	boss_health_bar.visible = false
 	boss_warning_label.visible = false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	# 1. UPDATE TIMER
 	# Read the single source of truth from GameManager
 	var time = GameManager.time_remaining
@@ -67,7 +67,6 @@ func _process(delta: float) -> void:
 	if time < 0: 
 		time = 0.0 # Keep as float!
 	
-	# --- THE NEW BIOS FORMATTING ---
 	var minutes = int(time / 60)
 	var seconds = int(time) % 60
 	var milliseconds = int((time - int(time)) * 1000)
@@ -88,8 +87,3 @@ func _on_supernova() -> void:
 	tween.tween_property(flash_rect, "modulate:a", 1.0, 0.1)
 	# Fade out slowly
 	tween.tween_property(flash_rect, "modulate:a", 0.0, 1.5)
-
-#func format_time(seconds: int) -> String:
-#	var minutes = seconds / 60
-#	var secs = seconds % 60
-#	return "%02d:%02d" % [minutes, secs]

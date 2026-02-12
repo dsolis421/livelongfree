@@ -19,6 +19,7 @@ drop_chance = 0.0
 death_effect = ExtResource("2_sbw3t")
 special_drop_chance = 1.0
 special_drop_scene = ExtResource("4_dkpe8")
+available_drops = Array[String](["SigKill", "Purge"])
 role = 1
 
 [node name="ColorRect" parent="." index="0" unique_id=2128324598]
@@ -27,13 +28,7 @@ offset_top = -30.0
 offset_right = 30.0
 offset_bottom = 30.0
 pivot_offset = Vector2(30, 30)
-color = Color(0.4745098, 0.27058825, 0, 1)
-
-[node name="Eye" parent="ColorRect" index="0" unique_id=835238468]
-offset_left = 40.0
-offset_top = 40.0
-offset_right = 48.0
-offset_bottom = 48.0
+color = Color(1, 0.37254903, 0, 1)
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1944004044]
 shape = SubResource("RectangleShape2D_sbw3t")

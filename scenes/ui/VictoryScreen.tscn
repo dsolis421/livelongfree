@@ -2,9 +2,11 @@
 
 [ext_resource type="Script" uid="uid://cxecjkjyj8lpo" path="res://scenes/ui/VictoryScreen.gd" id="1_kruri"]
 [ext_resource type="Theme" uid="uid://da2h212h2jmb6" path="res://assets/fonts/MainTheme.tres" id="2_fh53a"]
+[ext_resource type="FontFile" uid="uid://culw22xs6a7cs" path="res://assets/fonts/Orbitron-VariableFont_wght.ttf" id="3_nysyb"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kruri"]
-font_size = 36
+font = ExtResource("3_nysyb")
+font_size = 32
 font_color = Color(0, 0.7137255, 0.007843138, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_57v1k"]
