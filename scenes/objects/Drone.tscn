@@ -2,12 +2,16 @@
 
 [ext_resource type="Script" uid="uid://dgyuj3asqo4qr" path="res://scenes/objects/Drone.gd" id="1_co4ur"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ufrvj"]
-size = Vector2(80, 80)
+[sub_resource type="Gradient" id="Gradient_co4ur"]
+offsets = PackedFloat32Array(0, 0.39325842, 0.71348315, 1)
+colors = PackedColorArray(0, 0.9529412, 1, 1, 0, 0, 0, 0, 0, 0.36078432, 0.38039216, 0, 0, 0.9529412, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_de684"]
+gradient = SubResource("Gradient_co4ur")
 
 [node name="Drone" type="Node2D" unique_id=1160803629]
 script = ExtResource("1_co4ur")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=812443399]
 z_index = 100
-texture = SubResource("PlaceholderTexture2D_ufrvj")
+texture = SubResource("GradientTexture2D_de684")

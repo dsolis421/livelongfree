@@ -15,7 +15,8 @@ initial_velocity_max = 100.0
 gravity = Vector3(0, 98, 0)
 scale_min = 2.0
 scale_max = 4.0
-color = Color(0, 0, 0.6039216, 1)
+hue_variation_min = -2.2351742e-08
+hue_variation_max = 0.18999997
 
 [node name="DeathGoblin" type="GPUParticles2D" unique_id=1860417171]
 z_index = 100

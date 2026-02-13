@@ -1,3 +1,7 @@
+Panel
+TextureRect
+ColorRect
+Node2D
 GPUParticles2D
 Sprite2D
 PointLight2D
@@ -9,6 +13,3 @@ ScrollContainer
 HSeparator
 Label
 MarginContainer
-ColorRect
-CanvasLayer
-Control

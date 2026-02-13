@@ -15,6 +15,7 @@ var is_dashing_active: bool = false # Acts as a safety lock during the "Wind Up"
 var is_attacking: bool = false
 # Make sure you added the Timer node to the scene and named it "BrainTimer"!
 @onready var brain_timer = $BrainTimer
+@onready var visuals = $TesseractVisuals
 
 func _ready() -> void:
 	super._ready()
@@ -191,15 +192,19 @@ func spawn_bullet(dir: Vector2) -> void:
 func take_damage(amount: int) -> void:
 	# 1. Take the damage (using parent logic)
 	super.take_damage(amount)
+	if visuals.has_method("play_hurt_animation"):
+		visuals.play_hurt_animation()
+	print("BOSS DAMAGE: ", amount , " - ", hp)
 	# 2. Report new HP to the Manager
 	# Note: If we died, hp is 0, which is fine to report.
 	GameManager.report_boss_damage(hp)
+	if hp <= 0: die()
 	
 func die() -> void:
 	# 1. Prevent Double-Death
 	# If hp is 0 AND we already hid the visual (exploded), stop running.
-	if hp <= 0 and not visual.visible: 
-		return
+	print("TIME FOR BOSS TO DIE!")
+	
 
 	# 2. Disable Physics immediately (Stop hurting the player)
 	$CollisionShape2D.set_deferred("disabled", true)

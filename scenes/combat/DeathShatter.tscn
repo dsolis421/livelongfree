@@ -19,7 +19,8 @@ damping_min = 20.0
 damping_max = 30.000002
 scale_min = 2.0
 scale_max = 4.0
-color = Color(0, 0.29411766, 0.84313726, 1)
+hue_variation_min = -2.2351742e-08
+hue_variation_max = 0.18999997
 
 [node name="DeathShatter" type="GPUParticles2D" unique_id=1860417171]
 z_index = 100

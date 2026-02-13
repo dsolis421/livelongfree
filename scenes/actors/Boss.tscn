@@ -3,6 +3,55 @@
 [ext_resource type="PackedScene" uid="uid://cgna31p5cx674" path="res://scenes/actors/Enemy.tscn" id="1_vm5jf"]
 [ext_resource type="Script" uid="uid://jya3f3cf7bhg" path="res://scenes/actors/Boss.gd" id="2_ltkqj"]
 [ext_resource type="PackedScene" uid="uid://c4ivd50pct5j4" path="res://scenes/combat/BossBomb.tscn" id="3_vm5jf"]
+[ext_resource type="Script" uid="uid://y5htun3hke44" path="res://scenes/actors/TesseractVisuals.gd" id="4_qy6jy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vm5jf"]
+bg_color = Color(0.78039217, 0, 0.22352941, 0.49019608)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.78039217, 0, 0.22352941, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qy6jy"]
+bg_color = Color(0.78039217, 0, 0.22352941, 0.49019608)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.78039217, 0, 0.22352941, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7dhht"]
+bg_color = Color(0.78039217, 0, 0.22352941, 0.49019608)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.78039217, 0, 0.22352941, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_flfnc"]
+bg_color = Color(0.78039217, 0, 0.22352941, 0.49019608)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.78039217, 0, 0.22352941, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sbw3t"]
 size = Vector2(120, 120)
@@ -20,7 +69,40 @@ drop_chance = 0.0
 death_effect = null
 role = 2
 
-[node name="ColorRect" parent="." index="0" unique_id=2128324598]
+[node name="TesseractVisuals" type="Node2D" parent="." index="0" unique_id=1147652717]
+script = ExtResource("4_qy6jy")
+
+[node name="Layer1_Outer" type="Panel" parent="TesseractVisuals" index="0" unique_id=108748998]
+offset_left = -60.0
+offset_top = -60.0
+offset_right = 60.0
+offset_bottom = 60.0
+pivot_offset = Vector2(60, 60)
+theme_override_styles/panel = SubResource("StyleBoxFlat_vm5jf")
+
+[node name="Layer2_Inner" type="Panel" parent="TesseractVisuals" index="1" unique_id=1147939331]
+offset_left = -20.0
+offset_top = 20.0
+offset_right = 60.0
+offset_bottom = 100.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_qy6jy")
+
+[node name="Layer3_Mid" type="Panel" parent="TesseractVisuals" index="2" unique_id=356803037]
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 35.0
+offset_bottom = 35.0
+pivot_offset = Vector2(50, 50)
+theme_override_styles/panel = SubResource("StyleBoxFlat_7dhht")
+
+[node name="Layer4_Core" type="Panel" parent="TesseractVisuals" index="3" unique_id=1668404217]
+offset_left = -30.0
+offset_top = -30.0
+pivot_offset = Vector2(-15, -15)
+theme_override_styles/panel = SubResource("StyleBoxFlat_flfnc")
+
+[node name="ColorRect" parent="." index="1" unique_id=2128324598]
+visible = false
 offset_left = -60.0
 offset_top = -60.0
 offset_right = 60.0
@@ -28,15 +110,15 @@ offset_bottom = 60.0
 pivot_offset = Vector2(60, 60)
 color = Color(1, 1, 1, 1)
 
-[node name="CollisionShape2D" parent="." index="1" unique_id=1944004044]
+[node name="CollisionShape2D" parent="." index="2" unique_id=1944004044]
 shape = SubResource("RectangleShape2D_sbw3t")
 
-[node name="Hitbox" parent="." index="2" unique_id=1527609457]
+[node name="Hitbox" parent="." index="3" unique_id=1527609457]
 collision_mask = 3
 
 [node name="CollisionShape2D" parent="Hitbox" index="0" unique_id=1995205190]
 shape = SubResource("RectangleShape2D_dkpe8")
 
-[node name="BrainTimer" type="Timer" parent="." index="3" unique_id=1550154071]
+[node name="BrainTimer" type="Timer" parent="." index="4" unique_id=1550154071]
 wait_time = 3.01
 autostart = true

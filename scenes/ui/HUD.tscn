@@ -30,7 +30,7 @@ outline_color = Color(1, 0, 0, 1)
 bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_atyv1"]
-bg_color = Color(0.73333335, 0, 0, 1)
+bg_color = Color(0.78039217, 0, 0.22352941, 1)
 
 [node name="HUD" type="CanvasLayer" unique_id=2066269178]
 script = ExtResource("1_kw0id")
