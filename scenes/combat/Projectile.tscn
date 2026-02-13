@@ -2,19 +2,28 @@
 
 [ext_resource type="Script" uid="uid://dmmgfxklclfkd" path="res://scenes/combat/Projectile.gd" id="1_02wxa"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_rgbsv"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_02wxa"]
+size = Vector2(24, 6)
 
-[sub_resource type="Gradient" id="Gradient_1jo0v"]
-offsets = PackedFloat32Array(0.22705314, 0.5845411, 1)
-colors = PackedColorArray(1, 0, 1, 1, 0, 0, 0.41568628, 1, 1, 1, 1, 0)
+[sub_resource type="Gradient" id="Gradient_02wxa"]
+offsets = PackedFloat32Array(0.35955057, 0.83146065, 1)
+colors = PackedColorArray(0, 1, 1, 1, 0.11372549, 0.5529412, 1, 0.4862745, 1, 1, 1, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_kw6bp"]
-gradient = SubResource("Gradient_1jo0v")
-width = 15
-height = 15
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rgbsv"]
+gradient = SubResource("Gradient_02wxa")
+width = 24
+height = 6
 fill = 1
-fill_from = Vector2(0.9102564, 0.53846157)
-fill_to = Vector2(0, 0.54273504)
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_rgbsv"]
+size = Vector2(2, 2)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1jo0v"]
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+color = Color(0, 0.68235296, 1, 0.8980392)
 
 [node name="Projectile" type="Area2D" unique_id=1222971837]
 collision_layer = 9
@@ -22,12 +31,19 @@ collision_mask = 5
 script = ExtResource("1_02wxa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=833756142]
-shape = SubResource("CircleShape2D_rgbsv")
+shape = SubResource("RectangleShape2D_02wxa")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1210751398]
-texture = SubResource("GradientTexture2D_kw6bp")
+texture = SubResource("GradientTexture2D_rgbsv")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=785078487]
+
+[node name="SparkTrail" type="GPUParticles2D" parent="." unique_id=1357459541]
+amount = 5
+texture = SubResource("PlaceholderTexture2D_rgbsv")
+lifetime = 0.29000000000000004
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_1jo0v")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

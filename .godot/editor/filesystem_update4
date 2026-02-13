@@ -2,3 +2,7 @@ res://scenes/actors/Player.tscn
 res://scenes/combat/PurgeEffect.tscn
 res://scripts/Player.gd
 res://scenes/combat/PurgeEffect.gd
+res://scenes/ui/MainMenu.gd
+res://scenes/combat/Projectile.tscn
+res://scenes/combat/Projectile.gd
+res://scenes/ui/HUD.tscn

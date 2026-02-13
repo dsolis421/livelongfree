@@ -7,8 +7,6 @@ extends Control
 func _ready() -> void:
 	# 1. Update Labels directly from GameData (The new source of truth)
 	GameData.load_game()
-	print("DEBUG: Loaded Gold: ", GameData.gold)
-	print("DEBUG: Loaded Kills: ", GameData.high_kills)
 	# Display Gold
 	if has_node("MainLayout/RightColumn/StatsPanel/VBoxContainer/GoldLabel"):
 		$MainLayout/RightColumn/StatsPanel/VBoxContainer/GoldLabel.text = "Net Worth: " + str(GameData.gold)
