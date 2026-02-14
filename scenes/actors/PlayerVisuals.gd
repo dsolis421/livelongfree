@@ -16,11 +16,16 @@ var rotation_speed = 10.0 # How fast we turn to face movement
 var base_body_pos: Vector2
 var base_hand_l_pos: Vector2
 var base_hand_r_pos: Vector2
+var base_hand_l_rot: float
+var base_hand_r_rot: float
+
 
 func _ready() -> void:
 	base_body_pos = body.position
 	base_hand_l_pos = hand_l.position
 	base_hand_r_pos = hand_r.position
+	base_hand_l_rot = hand_l.rotation
+	base_hand_r_rot = hand_r.rotation
 
 func _process(delta: float) -> void:
 	# 1. GET PLAYER DATA
@@ -56,15 +61,18 @@ func animate_run(_velocity: Vector2) -> void:
 	body.rotation = lerp_angle(body.rotation, 0.0, 0.1) # Reset local tilt
 	
 	# --- ARM SWING ---
-	var swing = sin(time) * arm_span
-	
+	var swing_amplitude = arm_span
+	var swing = sin(time) * swing_amplitude
+	var drag_tilt = cos(time) * -0.3
 	# Hands swing relative to the rotation of the Visuals container
 	hand_l.position.x = base_hand_l_pos.x + swing
 	hand_l.position.y = base_hand_l_pos.y + (cos(time) * 2.0)
-	
+	hand_l.rotation = base_hand_l_rot + drag_tilt
+	# print(" left swing: ", swing, " | hand_l.rotation: ", hand_l.rotation)  # DEBUG - remove later
 	hand_r.position.x = base_hand_r_pos.x - swing
 	hand_r.position.y = base_hand_r_pos.y + (cos(time + PI) * 2.0)
-
+	hand_r.rotation = base_hand_r_rot - drag_tilt
+	# print("right swing: ", swing, " | hand_r.rotation: ", hand_r.rotation)  # DEBUG - remove later
 func animate_idle() -> void:
 	# Reset Body Lean
 	body.rotation = lerp_angle(body.rotation, 0.0, 0.1)
@@ -78,3 +86,5 @@ func animate_idle() -> void:
 	var target_r = base_hand_r_pos + Vector2(0, hover)
 	hand_l.position = hand_l.position.lerp(target_l, 0.1)
 	hand_r.position = hand_r.position.lerp(target_r, 0.1)
+	hand_l.rotation = lerp_angle(hand_l.rotation, base_hand_l_rot, 0.1)
+	hand_r.rotation = lerp_angle(hand_r.rotation, base_hand_r_rot, 0.1)

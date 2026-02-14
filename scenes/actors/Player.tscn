@@ -73,28 +73,28 @@ pivot_offset = Vector2(20, 20)
 theme_override_styles/panel = SubResource("StyleBoxFlat_4aj10")
 
 [node name="Hand_L" type="ColorRect" parent="PlayerVisuals" unique_id=1800105752]
-offset_left = 2.5
-offset_top = -35.0
-offset_right = 22.5
-offset_bottom = -30.0
-rotation = 1.5707964
+offset_top = -18.0
+offset_right = 20.0
+offset_bottom = -13.0
+rotation = -1.5707964
+pivot_offset = Vector2(0, 2.5)
 color = Color(0, 1, 1, 1)
 
 [node name="Foot1_L" type="ColorRect" parent="PlayerVisuals/Hand_L" unique_id=1101347073]
 layout_mode = 0
-offset_left = -5.0
-offset_top = 8.5
-offset_right = 8.0
-offset_bottom = 13.5
+offset_left = 20.0
+offset_top = 9.0
+offset_right = 33.0
+offset_bottom = 14.0
 rotation = -1.5707964
 color = Color(0, 1, 1, 1)
 
 [node name="Hand_R" type="ColorRect" parent="PlayerVisuals" unique_id=643364748]
-offset_left = 2.5
-offset_top = 15.0
-offset_right = 22.5
-offset_bottom = 20.0
+offset_top = 12.0
+offset_right = 20.0
+offset_bottom = 17.0
 rotation = 1.5707964
+pivot_offset = Vector2(0, 2.5)
 color = Color(0, 1, 1, 1)
 
 [node name="Foot1_R" type="ColorRect" parent="PlayerVisuals/Hand_R" unique_id=895811986]

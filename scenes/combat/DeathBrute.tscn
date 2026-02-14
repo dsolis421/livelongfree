@@ -2,8 +2,15 @@
 
 [ext_resource type="Script" uid="uid://g7h3vgibrjnu" path="res://scripts/EffectCleanup.gd" id="1_tn6cl"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_b3wvv"]
-size = Vector2(10, 10)
+[sub_resource type="Gradient" id="Gradient_4ffwc"]
+colors = PackedColorArray(0.5882353, 0.5882353, 0.5882353, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4s477"]
+gradient = SubResource("Gradient_4ffwc")
+width = 10
+height = 10
+fill = 2
+fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="Gradient" id="Gradient_tn6cl"]
 colors = PackedColorArray(1, 0.37254903, 0, 1, 1, 0.37254903, 0, 0.49019608)
@@ -24,13 +31,13 @@ scale_min = 2.0
 scale_max = 4.0
 color_ramp = SubResource("GradientTexture1D_4ffwc")
 hue_variation_min = -2.2351742e-08
-hue_variation_max = 0.19999997
+hue_variation_max = -2.2351742e-08
 
 [node name="DeathBrute" type="GPUParticles2D" unique_id=1860417171]
 z_index = 100
 emitting = false
 amount = 10
-texture = SubResource("PlaceholderTexture2D_b3wvv")
+texture = SubResource("GradientTexture2D_4s477")
 one_shot = true
 explosiveness = 1.0
 local_coords = true

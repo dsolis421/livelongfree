@@ -1,0 +1,5 @@
+res://scenes/combat/DeathGoblin.tscn
+res://scenes/combat/DeathShatter.tscn
+res://scenes/combat/DeathBrute.tscn
+res://scenes/actors/PlayerVisuals.gd
+res://scenes/actors/Player.tscn
