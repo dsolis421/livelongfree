@@ -1,3 +1,5 @@
+*.apk
+*.aab
 *.iml
 .gradle
 .godot/
@@ -14,3 +16,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+export_presets.cfg
+Thumbs.db
