@@ -8,16 +8,16 @@ signal player_died
 @export var game_over_screen: PackedScene
 @export var explosion_scene: PackedScene
 @export var purge_scene: PackedScene
+
 # --- NODES ---
 @onready var gun_timer = $GunTimer
-@onready var sprite = $AnimatedSprite2D
 @onready var detection_area = $EnemyDetectionArea
 @export var joystick: VirtualJoystick 
 
 # --- STATS & CONFIG ---
 @export_group("Player Stats")
 @export var movement_speed: float = 300.0
-@export var max_hp: float = 1.0  # Default starting HP
+@export var max_hp: float = 1.0  
 var current_hp: float
 
 # --- SPELL CONFIGURATION ---
@@ -26,6 +26,7 @@ var current_hp: float
 @export var purge_damage: int = 50
 @export var meteor_damage: int = 10
 @export var meteor_impact_radius: float = 150.0 
+
 # --- SCREEN SHAKE ---
 @export var shake_decay: float = 5.0  
 @export var meteor_shake_intensity: float = 8.0
@@ -60,15 +61,12 @@ func _apply_global_upgrades() -> void:
 	# B. DAMAGE (Multiplier)
 	var damage_level = GameData.get_upgrade_level("damage")
 	if damage_level > 0:
-		# Example: Level 1 = 1.1x Damage
 		damage_multiplier = 1.0 + (damage_level * 0.5)
 		print("Repo Upgrade: Damage Multiplier set to ", damage_multiplier)
 
 	# C. MAGNET (Collection Range)
 	var magnet_level = GameData.get_upgrade_level("magnet")
 	if magnet_level > 0:
-		# NOTE: This assumes you have an Area2D named "MagnetArea" for XP.
-		# If you don't have one yet, this check prevents a crash.
 		var magnet_shape = get_node_or_null("MagnetArea/CollisionShape2D")
 		if magnet_shape and magnet_shape.shape is CircleShape2D:
 			magnet_shape.shape.radius *= (1.0 + (magnet_level * 0.1))
@@ -76,10 +74,11 @@ func _apply_global_upgrades() -> void:
 
 # --- PHYSICS LOOP ---
 func _physics_process(delta: float) -> void:
+	# Cleaned up: No more update_animation() call.
+	# The Visuals node handles animation automatically in its own _process().
 	move()
 	handle_screen_shake(delta)
-	update_animation()
-	
+
 func move() -> void:
 	var direction = get_game_input()
 	
@@ -90,14 +89,8 @@ func move() -> void:
 
 	move_and_slide()
 
-func update_animation() -> void:
-	if not sprite: return
-
-	if velocity.length() > 0:
-		sprite.play("run") 
-		sprite.rotation = velocity.angle()
-	else:
-		sprite.play("idle") 
+# Removed update_animation() entirely. 
+# The new HoverBotAnimator handles looking at mouse and walking bob.
 
 func get_game_input() -> Vector2:
 	var input = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
@@ -109,11 +102,8 @@ func get_game_input() -> Vector2:
 
 # --- COMBAT LOGIC ---
 
-# UPDATED: Accepts float and subtracts HP
 func take_damage(amount: float = 1.0) -> void:
-	# If the boss is dead, the game is over (Victory state). Don't take damage.
-	if GameManager.is_game_over:
-		return
+	if GameManager.is_game_over: return
 	
 	if is_invincible:
 		print("Damage Blocked! (Invincible)")
@@ -127,16 +117,15 @@ func take_damage(amount: float = 1.0) -> void:
 
 func die() -> void:
 	set_physics_process(false)
+	# Optional: Hide visuals immediately or play a death tween here
 	await get_tree().create_timer(0.1).timeout
+	
 	if GameManager.is_game_over:
-		print("Player died, but Victory was already triggered. cancelling Game Over.")
 		queue_free()
 		return
 	
 	GameManager.on_player_died()
-	
 	player_died.emit()
-	print("Player has died!")
 	GameManager.save_game()
 	
 	if game_over_screen:
@@ -168,22 +157,16 @@ func _on_gun_timer_timeout() -> void:
 	
 	# 1. Create Bullet
 	var bullet = projectile_scene.instantiate()
-	
-	# 2. CRITICAL FIX: Add to scene FIRST
-	# This tells Godot exactly which coordinate space the bullet lives in.
 	get_parent().add_child(bullet)
-	
-	# 3. NOW set the position
-	# Since it's in the tree, "global_position" now calculates correctly relative to the world.
 	bullet.global_position = global_position
 	
-	# 4. Setup Stats
+	# 2. Stats
 	bullet.damage = 1.0 * damage_multiplier 
 	
-	# 5. Calculate Direction
+	# 3. Direction
 	var direction = (target.global_position - global_position).normalized()
 	bullet.direction = direction
-	bullet.rotation = direction.angle()
+	bullet.rotation = direction.angle() # Rotates the bullet sprite, not the player
 
 # --- LEVEL UP & POWER UPS ---
 
@@ -192,14 +175,12 @@ func apply_upgrade(type: String) -> void:
 		"movement_speed":
 			if movement_speed >= MAX_SPEED: return
 			movement_speed += 20.0
-			print("movement speed upgraded to: ", movement_speed)
 		"cooldown":
 			if cooldown_modifier <= MIN_COOLDOWN_MODIFIER: return
 			cooldown_modifier -= 0.03
 			if cooldown_modifier < MIN_COOLDOWN_MODIFIER:
 				cooldown_modifier = MIN_COOLDOWN_MODIFIER
 			$GunTimer.wait_time = BASE_COOLDOWN_TIME * cooldown_modifier
-			print("fire faster upgrade to: ", cooldown_modifier)
 
 func activate_power_weapon(type: String) -> void:
 	match type:
@@ -211,15 +192,13 @@ func cast_invincible() -> void:
 	if is_invincible: return
 	is_invincible = true
 	var original_modulate = self.modulate
-	self.modulate = Color(2, 2, 0, 1) 
+	self.modulate = Color(2, 2, 0, 1) # Turns the whole bot Gold
 	await get_tree().create_timer(invincible_duration).timeout
 	is_invincible = false
 	self.modulate = original_modulate
 
 func cast_purge() -> void:
-	print("Here goes CAST PURGE")
 	if purge_scene:
-		print("Here is PURGE SCENE")
 		var purge_vfx = purge_scene.instantiate()
 		get_tree().root.add_child(purge_vfx) 
 	var enemies = get_tree().get_nodes_in_group("enemy")
@@ -237,7 +216,6 @@ func fire_one_meteor() -> void:
 	var all_enemies = get_tree().get_nodes_in_group("enemy")
 	if all_enemies.is_empty(): return
 		
-	# Find visible enemies logic...
 	var visible_enemies = []
 	var screen_size = get_viewport_rect().size
 	var player_pos = global_position
@@ -262,7 +240,6 @@ func fire_one_meteor() -> void:
 	boom.global_position = target.global_position + offset
 	apply_shake(meteor_shake_intensity)
 	
-	# Apply damage to enemies in radius
 	var hit_enemies = get_tree().get_nodes_in_group("enemy")
 	for e in hit_enemies:
 		if e.global_position.distance_to(boom.global_position) < meteor_impact_radius:

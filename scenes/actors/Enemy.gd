@@ -21,7 +21,7 @@ const LOOT_SCENE = preload("res://scenes/loot/Gem.tscn")
 @export var death_effect: PackedScene
 @export var special_drop_chance: float = 1.0 
 @export var special_drop_scene: PackedScene 
-@export var available_drops: Array[String] = ["meteor", "Purge"] 
+@export var available_drops: Array[String] = ["SigKill", "Purge"] 
 @export var role: EnemyRole = EnemyRole.FODDER
 
 # We track knockback separately so we can decay it over time
@@ -179,8 +179,11 @@ func spawn_standard_loot() -> void:
 func spawn_death_effect() -> void:
 	if death_effect:
 		var effect = death_effect.instantiate()
-		get_tree().current_scene.add_child(effect)
+		# get_tree().current_scene.add_child(effect)
+		# effect.global_position = global_position
+		get_parent().add_child(effect)
 		effect.global_position = global_position
 		if effect is GPUParticles2D:
+			effect.process_material.color = Color.WHITE
 			effect.restart()
 			effect.emitting = true

@@ -5,7 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://br82q10ty1k2e" path="res://scenes/ui/VirtualJoystick.tscn" id="1_rvslj"]
 [ext_resource type="PackedScene" uid="uid://djx0wt86xpxae" path="res://scenes/actors/Player.tscn" id="2_0bbpv"]
 [ext_resource type="Script" uid="uid://bl0o8kjg5nw25" path="res://scenes/WorldGenerator.gd" id="2_bb450"]
-[ext_resource type="PackedScene" uid="uid://cjfv4p0uq6fbx" path="res://scenes/combat/Explosion.tscn" id="2_qmy6f"]
 [ext_resource type="PackedScene" uid="uid://cgna31p5cx674" path="res://scenes/actors/Enemy.tscn" id="3_0bbpv"]
 [ext_resource type="Texture2D" uid="uid://dhe3qma8nxxru" path="res://assets/sprites/tile_proto.png" id="3_bb450"]
 [ext_resource type="Script" uid="uid://bevfo8jg6sw65" path="res://scripts/EnemySpawner.gd" id="3_rarhs"]
@@ -61,7 +60,6 @@ player = NodePath("../Player")
 tile_set = SubResource("TileSet_1nqs0")
 
 [node name="Player" parent="." unique_id=1378413890 node_paths=PackedStringArray("joystick") instance=ExtResource("2_0bbpv")]
-explosion_scene = ExtResource("2_qmy6f")
 joystick = NodePath("../Controls/VirtualJoystick")
 
 [node name="Camera2D2" type="Camera2D" parent="Player" unique_id=1102355290]
@@ -119,9 +117,11 @@ show_percentage = false
 script = ExtResource("9_wp0k4")
 
 [node name="ActiveItemHUD" parent="CanvasLayer" unique_id=1798283823 instance=ExtResource("10_wp0k4")]
+z_index = 500
 
 [node name="LevelUpScreen" parent="CanvasLayer" unique_id=145395974 instance=ExtResource("6_nxtc6")]
 process_mode = 3
+z_index = 1000
 
 [node name="GameOver" parent="CanvasLayer" unique_id=250668618 instance=ExtResource("1_c01mt")]
 

@@ -5,10 +5,14 @@
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_g0fx7"]
 size = Vector2(4, 2)
 
+[sub_resource type="Gradient" id="Gradient_g0fx7"]
+colors = PackedColorArray(1, 0.84313726, 0, 1, 1, 0.84313726, 0, 0.49019608)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_gkla4"]
+gradient = SubResource("Gradient_g0fx7")
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nq22s"]
 particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 10.0
 angle_min = -720.0
 angle_max = 720.0
 spread = 180.0
@@ -19,6 +23,7 @@ damping_min = 20.0
 damping_max = 30.000002
 scale_min = 2.0
 scale_max = 4.0
+color_ramp = SubResource("GradientTexture1D_gkla4")
 hue_variation_min = -2.2351742e-08
 hue_variation_max = 0.18999997
 

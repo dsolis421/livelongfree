@@ -1,7 +1,7 @@
-Panel
-TextureRect
 ColorRect
+Panel
 Node2D
+TextureRect
 GPUParticles2D
 Sprite2D
 PointLight2D
@@ -12,4 +12,3 @@ VBoxContainer
 ScrollContainer
 HSeparator
 Label
-MarginContainer
