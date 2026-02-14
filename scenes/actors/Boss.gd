@@ -201,37 +201,30 @@ func take_damage(amount: int) -> void:
 	if hp <= 0: die()
 	
 func die() -> void:
-	# 1. Prevent Double-Death
-	# If hp is 0 AND we already hid the visual (exploded), stop running.
 	print("TIME FOR BOSS TO DIE!")
-	
-
-	# 2. Disable Physics immediately (Stop hurting the player)
+	# Disable Physics immediately (Stop hurting the player)
 	$CollisionShape2D.set_deferred("disabled", true)
 	set_physics_process(false)
 	if brain_timer: brain_timer.stop()
-	
 	# --- THE CINEMATIC SEQUENCE ---
-	
-	# 3. Slow Motion Start
+	# Slow Motion Start
 	Engine.time_scale = 0.2 
-	
-	# 4. Charge Up (White Flash & Scale)
+	# Supernova Charge Up (White Flash & Scale)
 	var tween = create_tween().set_parallel(true)
 	tween.tween_property(visual, "modulate", Color(10, 10, 10, 1), 1.5) # Super bright white
 	tween.tween_property(visual, "scale", Vector2(1.5, 1.5), 1.5)       # Expand
 	
-	# 5. Screen Shake
+	# Screen Shake
 	var shake_tween = create_tween()
 	for i in range(10):
 		var offset = Vector2(randf_range(-5, 5), randf_range(-5, 5))
 		shake_tween.tween_property(visual, "position", offset, 0.05)
-		
-	# 6. Wait for the "Boom" (adjusted for time_scale)
+	AudioManager.play_sfx("supernova")
+	# Wait for the "Boom" (adjusted for time_scale)
 	# The 'true' arguments allow the timer to ignore the time_scale slowdown
 	await get_tree().create_timer(3.5, true, false, true).timeout
 	
-	# 7. THE EXPLOSION
+	# 7. THE EXPLOSION	
 	GameManager.trigger_supernova() # Triggers the UI white flash
 	visual.visible = false          # Hide the boss sprite
 	Engine.time_scale = 1.0         # Restore normal game speed

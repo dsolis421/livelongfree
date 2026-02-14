@@ -15,10 +15,15 @@ run/main_scene="uid://bnuke7grfywry"
 config/features=PackedStringArray("4.6", "Mobile")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://35nv17037vrq"
+
 [autoload]
 
 GameManager="*uid://cjofs1mjbx26l"
 GameData="*uid://bu2xe4rfp5hpm"
+AudioManager="*uid://daik04oplsu5"
 
 [display]
 

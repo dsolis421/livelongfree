@@ -134,6 +134,7 @@ func take_knockback(source_position: Vector2, force: float) -> void:
 
 func die() -> void:
 	spawn_death_effect()
+	AudioManager.play_sfx("enemy_death")
 	if GameManager:
 		GameManager.kills += 1
 		
