@@ -4,6 +4,8 @@ signal extraction_complete
 signal insertion_complete
 
 @onready var sprite = $Sprite2D
+@onready var audio = AudioManager
+
 var player_target: Node2D
 
 func start_insertion(player: Node2D) -> void:
@@ -21,7 +23,8 @@ func start_insertion(player: Node2D) -> void:
 	visible = true
 	
 	print("Drone Insertion!")
-
+	audio.start_loop("agent_drone")
+	# AudioManager.play_sfx("agent_drone")
 	# 2. ANIMATION SEQUENCE
 	var tween = create_tween()
 	
@@ -41,10 +44,12 @@ func start_insertion(player: Node2D) -> void:
 	tween.tween_property(self, "global_position", exit_pos, 1.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 	
 	# E. Start the Game
+	# AudioManager.stop_loop("agent_drone", true)
 	tween.tween_callback(_on_insertion_finished)
 
 func _on_insertion_finished() -> void:
 	emit_signal("insertion_complete")
+	audio.stop_loop("agent_drone", true)
 	queue_free()
 	
 func start_extraction(player: Node2D) -> void:
@@ -56,7 +61,7 @@ func start_extraction(player: Node2D) -> void:
 	visible = true
 	
 	print("Drone Extraction!")
-	
+	audio.start_loop("agent_drone")
 	# 2. Disable Player Controls (So they don't wander off)
 	if player.has_method("set_physics_process"):
 		player.set_physics_process(false)

@@ -1,16 +1,20 @@
 extends Control
 
+@onready var audio = AudioManager
+
 func _ready() -> void:
 	# 1. Hide the menu when the game starts
 	visible = false
 	# 2. Connect to the global signal
 	# This says: "When GameManager shouts, run my 'show_options' function"
 	GameManager.level_up_triggered.connect(show_options)
+	
 
 # This function will be called by the GameManager later
 func show_options(_new_level: int) -> void:
 	visible = true
 	get_tree().paused = true # FREEZE THE GAME
+	
 
 func _on_btn_speed_pressed() -> void:
 	apply_to_player("movement_speed")
@@ -27,6 +31,7 @@ func close_menu() -> void:
 func apply_to_player(type: String) -> void:
 	var player = get_tree().get_first_node_in_group("player")
 	if player:
+		audio.play_sfx("upgrade")
 		player.apply_upgrade(type)
 
 	close_menu()

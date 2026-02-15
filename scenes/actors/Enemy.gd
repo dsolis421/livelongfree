@@ -31,6 +31,7 @@ var knockback_velocity: Vector2 = Vector2.ZERO
 @onready var player = get_tree().get_first_node_in_group("player")
 @onready var left_ray = $LeftRay
 @onready var right_ray = $RightRay
+@onready var audio = AudioManager
 
 func _ready() -> void:
 	# --- 3. APPLY IDENTITY BASED ON ROLE ---
@@ -130,6 +131,7 @@ func take_knockback(source_position: Vector2, force: float) -> void:
 
 	# 3. Apply the kick
 	# We set the variable here, and _physics_process handles the movement
+	audio.play_sfx("enemy_hit")
 	knockback_velocity = direction * final_force
 
 func die() -> void:

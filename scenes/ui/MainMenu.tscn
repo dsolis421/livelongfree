@@ -72,9 +72,9 @@ size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="MainLayout/LeftColumn" unique_id=1709618541]
 layout_mode = 2
-text = "LIVE
-LONG
-FREE"
+text = "Kay-7:
+System
+Purge"
 label_settings = SubResource("LabelSettings_2ysvc")
 
 [node name="RightColumn" type="VBoxContainer" parent="MainLayout" unique_id=1100007085]

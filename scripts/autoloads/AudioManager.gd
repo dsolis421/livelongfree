@@ -36,12 +36,14 @@ var sfx_library: Dictionary = {
 	# Player sounds
 	# "player_hit": preload("res://audio/sfx/player_hit.ogg"),
 	# "player_death": preload("res://audio/sfx/player_death.ogg"),
-	# "level_up": preload("res://audio/sfx/level_up.ogg"),
+	"level_up": preload("res://audio/sfx/LLF_levelup.ogg"),
+	"upgrade": preload("res://audio/sfx/LLF_overclock.ogg"),
+	"agent_drone": preload("res://audio/sfx/LLF_drone.ogg"),
 	
 	# Enemy sounds
 	"enemy_death": preload("res://audio/sfx/LLF_death1.ogg"),
 	"supernova": preload("res://audio/sfx/LLF_supernova.ogg"),
-	# "enemy_hit": preload("res://audio/sfx/enemy_hit.ogg"),
+	"enemy_hit": preload("res://audio/sfx/LLF_impact.ogg"),
 	
 	# Item/pickup sounds
 	# "item_pickup": preload("res://audio/sfx/item_pickup.ogg"),
@@ -73,7 +75,7 @@ var music_library: Dictionary = {
 
 # Pool of AudioStreamPlayer nodes for non-positional SFX
 var _sfx_pool: Array[AudioStreamPlayer] = []
-
+var _loop_players: Dictionary = {}
 # Pool of AudioStreamPlayer2D nodes for positional SFX
 var _sfx_2d_pool: Array[AudioStreamPlayer2D] = []
 
@@ -175,13 +177,11 @@ func play_sfx(sound_name: String, volume_db: float = 0.0, pitch_variation: float
 	if player == null:
 		# All players busy - skip this sound (better than audio glitches)
 		return
-	
 	# Configure and play
 	player.stream = sfx_library[sound_name]
 	player.volume_db = volume_db
 	player.pitch_scale = _get_random_pitch(pitch_variation)
 	player.play()
-
 
 func play_sfx_2d(sound_name: String, position: Vector2, volume_db: float = 0.0, pitch_variation: float = DEFAULT_PITCH_VARIATION) -> void:
 	## Plays a positional 2D sound effect at the specified location
@@ -236,6 +236,64 @@ func play_ui(sound_name: String, volume_db: float = 0.0) -> void:
 	# Reset bus after playing (when sound finishes)
 	player.finished.connect(func(): player.bus = "SFX", CONNECT_ONE_SHOT)
 
+# =============================================================================
+# LOOPING SOUNDS - PUBLIC API
+# =============================================================================
+
+func start_loop(sound_name: String, volume_db: float = 0.0) -> void:
+	if _sfx_muted:
+		return
+
+	if _loop_players.has(sound_name):
+		return
+	
+	if not sfx_library.has(sound_name):
+		push_warning("AudioManager: SFX not found: " + sound_name)
+		return
+	
+	# Create a DEDICATED player for loops instead of using the pool
+	var player = AudioStreamPlayer.new()
+	player.bus = "SFX"
+	player.stream = sfx_library[sound_name]
+	player.volume_db = volume_db
+	add_child(player)
+	
+	# Store reference
+	_loop_players[sound_name] = player
+	
+	# Connect loop behavior
+	player.finished.connect(func():
+		if _loop_players.has(sound_name):
+			player.play()
+	)
+	player.play()
+	
+func stop_loop(sound_name: String, fade_out: bool = false) -> void:
+	if not _loop_players.has(sound_name):
+		return
+	
+	var player = _loop_players[sound_name]
+	_loop_players.erase(sound_name)
+	
+	if fade_out:
+		var tween = create_tween()
+		tween.tween_property(player, "volume_db", -40.0, 0.15)
+		tween.tween_callback(func():
+			player.stop()
+			player.queue_free()  # Clean up the dedicated player
+		)
+	else:
+		player.stop()
+		player.queue_free()  # Clean up the dedicated player
+
+func is_loop_playing(sound_name: String) -> bool:
+	## Returns true if the specified sound is currently looping
+	##
+	## Example:
+	##   if not AudioManager.is_loop_playing("engine"):
+	##       AudioManager.start_loop("engine")
+	return _loop_players.has(sound_name)
+	
 # =============================================================================
 # MUSIC - PUBLIC API
 # =============================================================================

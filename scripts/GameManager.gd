@@ -1,5 +1,7 @@
 extends Node
 
+@onready var audio = AudioManager
+
 # --- SIGNALS ---
 signal xp_updated(current: int, target: int)
 signal level_up_triggered(level: int)
@@ -13,18 +15,18 @@ signal extraction_requested
 
 # --- CONFIGURATION ---
 const STARTING_XP = 0
-const STARTING_TARGET_XP = 10
+const STARTING_TARGET_XP = 100
 const STAGE_TIME_LIMIT: float = 120.0
 
 # --- SESSION DATA ---
-var kills: int = 0          # Your Score
+var kills: int = 0
 var gold_current_run: int = 0
 var experience: int = STARTING_XP
 var target_experience: int = STARTING_TARGET_XP
 var level: int = 1
 
 # --- INTERNAL FLAGS ---
-var needs_full_reset: bool = true # <--- THE MAGIC FIX
+var needs_full_reset: bool = true
 
 # --- STAGE DATA ---
 var time_elapsed: float = 0.0
@@ -59,7 +61,6 @@ func continue_to_next_sector() -> void:
 # --- 3. CALLED BY MAIN.GD (When Drone Lands) ---
 func start_mission_logic() -> void:
 	print("--- STARTING MISSION LOGIC ---")
-	
 	# A. Handle the "New Game" vs "Next Level" decision here
 	if needs_full_reset:
 		print(" > Performing Full Career Reset")
@@ -91,6 +92,9 @@ func add_experience(amount: int) -> void:
 	experience += amount
 	if experience >= target_experience:
 		level_up()
+		get_tree().create_timer(0.1).timeout.connect(func():
+			audio.play_sfx("level_up")
+		)
 	xp_updated.emit(experience, target_experience)
 
 func level_up() -> void:
@@ -129,6 +133,7 @@ func start_extraction_sequence() -> void:
 
 func on_extraction_complete() -> void:
 	print("VICTORY! Loading Win Screen...")
+	audio.stop_loop("agent_drone", true)
 	var win_screen = load("res://scenes/ui/VictoryScreen.tscn").instantiate()
 	get_tree().root.add_child(win_screen)
 	get_tree().paused = true
@@ -168,11 +173,8 @@ func on_player_died() -> void:
 # 2. SAFE RETURN (Call this from GameOverScreen or VictoryScreen buttons)
 func return_to_main_menu() -> void:
 	print("--- RETURNING TO MENU ---")
-	
 	# Double check the flag is set so the timer is dead
 	is_game_over = true 
-	
 	# IMPORTANT: Unpause the tree, or the Main Menu will be frozen!
 	get_tree().paused = false 
-	
 	get_tree().change_scene_to_file("res://scenes/ui/MainMenu.tscn")

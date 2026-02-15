@@ -6,7 +6,7 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_57v1k"]
 font = ExtResource("2_57v1k")
-font_size = 64
+font_size = 32
 font_color = Color(0.78039217, 0, 0.22352941, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_pxa5g"]
@@ -47,7 +47,7 @@ theme_override_constants/separation = 25
 
 [node name="Label" type="Label" parent="CenterContainer/VBoxContainer" unique_id=638911852]
 layout_mode = 2
-text = "SYSTEM CRASH:"
+text = "Kay-7 Has Been Deleted"
 label_settings = SubResource("LabelSettings_57v1k")
 horizontal_alignment = 1
 vertical_alignment = 1

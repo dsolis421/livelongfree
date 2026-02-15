@@ -106,7 +106,6 @@ func take_damage(amount: float = 1.0) -> void:
 	if GameManager.is_game_over: return
 	
 	if is_invincible:
-		print("Damage Blocked! (Invincible)")
 		return 
 
 	current_hp -= amount

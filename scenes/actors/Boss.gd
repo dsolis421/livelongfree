@@ -225,6 +225,7 @@ func die() -> void:
 	await get_tree().create_timer(3.5, true, false, true).timeout
 	
 	# 7. THE EXPLOSION	
+	visuals.play_death_animation()
 	GameManager.trigger_supernova() # Triggers the UI white flash
 	visual.visible = false          # Hide the boss sprite
 	Engine.time_scale = 1.0         # Restore normal game speed

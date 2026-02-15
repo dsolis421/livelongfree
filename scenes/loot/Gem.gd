@@ -1,14 +1,15 @@
 extends Area2D
 
+@onready var audio = AudioManager
 # --- CONFIGURATION ---
 enum TYPE { COMMON, RARE, EPIC, LEGENDARY, GOLD }
 
 var stats = {
-	TYPE.COMMON:    {"color": Color.WHITE,       "val": 10,   "is_gold": false},
-	TYPE.RARE:      {"color": Color.CYAN,        "val": 50,   "is_gold": false},
-	TYPE.EPIC:      {"color": Color.MAGENTA,     "val": 100,  "is_gold": false},
-	TYPE.LEGENDARY: {"color": Color.GREEN,      "val": 200,  "is_gold": false},
-	TYPE.GOLD:      {"color": Color(1, 0.85, 0), "val": 20,    "is_gold": true} 
+	TYPE.COMMON:    {"color": Color(0.4,0,0.8),       "val": 10,   "is_gold": false},
+	TYPE.RARE:      {"color": Color(0,0,0.8),        "val": 25,   "is_gold": false},
+	TYPE.EPIC:      {"color": Color(0,0.4,0.8),     "val": 50,  "is_gold": false},
+	TYPE.LEGENDARY: {"color": Color(0,0.8,0.8),      "val": 100,  "is_gold": false},
+	TYPE.GOLD:      {"color": Color(1, 0.85, 0), "val": 1,    "is_gold": true} 
 }
 
 # --- STATE VARIABLES ---
