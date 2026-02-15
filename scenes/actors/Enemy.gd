@@ -58,6 +58,15 @@ func _ready() -> void:
 	# Ensures generic collision logic (bullets hitting enemies) always works
 	if not is_in_group("enemy"):
 		add_to_group("enemy")
+		
+	# --- 5. NEW: APPLY RUN DIFFICULTY ---
+	if GameManager:
+		# Apply HP Multiplier (Ricochet Curse)
+		# We must cast to int because HP is an integer
+		hp = int(hp * GameManager.run_enemy_hp_mult)
+		
+		# Apply Damage Bonus (Slots Curse)
+		damage = damage + GameManager.run_enemy_dmg_bonus
 
 func _physics_process(delta: float) -> void:
 	if player == null: return
@@ -114,7 +123,7 @@ func _physics_process(delta: float) -> void:
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
 		if body.has_method("take_damage"):
-			body.take_damage(1)
+			body.take_damage(damage)
 
 func take_damage(amount: int) -> void:
 	hp -= amount

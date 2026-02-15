@@ -16,7 +16,7 @@ signal extraction_requested
 # --- CONFIGURATION ---
 const STARTING_XP = 0
 const STARTING_TARGET_XP = 100
-const STAGE_TIME_LIMIT: float = 180.0
+const STAGE_TIME_LIMIT: float = 120.0
 
 # --- SESSION DATA ---
 var kills: int = 0
@@ -24,6 +24,12 @@ var gold_current_run: int = 0
 var experience: int = STARTING_XP
 var target_experience: int = STARTING_TARGET_XP
 var level: int = 1
+
+# --- RUN MODIFIERS (SCALING) ---
+var run_enemy_hp_mult: float = 1.0
+var run_enemy_dmg_bonus: int = 0
+var run_spawn_timer_mod: float = 0.0
+var run_max_time_bonus: float = 0.0
 
 # --- INTERNAL FLAGS ---
 var needs_full_reset: bool = true
@@ -61,6 +67,7 @@ func continue_to_next_sector() -> void:
 # --- 3. CALLED BY MAIN.GD (When Drone Lands) ---
 func start_mission_logic() -> void:
 	print("--- STARTING MISSION LOGIC ---")
+	calculate_difficulty()
 	# A. Handle the "New Game" vs "Next Level" decision here
 	if needs_full_reset:
 		print(" > Performing Full Career Reset")
@@ -74,7 +81,7 @@ func start_mission_logic() -> void:
 		print(" > Continuing Career (Kills: ", kills, ")")
 
 	# B. ALWAYS Reset Stage Logic (Fixes Extraction/Boss bugs)
-	time_remaining = STAGE_TIME_LIMIT
+	time_remaining = STAGE_TIME_LIMIT + run_max_time_bonus
 	boss_has_spawned = false
 	is_boss_active = false
 	is_game_over = false # <--- CRITICAL: Allows extraction to happen again
@@ -180,3 +187,27 @@ func return_to_main_menu() -> void:
 	# IMPORTANT: Unpause the tree, or the Main Menu will be frozen!
 	get_tree().paused = false 
 	get_tree().change_scene_to_file("res://scenes/ui/MainMenu.tscn")
+
+func calculate_difficulty() -> void:
+	# 1. BUFFER -> TIME (+15s per level)
+	var buffer_lvl = GameData.get_upgrade_level("buffer")
+	run_max_time_bonus = buffer_lvl * 15.0 
+	
+	# 2. DAMAGE -> SPAWN RATE (-0.1s per level)
+	var dmg_lvl = GameData.get_upgrade_level("damage")
+	run_spawn_timer_mod = dmg_lvl * 0.1 
+	
+	# 3. RICOCHET -> ENEMY HP (Linear Scaling)
+	# Level 1 = 2x HP, Level 2 = 3x HP, etc.
+	var ric_lvl = GameData.get_upgrade_level("ricochet")
+	run_enemy_hp_mult = 1.0 + (ric_lvl * 1.0) 
+	
+	# 4. SLOTS -> ENEMY DAMAGE (+1 per level)
+	var slot_lvl = GameData.get_upgrade_level("slots")
+	run_enemy_dmg_bonus = slot_lvl * 1 
+
+	print("--- DIFFICULTY CALCULATED ---")
+	print("Time Bonus: +", run_max_time_bonus)
+	print("Spawn Mod: -", run_spawn_timer_mod)
+	print("HP Mult: ", run_enemy_hp_mult)
+	print("Dmg Bonus: +", run_enemy_dmg_bonus)

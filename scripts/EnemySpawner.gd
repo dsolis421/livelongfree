@@ -10,7 +10,18 @@ extends Node2D
 func _ready() -> void:
 	GameManager.level_up_triggered.connect(_on_level_up)
 	GameManager.boss_spawn_requested.connect(spawn_boss)
-
+	# --- NEW: APPLY SPAWN RATE SCALING ---
+	# We grab the default time set in the Inspector (likely 1.0s)
+	# And subtract the modifier (e.g., 0.1s per Damage Level)
+	var new_wait_time = $Timer.wait_time - GameManager.run_spawn_timer_mod
+	
+	# Safety Clamp: Don't let it go below 0.1s or the game might crash
+	if new_wait_time < 0.2:
+		new_wait_time = 0.2
+		
+	$Timer.wait_time = new_wait_time
+	print("Spawner: Spawn Rate adjusted to ", new_wait_time, "s")
+	
 func _on_level_up(_level: int) -> void:
 	# Reset rhythm on level up
 	$Timer.stop()

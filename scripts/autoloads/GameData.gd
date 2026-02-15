@@ -6,7 +6,7 @@ const UPGRADE_CONFIG = {
 	"buffer": { 
 		"name": "Data Buffer", 
 		"description": "Start with temporary extra integrity.",
-		"base_cost": 15,
+		"base_cost": 5,
 		"cost_multiplier": 1.5, 
 		"max_level": 10
 	},
@@ -18,20 +18,20 @@ const UPGRADE_CONFIG = {
 	},
 	"damage": {
 		"name": "Weapon Overclock",
-		"base_cost": 20,
+		"base_cost": 10,
 		"cost_multiplier": 2.0, 
 		"max_level": 5
 	},
 	"slots": {
 		"name": "Expansion Slot",
 		"description": "Unlock a new Active Item Slot.",
-		"fixed_costs": [10,20,30,40,50],
+		"fixed_costs": [10,15,20,25,30],
 		"max_level": 5        # 1 Base + 5 Upgrades = 6 Total
 	},
 	"ricochet": {
 		"name": "Chain Ricochet",
 		"description": "Enable chain ricochet.",
-		"fixed_costs": [10,20,30],
+		"fixed_costs": [10,15,20],
 		"max_level": 3        # 1 Base + 3 Upgrades
 	}
 }
