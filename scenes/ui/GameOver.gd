@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+@onready var audio = AudioManager
+
 # --- UI REFERENCES ---
 # Adjust these paths if your hierarchy changes!
 @onready var run_stats_label: Label = $CenterContainer/VBoxContainer/RunStatsLabel
@@ -22,7 +24,7 @@ func _ready() -> void:
 # OR call this from Player.gd: get_tree().root.get_node("Main/GameOver")._on_player_died()
 func _on_player_died() -> void:
 	print("GAME OVER SCREEN ACTIVATED")
-	
+	audio.stop_all_loops(true)
 	# 1. UPDATE STATS
 	# We pull the specific numbers from our Managers
 	if run_stats_label:

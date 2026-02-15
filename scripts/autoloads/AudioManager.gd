@@ -41,9 +41,10 @@ var sfx_library: Dictionary = {
 	"agent_drone": preload("res://audio/sfx/LLF_drone.ogg"),
 	
 	# Enemy sounds
-	"enemy_death": preload("res://audio/sfx/LLF_death1.ogg"),
+	"enemy_death": preload("res://audio/sfx/LLF_shatter.ogg"),
 	"supernova": preload("res://audio/sfx/LLF_supernova.ogg"),
-	"enemy_hit": preload("res://audio/sfx/LLF_impact.ogg"),
+	"enemy_hit": preload("res://audio/sfx/LLF_impact2.ogg"),
+	"boss_loop": preload("res://audio/sfx/LLF_bossloop.ogg"),
 	
 	# Item/pickup sounds
 	# "item_pickup": preload("res://audio/sfx/item_pickup.ogg"),
@@ -51,9 +52,9 @@ var sfx_library: Dictionary = {
 	# "xp_pickup": preload("res://audio/sfx/xp_pickup.ogg"),
 	
 	# Weapon sounds
-	# "weapon_fire": preload("res://audio/sfx/weapon_fire.ogg"),
+	"weapon_fire": preload("res://audio/sfx/LLF_weapon.ogg"),
 	# "weapon_swing": preload("res://audio/sfx/weapon_swing.ogg"),
-	
+	"sigkill": preload("res://audio/sfx/LLF_sigkill.ogg"),
 	# UI sounds
 	# "ui_click": preload("res://audio/sfx/ui_click.ogg"),
 	# "ui_hover": preload("res://audio/sfx/ui_hover.ogg"),
@@ -62,7 +63,7 @@ var sfx_library: Dictionary = {
 
 ## Music tracks
 var music_library: Dictionary = {
-	# "main_menu": preload("res://audio/music/main_menu.ogg"),
+	"main_menu": preload("res://audio/music/LLF_titlemusic.ogg"),
 	# "gameplay": preload("res://audio/music/gameplay.ogg"),
 	# "boss": preload("res://audio/music/boss.ogg"),
 	# "game_over": preload("res://audio/music/game_over.ogg"),
@@ -531,6 +532,17 @@ func _save_audio_settings() -> void:
 	
 	config.save(SETTINGS_PATH)
 
+func stop_all_loops(fade_out: bool = true) -> void:
+	## Stops all currently playing loops
+	## Call this on player death, game over, scene change, etc.
+	##
+	## Example:
+	##   AudioManager.stop_all_loops()
+	# Get all loop names (we need a copy since we're modifying the dictionary)
+	var loop_names = _loop_players.keys().duplicate()
+	# Stop each one
+	for sound_name in loop_names:
+		stop_loop(sound_name, fade_out)
 
 func _load_audio_settings() -> void:
 	## Loads saved volume settings, applying defaults if no save exists

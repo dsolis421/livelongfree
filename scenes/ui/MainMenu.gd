@@ -3,10 +3,12 @@ extends Control
 # References to our Stat Labels
 @onready var kills_label = $MainLayout/RightColumn/StatsPanel/VBoxContainer/KillsLabel
 @onready var repo_button = $MainLayout/RightColumn/RepoButton
+@onready var audio = AudioManager
 
 func _ready() -> void:
 	# 1. Update Labels directly from GameData (The new source of truth)
 	GameData.load_game()
+	audio.play_music("main_menu")
 	# Display Gold
 	if has_node("MainLayout/RightColumn/StatsPanel/VBoxContainer/GoldLabel"):
 		$MainLayout/RightColumn/StatsPanel/VBoxContainer/GoldLabel.text = "Net Worth: " + str(GameData.gold)
@@ -25,7 +27,9 @@ func _ready() -> void:
 
 
 func _on_play_pressed() -> void:
+	audio.stop_music()
 	GameManager.start_new_game_from_menu()
+	
 
 func _on_repo_pressed():
 	# Go to the Store Scene

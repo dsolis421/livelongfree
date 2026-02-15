@@ -47,7 +47,7 @@ theme_override_constants/separation = 25
 
 [node name="Label" type="Label" parent="CenterContainer/VBoxContainer" unique_id=638911852]
 layout_mode = 2
-text = "Kay-7 Has Been Deleted"
+text = "[ Kay-7 Has Been Deleted ]"
 label_settings = SubResource("LabelSettings_57v1k")
 horizontal_alignment = 1
 vertical_alignment = 1

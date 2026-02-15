@@ -16,7 +16,7 @@ signal extraction_requested
 # --- CONFIGURATION ---
 const STARTING_XP = 0
 const STARTING_TARGET_XP = 100
-const STAGE_TIME_LIMIT: float = 120.0
+const STAGE_TIME_LIMIT: float = 180.0
 
 # --- SESSION DATA ---
 var kills: int = 0
@@ -111,12 +111,14 @@ func spawn_final_boss() -> void:
 	print("!!! TIME LIMIT REACHED - SUMMONING BOSS !!!")
 	boss_has_spawned = true
 	is_boss_active = true
+	audio.start_loop("boss_loop")
 	boss_incoming_warning.emit()
 	boss_spawn_requested.emit()
 
 func on_boss_died() -> void:
 	print("!!! BOSS DEFEATED - SECTOR CLEARED !!!")
 	is_boss_active = false
+	audio.stop_loop("boss_loop")
 	boss_cleared_ui.emit()
 	start_extraction_sequence()
 

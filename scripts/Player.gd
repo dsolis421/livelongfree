@@ -3,6 +3,8 @@ extends CharacterBody2D
 class_name Player
 signal player_died
 
+@onready var audio = AudioManager
+
 # --- SCENES ---
 @export var projectile_scene: PackedScene
 @export var game_over_screen: PackedScene
@@ -165,7 +167,8 @@ func _on_gun_timer_timeout() -> void:
 	# 3. Direction
 	var direction = (target.global_position - global_position).normalized()
 	bullet.direction = direction
-	bullet.rotation = direction.angle() # Rotates the bullet sprite, not the player
+	bullet.rotation = direction.angle()
+	audio.play_sfx("weapon_fire") # Rotates the bullet sprite, not the player
 
 # --- LEVEL UP & POWER UPS ---
 
@@ -206,6 +209,7 @@ func cast_purge() -> void:
 			enemy.take_damage(purge_damage)
 
 func cast_meteor() -> void:
+	audio.play_sfx("sigkill")
 	for i in range(3):
 		fire_one_meteor()
 		await get_tree().create_timer(0.2).timeout
