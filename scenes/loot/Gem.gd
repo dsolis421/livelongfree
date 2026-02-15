@@ -72,7 +72,7 @@ func _on_area_entered(area: Area2D) -> void:
 # --- ACTUAL PICKUP ---
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		
+		audio.play_sfx("item_pickup")
 		# 1. Give Rewards
 		if is_currency:
 			GameManager.add_gold(current_value)

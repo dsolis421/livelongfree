@@ -47,7 +47,7 @@ var sfx_library: Dictionary = {
 	"boss_loop": preload("res://audio/sfx/LLF_bossloop.ogg"),
 	
 	# Item/pickup sounds
-	# "item_pickup": preload("res://audio/sfx/item_pickup.ogg"),
+	"item_pickup": preload("res://audio/sfx/LLF_itempickup.ogg"),
 	# "health_pickup": preload("res://audio/sfx/health_pickup.ogg"),
 	# "xp_pickup": preload("res://audio/sfx/xp_pickup.ogg"),
 	

@@ -30,7 +30,7 @@ func _on_timer_timeout() -> void:
 
 	# 1. Get Safe Position (Radius 25.0 for normal enemies)
 	# Increase this to 35.0 or 40.0 if enemies are still clipping walls!
-	var spawn_pos = get_valid_spawn_position(player, 30.0)
+	var spawn_pos = get_valid_spawn_position(player, 100.0)
 	
 	# If failed (Vector2.ZERO), skip this spawn cycle entirely
 	if spawn_pos == Vector2.ZERO:
