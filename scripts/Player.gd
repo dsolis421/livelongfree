@@ -55,7 +55,7 @@ func _apply_global_upgrades() -> void:
 	# A. BUFFER (Extra HP)
 	var buffer_level = GameData.get_upgrade_level("buffer")
 	if buffer_level > 0:
-		var bonus_hp = buffer_level * 2
+		var bonus_hp = buffer_level
 		max_hp += bonus_hp
 		current_hp += bonus_hp
 		print("Repo Upgrade: Buffer Applied (+", bonus_hp, " HP)")
@@ -164,11 +164,21 @@ func _on_gun_timer_timeout() -> void:
 	# 2. Stats
 	bullet.damage = 1.0 * damage_multiplier 
 	
+	# --- NEW: APPLY RICOCHET UPGRADE ---
+	var ricochet_level = GameData.get_upgrade_level("ricochet")
+	if ricochet_level > 0:
+		bullet.bounce_count = ricochet_level
+		# Optional: Set range if not hardcoded in Projectile
+		bullet.bounce_range = 400.0 
+	
 	# 3. Direction
 	var direction = (target.global_position - global_position).normalized()
 	bullet.direction = direction
 	bullet.rotation = direction.angle()
-	audio.play_sfx("weapon_fire") # Rotates the bullet sprite, not the player
+	
+	# 4. Audio
+	if audio:
+		audio.play_sfx("weapon_fire")
 
 # --- LEVEL UP & POWER UPS ---
 

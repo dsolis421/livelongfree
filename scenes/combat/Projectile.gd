@@ -6,6 +6,10 @@ extends Area2D
 
 var direction = Vector2.RIGHT
 
+var bounce_count: int = 0       # Set by Player.gd
+var bounce_range: float = 400.0 # How far to scan for next target
+var already_hit: Array[Node2D] = [] # Memory to avoid hitting same enemy twice
+
 func _ready() -> void:
 	# --- NEW: ALIGN ROTATION ---
 	# Turn the bullet to face its travel direction immediately.
@@ -46,8 +50,42 @@ func _on_body_entered(body: Node2D) -> void:
 		
 		if body.has_method("take_knockback"):
 			body.take_knockback(global_position, knockback_force)
-			
+		
+		already_hit.append(body)
+		if bounce_count > 0:
+			if attempt_ricochet(body):
+				return # We found a target! Don't destroy bullet.
 		queue_free()
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	queue_free()
+
+func attempt_ricochet(current_victim: Node2D) -> bool:
+	bounce_count -= 1
+	
+	var nearest_enemy = null
+	var min_dist_sq = bounce_range * bounce_range # Compare Squared Distance (Faster)
+	var enemies = get_tree().get_nodes_in_group("enemy")
+	
+	for enemy in enemies:
+		# Validation Checks
+		if not is_instance_valid(enemy): continue
+		if enemy == current_victim: continue
+		if enemy in already_hit: continue # Don't hit the same guy twice
+		
+		# Find the closest one
+		var dist_sq = global_position.distance_squared_to(enemy.global_position)
+		if dist_sq < min_dist_sq:
+			min_dist_sq = dist_sq
+			nearest_enemy = enemy
+	
+	if nearest_enemy:
+		# Found one! Update direction for physics_process
+		direction = global_position.direction_to(nearest_enemy.global_position)
+		
+		# Reset rotation immediately (physics_process will jitter it later)
+		rotation = direction.angle()
+		
+		return true # Tell body_entered we survived
+		
+	return false # No target found, let the bullet die

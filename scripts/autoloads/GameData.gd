@@ -27,6 +27,12 @@ const UPGRADE_CONFIG = {
 		"description": "Unlock a new Active Item Slot.",
 		"fixed_costs": [10,20,30,40,50],
 		"max_level": 5        # 1 Base + 5 Upgrades = 6 Total
+	},
+	"ricochet": {
+		"name": "Chain Ricochet",
+		"description": "Enable chain ricochet.",
+		"fixed_costs": [10,20,30],
+		"max_level": 3        # 1 Base + 3 Upgrades
 	}
 }
 
@@ -34,10 +40,11 @@ const UPGRADE_CONFIG = {
 var gold: int = 0
 var high_kills: int = 0
 var upgrades: Dictionary = {
-	"speed": 0,
+	"buffer": 0,
 	"magnet": 0,
 	"damage": 0,
-	"slots": 0
+	"slots": 0,
+	"ricochet":0
 }
 var unlocked_active_slots: int = 1
 
@@ -58,8 +65,9 @@ func generate_content_string(data: Dictionary) -> String:
 	var upgrade_str = ""
 	upgrade_str += str(int(ups.get("damage", 0)))
 	upgrade_str += str(int(ups.get("magnet", 0)))
-	upgrade_str += str(int(ups.get("speed", 0)))
+	upgrade_str += str(int(ups.get("buffer", 0)))
 	upgrade_str += str(int(ups.get("slots", 0)))
+	upgrade_str += str(int(ups.get("ricochet", 0)))
 	# 3. Combine with Secret Key
 	return base_str + upgrade_str + SECRET_KEY
 
