@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://nsfu03fajja8" path="res://scenes/loot/ItemPickup.tscn" id="3_n74la"]
 [ext_resource type="PackedScene" uid="uid://cx1i5tfrv4ajw" path="res://scenes/combat/DeathPhantom.tscn" id="3_q5s0s"]
 
-[node name="Phantom" unique_id=1413542967 groups=["enemy"] instance=ExtResource("1_mleiq")]
+[node name="Phantom" unique_id=1413542967 node_paths=PackedStringArray("visual") groups=["enemy"] instance=ExtResource("1_mleiq")]
 collision_mask = 2
 script = ExtResource("2_p7m8u")
 movement_speed = 170.0
@@ -15,6 +15,7 @@ special_drop_chance = 1.0
 special_drop_scene = ExtResource("3_n74la")
 available_drops = Array[String](["SysRoot"])
 role = 1
+visual = NodePath("ColorRect")
 
 [node name="ColorRect" parent="." index="0" unique_id=2128324598]
 color = Color(0, 1, 1, 0.50980395)

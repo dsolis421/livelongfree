@@ -9,12 +9,13 @@ size = Vector2(50, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lqgpg"]
 size = Vector2(52, 22)
 
-[node name="Sprinter" unique_id=1413542967 instance=ExtResource("1_xsveu")]
+[node name="Sprinter" unique_id=1413542967 node_paths=PackedStringArray("visual") instance=ExtResource("1_xsveu")]
 hp = 2
 movement_speed = 275.0
 drop_chance = 0.7
 knockback_resistance = -0.2
 death_effect = ExtResource("2_kyd6q")
+visual = NodePath("ColorRect")
 
 [node name="ColorRect" parent="." index="0" unique_id=2128324598]
 anchors_preset = 8

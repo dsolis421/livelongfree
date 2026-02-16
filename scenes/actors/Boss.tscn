@@ -59,7 +59,7 @@ size = Vector2(120, 120)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dkpe8"]
 size = Vector2(122, 122)
 
-[node name="Boss" unique_id=1413542967 instance=ExtResource("1_vm5jf")]
+[node name="Boss" unique_id=1413542967 node_paths=PackedStringArray("visual") instance=ExtResource("1_vm5jf")]
 script = ExtResource("2_ltkqj")
 boss_bullet_scene = ExtResource("3_vm5jf")
 hp = 20
@@ -68,6 +68,7 @@ loot_scene = null
 drop_chance = 0.0
 death_effect = null
 role = 2
+visual = NodePath("TesseractVisuals")
 
 [node name="TesseractVisuals" type="Node2D" parent="." index="0" unique_id=1147652717]
 script = ExtResource("4_qy6jy")

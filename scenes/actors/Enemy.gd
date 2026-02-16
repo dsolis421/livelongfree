@@ -27,13 +27,18 @@ const LOOT_SCENE = preload("res://scenes/loot/Gem.tscn")
 # We track knockback separately so we can decay it over time
 var knockback_velocity: Vector2 = Vector2.ZERO
 
-@onready var visual = $ColorRect
+@export var visual = Node2D
 @onready var player = get_tree().get_first_node_in_group("player")
 @onready var left_ray = $LeftRay
 @onready var right_ray = $RightRay
 @onready var audio = AudioManager
 
 func _ready() -> void:
+	if visual == null:
+		if has_node("ColorRect"):
+			visual = $ColorRect
+		elif has_node("Polygon2D"):
+			visual = $Polygon2D
 	# --- 3. APPLY IDENTITY BASED ON ROLE ---
 	# We assign the group dynamically. This prevents inheritance conflicts.
 	

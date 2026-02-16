@@ -4,13 +4,22 @@
 [ext_resource type="PackedScene" uid="uid://djffp1gncw3vf" path="res://scenes/combat/DeathBrute.tscn" id="2_sbw3t"]
 [ext_resource type="PackedScene" uid="uid://nsfu03fajja8" path="res://scenes/loot/ItemPickup.tscn" id="4_dkpe8"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sbw3t"]
-size = Vector2(60, 60)
+[sub_resource type="Gradient" id="Gradient_sbw3t"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 0.37254903, 0, 1, 0.78039217, 0, 0.22352941, 1, 1, 0.37254903, 0, 1)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dkpe8"]
-size = Vector2(62, 62)
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dkpe8"]
+gradient = SubResource("Gradient_sbw3t")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(1, 1)
 
-[node name="Brute" unique_id=1413542967 groups=["elite"] instance=ExtResource("1_hij64")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_dkpe8"]
+radius = 32.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sbw3t"]
+radius = 32.0
+
+[node name="Brute" unique_id=1413542967 node_paths=PackedStringArray("visual") groups=["elite"] instance=ExtResource("1_hij64")]
 hp = 10
 movement_speed = 100.0
 xp_value = 0
@@ -19,10 +28,11 @@ drop_chance = 0.0
 death_effect = ExtResource("2_sbw3t")
 special_drop_chance = 1.0
 special_drop_scene = ExtResource("4_dkpe8")
-available_drops = Array[String](["SigKill", "Purge"])
 role = 1
+visual = NodePath("Polygon2D")
 
 [node name="ColorRect" parent="." index="0" unique_id=2128324598]
+visible = false
 offset_left = -30.0
 offset_top = -30.0
 offset_right = 30.0
@@ -30,11 +40,17 @@ offset_bottom = 30.0
 pivot_offset = Vector2(30, 30)
 color = Color(1, 0.37254903, 0, 1)
 
-[node name="CollisionShape2D" parent="." index="1" unique_id=1944004044]
-shape = SubResource("RectangleShape2D_sbw3t")
+[node name="Polygon2D" type="Polygon2D" parent="." index="1" unique_id=1906433040]
+texture = SubResource("GradientTexture2D_dkpe8")
+texture_offset = Vector2(32, 32)
+polygon = PackedVector2Array(32, 0, 8, 32, -32, 24, -32, -24, 8, -32)
 
-[node name="Hitbox" parent="." index="2" unique_id=1527609457]
+[node name="CollisionShape2D" parent="." index="2" unique_id=1944004044]
+visible = false
+shape = SubResource("CircleShape2D_dkpe8")
+
+[node name="Hitbox" parent="." index="3" unique_id=1527609457]
 collision_mask = 3
 
 [node name="CollisionShape2D" parent="Hitbox" index="0" unique_id=1995205190]
-shape = SubResource("RectangleShape2D_dkpe8")
+shape = SubResource("CircleShape2D_sbw3t")
