@@ -3,21 +3,33 @@
 [ext_resource type="PackedScene" uid="uid://cgna31p5cx674" path="res://scenes/actors/Enemy.tscn" id="1_xsveu"]
 [ext_resource type="PackedScene" uid="uid://cfcqun17jlyjv" path="res://scenes/combat/DeathShatter.tscn" id="2_kyd6q"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kyd6q"]
-size = Vector2(50, 20)
+[sub_resource type="Gradient" id="Gradient_kyd6q"]
+offsets = PackedFloat32Array(0, 0.52597404, 1)
+colors = PackedColorArray(1, 0.84313726, 0, 1, 0.78039217, 0, 0.22352941, 1, 1, 0.84313726, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lqgpg"]
+gradient = SubResource("Gradient_kyd6q")
+width = 50
+height = 20
+fill_from = Vector2(1, 0)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kyd6q"]
+radius = 12.0
+height = 52.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lqgpg"]
 size = Vector2(52, 22)
 
-[node name="Sprinter" unique_id=1413542967 node_paths=PackedStringArray("visual") instance=ExtResource("1_xsveu")]
+[node name="Sprinter" unique_id=1413542967 instance=ExtResource("1_xsveu")]
 hp = 2
 movement_speed = 275.0
 drop_chance = 0.7
 knockback_resistance = -0.2
 death_effect = ExtResource("2_kyd6q")
-visual = NodePath("ColorRect")
 
 [node name="ColorRect" parent="." index="0" unique_id=2128324598]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -32,8 +44,20 @@ grow_vertical = 2
 pivot_offset = Vector2(25, 10)
 color = Color(1, 0.84313726, 0, 1)
 
-[node name="CollisionShape2D" parent="." index="1" unique_id=1944004044]
-shape = SubResource("RectangleShape2D_kyd6q")
+[node name="Polygon2D" type="Polygon2D" parent="." index="1" unique_id=1013079940]
+color = Color(1, 0.84313726, 0, 1)
+texture = SubResource("GradientTexture2D_lqgpg")
+texture_offset = Vector2(25, 10)
+polygon = PackedVector2Array(26, 0, 0, -11, -26, -6, -11, 0, -26, 6, 0, 11)
+
+[node name="CollisionShape2D" parent="." index="2" unique_id=1944004044]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_kyd6q")
 
 [node name="CollisionShape2D" parent="Hitbox" parent_id_path=PackedInt32Array(1527609457) index="0" unique_id=1995205190]
+visible = false
 shape = SubResource("RectangleShape2D_lqgpg")
+disabled = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitbox" parent_id_path=PackedInt32Array(1527609457) index="1" unique_id=1069101332]
+polygon = PackedVector2Array(26, 0, 0, -11, -26, -6, -11, 0, -26, 6, 0, 11)
