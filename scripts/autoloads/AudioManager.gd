@@ -301,15 +301,9 @@ func is_loop_playing(sound_name: String) -> bool:
 
 func play_music(track_name: String, crossfade: bool = true) -> void:
 	## Plays a music track, optionally crossfading from current track
-	##
 	## Parameters:
 	##   track_name: Key from music_library dictionary
 	##   crossfade: If true, smoothly transitions from current music
-	##
-	## Example:
-	##   AudioManager.play_music("gameplay")
-	##   AudioManager.play_music("boss", false)  # Instant switch
-	
 	# Don't restart if already playing this track
 	if track_name == _current_music and _active_music_player.playing:
 		return
@@ -328,7 +322,6 @@ func play_music(track_name: String, crossfade: bool = true) -> void:
 
 func stop_music(fade_out: bool = true) -> void:
 	## Stops the current music
-	##
 	## Parameters:
 	##   fade_out: If true, fades out smoothly; if false, stops immediately
 	

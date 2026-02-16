@@ -25,6 +25,8 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	
 func _input(event: InputEvent) -> void:
+	if not is_inside_tree() or is_queued_for_deletion(): return
+	
 	if event is InputEventScreenTouch:
 		if event.pressed:
 			if _touch_index == -1:
@@ -102,3 +104,8 @@ func get_output() -> Vector2:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PAUSED or what == NOTIFICATION_APPLICATION_FOCUS_OUT:
 		_reset_joystick()
+		
+func _exit_tree() -> void:
+	process_mode = Node.PROCESS_MODE_DISABLED
+	set_process_input(false)
+	set_process_unhandled_input(false)
