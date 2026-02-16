@@ -48,6 +48,27 @@ var upgrades: Dictionary = {
 }
 var unlocked_active_slots: int = 1
 
+const ICON_PURGE = preload("res://assets/LLF_purge.png")
+const ICON_METEOR = preload("res://assets/LLF_sigkill.png")
+const ICON_ROOT = preload("res://assets/LLF_Root.png")
+
+# Visual settings for each type (Color for now, Texture later)
+# We use a Dictionary to map "Type Name" -> Color
+var item_data = {
+	"SigKill": {
+		"icon": ICON_METEOR,
+		"color": Color(1.0, 1.0, 0.2, 1.0), # Red Glow
+	},
+	"Purge": {
+		"icon": ICON_PURGE,
+		"color": Color(0.2, 1.0, 1.0, 1.0), # Green Glow
+	},
+	"SysRoot": {
+		"icon": ICON_ROOT,
+		"color": Color(1.0, 0.0, 1.0, 1.0), # Gold Glow
+	}
+}
+
 func _ready() -> void:
 	# Print path for debugging
 	print("GameData ready. Save path: ", ProjectSettings.globalize_path(SAVE_PATH))

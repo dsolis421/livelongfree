@@ -13,50 +13,55 @@ script = ExtResource("1_q5sid")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1384144381]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
+anchors_preset = 7
+anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -270.0
+offset_left = -250.0
 offset_top = -90.0
-offset_right = -22.0
+offset_right = 250.0
 offset_bottom = -30.0
-grow_horizontal = 0
+grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/separation = 20
+theme_override_constants/separation = 40
 alignment = 1
 
 [node name="Slot1" type="Button" parent="HBoxContainer" unique_id=1456769811]
-custom_minimum_size = Vector2(60, 60)
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 focus_mode = 0
 icon_alignment = 1
 
 [node name="Slot2" type="Button" parent="HBoxContainer" unique_id=1464869062]
-custom_minimum_size = Vector2(60, 60)
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 focus_mode = 0
+icon_alignment = 1
 
 [node name="Slot3" type="Button" parent="HBoxContainer" unique_id=706041105]
-custom_minimum_size = Vector2(60, 60)
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 focus_mode = 0
+icon_alignment = 1
 
 [node name="Slot4" type="Button" parent="HBoxContainer" unique_id=1217616026]
-custom_minimum_size = Vector2(60, 60)
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 focus_mode = 0
+icon_alignment = 1
 
 [node name="Slot5" type="Button" parent="HBoxContainer" unique_id=858537476]
-custom_minimum_size = Vector2(60, 60)
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 focus_mode = 0
+icon_alignment = 1
 
 [node name="Slot6" type="Button" parent="HBoxContainer" unique_id=162195826]
-custom_minimum_size = Vector2(60, 60)
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 focus_mode = 0
+icon_alignment = 1
 
 [connection signal="pressed" from="HBoxContainer/Slot1" to="." method="_on_slot_1_pressed"]
 [connection signal="pressed" from="HBoxContainer/Slot2" to="." method="_on_slot_2_pressed"]

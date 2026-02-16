@@ -8,10 +8,10 @@ func _ready() -> void:
 	add_to_group("store_ui") # Allows rows to tell me to update
 	update_gold_display()
 	return_button.pressed.connect(_on_return_pressed)
-	##if audio.is_music_playing():
-	##	return
-	##else:
-	##	audio.play_music("main_menu")
+	if audio.is_music_playing():
+		return
+	else:
+		audio.play_music("main_menu")
 
 func update_gold_display() -> void:
 	bank_label.text = "BANK: " + str(GameData.gold) + " G"

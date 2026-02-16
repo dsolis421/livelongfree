@@ -1,37 +1,20 @@
 extends Area2D
 
 var item_type: String = ""
-const ICON_PURGE = preload("res://assets/LLF_purge.png")
-const ICON_METEOR = preload("res://assets/LLF_sigkill.png")
-const ICON_ROOT = preload("res://assets/LLF_Root.png")
+
 # Fallback texture if something goes wrong
 const ICON_DEFAULT = preload("res://assets/LLF_ActiveDir.png")
-# Visual settings for each type (Color for now, Texture later)
-# We use a Dictionary to map "Type Name" -> Color
-var item_data = {
-	"SigKill": {
-		"icon": ICON_METEOR,
-		"color": Color(1.0, 1.0, 0.2, 1.0), # Red Glow
-	},
-	"Purge": {
-		"icon": ICON_PURGE,
-		"color": Color(0.2, 1.0, 1.0, 1.0), # Green Glow
-	},
-	"SysRoot": {
-		"icon": ICON_ROOT,
-		"color": Color(1.0, 0.0, 1.0, 1.0), # Gold Glow
-	}
-}
 
 @onready var sprite = $Sprite2D
 @onready var particles = $GlitchParticles
+@onready var game = GameData.item_data
 
 func setup(type: String) -> void:
 	item_type = type
 	
 	# Update Visuals based on type
-	if type in item_data:
-		var data = item_data[type]
+	if game.has(item_type):
+		var data = game[type]
 		
 		# 1. Set the Icon
 		sprite.texture = data["icon"]

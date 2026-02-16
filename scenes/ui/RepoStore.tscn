@@ -30,7 +30,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_v20v2")
 theme_override_constants/margin_left = 40
-theme_override_constants/margin_top = 40
+theme_override_constants/margin_top = 80
 theme_override_constants/margin_right = 40
 theme_override_constants/margin_bottom = 40
 

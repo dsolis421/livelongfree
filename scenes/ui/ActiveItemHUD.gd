@@ -20,6 +20,7 @@ var slots = [null, null, null, null, null, null]
 	$HBoxContainer/Slot5, 
 	$HBoxContainer/Slot6
 ]
+@onready var game = GameData
 
 func _ready() -> void:
 	add_to_group("hud")
@@ -67,27 +68,30 @@ func update_ui() -> void:
 	# var unlocked_count = GameData.unlocked_active_slots
 	var unlocked_count = get_unlocked_slot_count()
 	
+	
 	for i in range(buttons.size()):
 		var item = slots[i]
 		var btn = buttons[i]
+		
 		
 		# CASE 1: LOCKED SLOT
 		if i >= unlocked_count:
 			# btn.text = "LOCKED"
 			btn.disabled = true
 			btn.icon = ICON_LOCKED
-			btn.modulate = Color(0.5, 0.5, 0.5, 0.5) # Grayed out
+			btn.modulate = Color(1.0, 1.0, 1.0, 1.0) # Grayed out
 		# CASE 2: EMPTY UNLOCKED SLOT
 		elif item == null:
 			btn.text = ""
 			btn.disabled = true
 			btn.icon = ICON_OPEN 
-			btn.modulate = Color(1, 1, 1, 0.5) # Faint
+			btn.modulate = Color(1, 1, 1, 1.0) # Faint
 		# CASE 3: FILLED SLOT
 		else:
-			btn.text = item # Or use icons here
+			var data = game.item_data[item]
+			btn.text = "" # Or use icons here
 			btn.disabled = false
-			btn.icon = null
+			btn.icon = data.icon
 			btn.modulate = Color.WHITE
 
 func _on_slot_1_pressed() -> void:

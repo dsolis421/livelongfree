@@ -120,7 +120,6 @@ func die() -> void:
 	set_physics_process(false)
 	# Optional: Hide visuals immediately or play a death tween here
 	await get_tree().create_timer(0.1).timeout
-	if not is_inside_tree(): return
 	if GameManager.is_game_over:
 		queue_free()
 		return

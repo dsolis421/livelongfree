@@ -7,7 +7,7 @@
 bg_color = Color(0, 0, 0, 0.48235294)
 
 [sub_resource type="LabelSettings" id="LabelSettings_rnnc6"]
-font_size = 42
+font_size = 50
 font_color = Color(0, 0.9529412, 1, 1)
 
 [node name="LevelUpScreen" type="Control" unique_id=145395974]
@@ -44,7 +44,7 @@ offset_right = 132.0
 offset_bottom = 141.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 40
+theme_override_constants/separation = 80
 
 [node name="Label" type="Label" parent="VBoxContainer" unique_id=613243475]
 layout_mode = 2
@@ -54,12 +54,12 @@ horizontal_alignment = 1
 
 [node name="BtnSpeed" type="Button" parent="VBoxContainer" unique_id=681354289]
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 42
 text = "Speed Boost"
 
 [node name="BtnCooldown" type="Button" parent="VBoxContainer" unique_id=950952776]
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 42
 text = "Fire Faster"
 
 [connection signal="pressed" from="VBoxContainer/BtnSpeed" to="." method="_on_btn_speed_pressed"]

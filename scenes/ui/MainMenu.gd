@@ -8,7 +8,7 @@ extends Control
 func _ready() -> void:
 	# 1. Update Labels directly from GameData (The new source of truth)
 	GameData.load_game()
-	## audio.play_music("main_menu")
+	audio.play_music("main_menu")
 	# Display Gold
 	if has_node("MainLayout/RightColumn/StatsPanel/VBoxContainer/GoldLabel"):
 		$MainLayout/RightColumn/StatsPanel/VBoxContainer/GoldLabel.text = "Net Worth: " + str(GameData.gold)
@@ -27,7 +27,7 @@ func _ready() -> void:
 
 
 func _on_play_pressed() -> void:
-	## audio.stop_music()
+	audio.stop_music()
 	GameManager.start_new_game_from_menu()
 	
 

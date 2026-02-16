@@ -16,17 +16,18 @@ height = 1300
 fill = 1
 
 [sub_resource type="LabelSettings" id="LabelSettings_2ysvc"]
+line_spacing = 10.0
 font = ExtResource("2_2ysvc")
-font_size = 60
+font_size = 75
 font_color = Color(0, 0.9529412, 1, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_6jbdy"]
 font = ExtResource("3_xpiny")
-font_size = 24
+font_size = 32
 
 [sub_resource type="LabelSettings" id="LabelSettings_iwbf0"]
 font = ExtResource("3_xpiny")
-font_size = 24
+font_size = 32
 
 [node name="MainMenu" type="Control" unique_id=1379807569]
 layout_mode = 3
@@ -81,7 +82,7 @@ label_settings = SubResource("LabelSettings_2ysvc")
 [node name="RightColumn" type="VBoxContainer" parent="MainLayout" unique_id=1100007085]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 30
+theme_override_constants/separation = 70
 alignment = 1
 
 [node name="StatsPanel" type="PanelContainer" parent="MainLayout/RightColumn" unique_id=233822147]
@@ -114,7 +115,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("2_2ysvc")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 36
 text = "Play"
 
 [node name="RepoButton" type="Button" parent="MainLayout/RightColumn" unique_id=697541380]
@@ -124,7 +125,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("2_6jbdy")
 theme_override_fonts/font = ExtResource("2_2ysvc")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 36
 text = "Go to Repo"
 
 [node name="Label" type="Label" parent="." unique_id=1947637536]
@@ -140,4 +141,4 @@ offset_right = 84.5
 offset_bottom = -57.0
 grow_horizontal = 2
 grow_vertical = 0
-text = "Numb Thumb Studios"
+text = "Bot76 Games"
