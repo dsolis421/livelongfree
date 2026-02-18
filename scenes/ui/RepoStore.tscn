@@ -3,6 +3,11 @@
 [ext_resource type="Script" uid="uid://diefs60vu5xe6" path="res://scenes/ui/RepoStore.gd" id="1_m4dye"]
 [ext_resource type="PackedScene" uid="uid://dlvmo5lc3uwwa" path="res://scenes/ui/UpgradeItem.tscn" id="2_5m2y2"]
 [ext_resource type="Theme" uid="uid://da2h212h2jmb6" path="res://assets/fonts/MainTheme.tres" id="2_v20v2"]
+[ext_resource type="Texture2D" uid="uid://cg13vfyvc8tep" path="res://assets/LLF_buffericon.png" id="4_53mla"]
+[ext_resource type="Texture2D" uid="uid://dv6or1fwtvnkg" path="res://assets/LLF_ActiveDir.png" id="4_gpuet"]
+[ext_resource type="Texture2D" uid="uid://d01cn2l71b5v0" path="res://assets/LLF_magneticon.png" id="5_17ff2"]
+[ext_resource type="Texture2D" uid="uid://da6rrld3ge1y" path="res://assets/LLF_damageicon.png" id="6_n6j0y"]
+[ext_resource type="Texture2D" uid="uid://08r412hf57c7" path="res://assets/LLF_ricocheticon.png" id="7_08b5e"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_5m2y2"]
 font_size = 36
@@ -66,22 +71,27 @@ theme_override_constants/separation = 10
 [node name="UpgradeItem" parent="MarginContainer/VBoxContainer/ScrollContainer/UpgradeList" unique_id=1602326425 instance=ExtResource("2_5m2y2")]
 layout_mode = 2
 upgrade_key = "buffer"
+icon_texture = ExtResource("4_53mla")
 
 [node name="UpgradeItem2" parent="MarginContainer/VBoxContainer/ScrollContainer/UpgradeList" unique_id=674823722 instance=ExtResource("2_5m2y2")]
 layout_mode = 2
 upgrade_key = "magnet"
+icon_texture = ExtResource("5_17ff2")
 
 [node name="UpgradeItem3" parent="MarginContainer/VBoxContainer/ScrollContainer/UpgradeList" unique_id=698242278 instance=ExtResource("2_5m2y2")]
 layout_mode = 2
 upgrade_key = "damage"
+icon_texture = ExtResource("6_n6j0y")
 
 [node name="UpgradeItem4" parent="MarginContainer/VBoxContainer/ScrollContainer/UpgradeList" unique_id=1749609874 instance=ExtResource("2_5m2y2")]
 layout_mode = 2
 upgrade_key = "ricochet"
+icon_texture = ExtResource("7_08b5e")
 
 [node name="UpgradeItem5" parent="MarginContainer/VBoxContainer/ScrollContainer/UpgradeList" unique_id=1605219173 instance=ExtResource("2_5m2y2")]
 layout_mode = 2
 upgrade_key = "slots"
+icon_texture = ExtResource("4_gpuet")
 
 [node name="ReturnButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=2101019344]
 custom_minimum_size = Vector2(200, 60)

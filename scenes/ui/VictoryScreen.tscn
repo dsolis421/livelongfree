@@ -6,11 +6,11 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_kruri"]
 font = ExtResource("3_nysyb")
-font_size = 32
+font_size = 36
 font_color = Color(0, 0.7137255, 0.007843138, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_57v1k"]
-font_size = 15
+font_size = 22
 shadow_color = Color(0, 0, 0, 0.39215687)
 
 [node name="VictoryScreen" type="CanvasLayer" unique_id=250668618]
@@ -36,7 +36,7 @@ theme = ExtResource("2_fh53a")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=202753810]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 36
 
 [node name="Label" type="Label" parent="CenterContainer/VBoxContainer" unique_id=638911852]
 layout_mode = 2
@@ -68,14 +68,12 @@ vertical_alignment = 1
 
 [node name="NextSector" type="Button" parent="CenterContainer/VBoxContainer" unique_id=73957395]
 layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 32
 text = " Next Directory "
 
 [node name="ReturnToBase" type="Button" parent="CenterContainer/VBoxContainer" unique_id=527434688]
 layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 32
 text = " Return to Repo "
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/NextSector" to="." method="_on_button_pressed"]

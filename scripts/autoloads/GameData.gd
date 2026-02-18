@@ -2,6 +2,7 @@ extends Node
 
 const SAVE_PATH: String = "user://game_data.dat"
 const SECRET_KEY: String = "change_this_to_random_gibberish_string_99!" 
+
 const UPGRADE_CONFIG = {
 	"buffer": { 
 		"name": "Data Buffer", 
@@ -12,12 +13,14 @@ const UPGRADE_CONFIG = {
 	},
 	"magnet": {
 		"name": "Matter Siphon",
+		"description": "Extend magnetic reach for gems and coins.",
 		"base_cost": 10,
 		"cost_multiplier": 1.2, 
 		"max_level": 20
 	},
 	"damage": {
 		"name": "Weapon Overclock",
+		"description": "Weapon does additional damage.",
 		"base_cost": 10,
 		"cost_multiplier": 2.0, 
 		"max_level": 5
@@ -26,13 +29,13 @@ const UPGRADE_CONFIG = {
 		"name": "Expansion Slot",
 		"description": "Unlock a new Active Item Slot.",
 		"fixed_costs": [10,15,20,25,30],
-		"max_level": 5        # 1 Base + 5 Upgrades = 6 Total
+		"max_level": 5
 	},
 	"ricochet": {
 		"name": "Chain Ricochet",
 		"description": "Enable chain ricochet.",
 		"fixed_costs": [10,15,20],
-		"max_level": 3        # 1 Base + 3 Upgrades
+		"max_level": 3
 	}
 }
 

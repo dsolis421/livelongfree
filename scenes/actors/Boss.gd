@@ -220,12 +220,13 @@ func die() -> void:
 		var offset = Vector2(randf_range(-5, 5), randf_range(-5, 5))
 		shake_tween.tween_property(visual, "position", offset, 0.05)
 	AudioManager.play_sfx("supernova")
+	visuals.play_death_animation()
 	# Wait for the "Boom" (adjusted for time_scale)
 	# The 'true' arguments allow the timer to ignore the time_scale slowdown
 	await get_tree().create_timer(3.5, true, false, true).timeout
 	
 	# 7. THE EXPLOSION	
-	visuals.play_death_animation()
+	
 	GameManager.trigger_supernova() # Triggers the UI white flash
 	visual.visible = false          # Hide the boss sprite
 	Engine.time_scale = 1.0         # Restore normal game speed
