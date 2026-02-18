@@ -71,7 +71,10 @@ func _ready() -> void:
 		hp = int(hp * GameManager.run_enemy_hp_mult)
 		
 		# Apply Damage Bonus (Slots Curse)
-		damage = damage + GameManager.run_enemy_dmg_bonus
+		# damage = damage + GameManager.run_enemy_dmg_bonus
+		
+		# Apply Movement Mult (Rico Curse)
+		movement_speed = movement_speed + GameManager.run_enemy_speed_mod
 
 func _physics_process(delta: float) -> void:
 	if player == null: return
@@ -89,7 +92,7 @@ func _physics_process(delta: float) -> void:
 	
 	# 2. Avoidance Logic
 	var avoidance = Vector2.ZERO
-	var avoidance_force = 15.0 
+	var avoidance_force = 30.0 
 	
 	var left_hit = left_ray.is_colliding()
 	var right_hit = right_ray.is_colliding()

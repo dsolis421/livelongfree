@@ -15,8 +15,8 @@ signal extraction_requested
 
 # --- CONFIGURATION ---
 const STARTING_XP = 0
-const STARTING_TARGET_XP = 100
-const STAGE_TIME_LIMIT: float = 120.0
+const STARTING_TARGET_XP = 200
+const STAGE_TIME_LIMIT: float = 60.0
 
 # --- SESSION DATA ---
 var kills: int = 0
@@ -27,9 +27,11 @@ var level: int = 1
 
 # --- RUN MODIFIERS (SCALING) ---
 var run_enemy_hp_mult: float = 1.0
-var run_enemy_dmg_bonus: int = 0
+# var run_enemy_dmg_bonus: int = 0
 var run_spawn_timer_mod: float = 0.0
 var run_max_time_bonus: float = 0.0
+var run_enemy_speed_mod: int = 0
+var run_xp_level_mult: float = 1.0
 
 # --- INTERNAL FLAGS ---
 var needs_full_reset: bool = true
@@ -74,9 +76,10 @@ func start_mission_logic() -> void:
 		kills = 0
 		level = 1
 		experience = STARTING_XP
-		target_experience = STARTING_TARGET_XP
+		target_experience = STARTING_TARGET_XP * run_xp_level_mult
 		gold_current_run = 0
 		needs_full_reset = false # Done!
+		# print("Start Mission XP: ", STARTING_XP, " of ", target_experience)
 	else:
 		print(" > Continuing Career (Kills: ", kills, ")")
 
@@ -108,8 +111,9 @@ func level_up() -> void:
 	experience -= target_experience
 	if experience < 0: experience = 0
 	level += 1
-	target_experience = int(target_experience * 1.2)
+	target_experience = int(target_experience * 1.2) * run_xp_level_mult
 	print("UPGRADE READY! Tier: ", level)
+	# print("NEW XP : ", experience, " of ", target_experience)
 	level_up_triggered.emit(level)
 	xp_updated.emit(experience, target_experience)
 
@@ -197,17 +201,23 @@ func calculate_difficulty() -> void:
 	var dmg_lvl = GameData.get_upgrade_level("damage")
 	run_spawn_timer_mod = dmg_lvl * 0.1 
 	
-	# 3. RICOCHET -> ENEMY HP (Linear Scaling)
-	# Level 1 = 2x HP, Level 2 = 3x HP, etc.
+	# 3. RICOCHET -> ENEMY HP (Linear Scaling) # ENEMY MOVEMENT?
+	# +5 Enemy Movement Per Ric Level
 	var ric_lvl = GameData.get_upgrade_level("ricochet")
-	run_enemy_hp_mult = 1.0 + (ric_lvl * 1.0) 
+	run_enemy_speed_mod = ric_lvl * 5
 	
-	# 4. SLOTS -> ENEMY DAMAGE (+1 per level)
+	# 4. SIPHON -> XP LEVEL (+10% per level)
+	var xp_lvl = GameData.get_upgrade_level("magnet")
+	run_xp_level_mult = 1 + (xp_lvl * .01)
+	
+	# 5. SLOTS -> ENEMY HP (+1 per 2 levels)
+	# 2x HP for every 2 slots opened.
 	var slot_lvl = GameData.get_upgrade_level("slots")
-	run_enemy_dmg_bonus = slot_lvl * 1 
+	run_enemy_hp_mult = slot_lvl * 0.5
 
 	print("--- DIFFICULTY CALCULATED ---")
 	print("Time Bonus: +", run_max_time_bonus)
 	print("Spawn Mod: -", run_spawn_timer_mod)
-	print("HP Mult: ", run_enemy_hp_mult)
-	print("Dmg Bonus: +", run_enemy_dmg_bonus)
+	print("HP Mult: x", run_enemy_hp_mult)
+	print("Speed Mod: +", run_enemy_speed_mod)
+	print("XP Mod: x", run_xp_level_mult)

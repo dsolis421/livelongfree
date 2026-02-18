@@ -198,13 +198,14 @@ func take_damage(amount: int) -> void:
 	# 2. Report new HP to the Manager
 	# Note: If we died, hp is 0, which is fine to report.
 	GameManager.report_boss_damage(hp)
-	if hp <= 0: die()
+	if hp <= 0:
+		# Disable Physics immediately (Stop hurting the player)
+		$CollisionShape2D.set_deferred("disabled", true)
+		set_physics_process(false) 
+		die()
 	
 func die() -> void:
 	print("TIME FOR BOSS TO DIE!")
-	# Disable Physics immediately (Stop hurting the player)
-	$CollisionShape2D.set_deferred("disabled", true)
-	set_physics_process(false)
 	if brain_timer: brain_timer.stop()
 	# --- THE CINEMATIC SEQUENCE ---
 	# Slow Motion Start

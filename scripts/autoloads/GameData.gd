@@ -1,6 +1,6 @@
 extends Node
 
-const SAVE_PATH: String = "user://game_data.dat"
+const SAVE_PATH: String = "user://tobee_data.dat"
 const SECRET_KEY: String = "change_this_to_random_gibberish_string_99!" 
 
 const UPGRADE_CONFIG = {
