@@ -13,11 +13,12 @@ func _ready() -> void:
 	if has_node("MainLayout/RightColumn/StatsPanel/VBoxContainer/GoldLabel"):
 		$MainLayout/RightColumn/StatsPanel/VBoxContainer/GoldLabel.text = "Net Worth: " + str(GameData.gold)
 	
-	# Display High Kills (Your new Score)
-	# Assuming you have a label named 'KillsLabel' or similar
 	if has_node("MainLayout/RightColumn/StatsPanel/VBoxContainer/KillsLabel"):
 		$MainLayout/RightColumn/StatsPanel/VBoxContainer/KillsLabel.text = "Most Kills: " + str(GameData.high_kills)
 
+	if has_node("MainLayout/RightColumn/StatsPanel/VBoxContainer/SectorsLabel"):
+		$MainLayout/RightColumn/StatsPanel/VBoxContainer/SectorsLabel.text = "Max Sectors: " + str(GameData.max_sectors)
+		
 	# 3. Connect Play Button
 	var play_btn = $MainLayout/RightColumn/PlayButton
 	if not play_btn.pressed.is_connected(_on_play_pressed):
@@ -34,3 +35,6 @@ func _on_play_pressed() -> void:
 func _on_repo_pressed():
 	# Go to the Store Scene
 	get_tree().change_scene_to_file("res://scenes/ui/RepoStore.tscn")
+	
+func _on_medals_button_pressed():
+	get_tree().change_scene_to_file("res://scenes/ui/AchievementsMenu.tscn")

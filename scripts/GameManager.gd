@@ -2,6 +2,7 @@ extends Node
 
 @onready var audio = AudioManager
 
+
 # --- SIGNALS ---
 signal xp_updated(current: int, target: int)
 signal level_up_triggered(level: int)
@@ -21,9 +22,12 @@ const STAGE_TIME_LIMIT: float = 60.0
 # --- SESSION DATA ---
 var kills: int = 0
 var gold_current_run: int = 0
+var sectors_current_run: int = 0
 var experience: int = STARTING_XP
 var target_experience: int = STARTING_TARGET_XP
 var level: int = 1
+# var current_sector: int = 1
+var achievement_popup: Node = null
 
 # --- RUN MODIFIERS (SCALING) ---
 var run_enemy_hp_mult: float = 1.0
@@ -70,6 +74,7 @@ func continue_to_next_sector() -> void:
 func start_mission_logic() -> void:
 	print("--- STARTING MISSION LOGIC ---")
 	calculate_difficulty()
+	check_achievements()
 	# A. Handle the "New Game" vs "Next Level" decision here
 	if needs_full_reset:
 		print(" > Performing Full Career Reset")
@@ -78,6 +83,7 @@ func start_mission_logic() -> void:
 		experience = STARTING_XP
 		target_experience = STARTING_TARGET_XP * run_xp_level_mult
 		gold_current_run = 0
+		sectors_current_run = 0
 		needs_full_reset = false # Done!
 		# print("Start Mission XP: ", STARTING_XP, " of ", target_experience)
 	else:
@@ -127,7 +133,7 @@ func spawn_final_boss() -> void:
 	boss_spawn_requested.emit()
 
 func on_boss_died() -> void:
-	print("!!! BOSS DEFEATED - SECTOR CLEARED !!!")
+	print("GameManager.on_boss_died")
 	is_boss_active = false
 	audio.stop_loop("boss_loop")
 	boss_cleared_ui.emit()
@@ -147,6 +153,7 @@ func start_extraction_sequence() -> void:
 func on_extraction_complete() -> void:
 	print("VICTORY! Loading Win Screen...")
 	audio.stop_loop("agent_drone", true)
+	sectors_current_run += 1
 	var win_screen = load("res://scenes/ui/VictoryScreen.tscn").instantiate()
 	get_tree().root.add_child(win_screen)
 	get_tree().paused = true
@@ -172,7 +179,10 @@ func save_game() -> void:
 
 	if kills > GameData.high_kills:
 		GameData.high_kills = kills
-
+		
+	if sectors_current_run > GameData.max_sectors:
+		GameData.max_sectors = sectors_current_run
+		
 	GameData.save_game()
 	
 # --- PLAYER DEATH & MENU LOGIC ---
@@ -213,7 +223,7 @@ func calculate_difficulty() -> void:
 	# 5. SLOTS -> ENEMY HP (+1 per 2 levels)
 	# 2x HP for every 2 slots opened.
 	var slot_lvl = GameData.get_upgrade_level("slots")
-	run_enemy_hp_mult = slot_lvl * 0.5
+	run_enemy_hp_mult = 1.0 + (slot_lvl * 0.5)
 
 	print("--- DIFFICULTY CALCULATED ---")
 	print("Time Bonus: +", run_max_time_bonus)
@@ -221,3 +231,58 @@ func calculate_difficulty() -> void:
 	print("HP Mult: x", run_enemy_hp_mult)
 	print("Speed Mod: +", run_enemy_speed_mod)
 	print("XP Mod: x", run_xp_level_mult)
+
+func check_achievements() -> void:
+	# 1. CHECK: Clear 10 Sectors
+	# Using 'level' variable (assuming level 1 = Sector 1)
+	if sectors_current_run >= 1:
+		unlock_achievement("sector_10")
+
+	# 2. CHECK: Max Damage
+	if is_upgrade_maxed("damage"):
+		unlock_achievement("max_damage")
+
+	# 3. CHECK: Max Siphon
+	if is_upgrade_maxed("magnet"):
+		unlock_achievement("max_siphon")
+		
+	# 4. CHECK: Max Ricochet
+	if is_upgrade_maxed("ricochet"):
+		unlock_achievement("max_ricochet")
+		
+	# 5. CHECK: Max Slots
+	if GameData.unlocked_active_slots >= 6: # Assuming 3 is max
+		unlock_achievement("max_slots")
+		
+	# 6. CHECK: Max Buffer
+	if is_upgrade_maxed("buffer"):
+		unlock_achievement("max_buffer")
+
+func is_upgrade_maxed(key: String) -> bool:
+	if not GameData.UPGRADE_CONFIG.has(key): return false
+	
+	var current_lvl = GameData.get_upgrade_level(key)
+	var max_lvl = GameData.UPGRADE_CONFIG[key].max_level
+	
+	return current_lvl >= max_lvl
+	
+func unlock_achievement(key: String) -> void:
+	# 1. If we already have it, stop.
+	if key in GameData.unlocked_achievements:
+		return
+		
+	# 2. Unlock it
+	print("ACHIEVEMENT UNLOCKED: " + key)
+	GameData.unlocked_achievements.append(key)
+	GameData.save_game() # Save immediately so they don't lose it if they crash
+	
+	# 3. Show UI Notification (We will build this next)
+	show_achievement_popup(key)
+
+func show_achievement_popup(key: String):
+	print("ATTEMPTING TO SHOW POPUP FOR: ", key)
+	if achievement_popup:
+		print(" > POPUP FOUND")
+		achievement_popup.show_medal(key)
+	else:
+		print(" > POPUP ERROR")

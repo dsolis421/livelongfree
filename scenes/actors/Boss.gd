@@ -2,6 +2,8 @@ extends Enemy
 
 class_name Boss
 
+signal boss_died
+
 # --- THE BRAIN ---
 enum State { CHASE, ORBIT, DASH, ATTACK }
 var current_state: State = State.CHASE
@@ -13,6 +15,7 @@ var is_dashing_active: bool = false # Acts as a safety lock during the "Wind Up"
 # --- COMBAT SETTINGS ---
 @export var boss_bullet_scene: PackedScene
 var is_attacking: bool = false
+var is_dead: bool = false
 # Make sure you added the Timer node to the scene and named it "BrainTimer"!
 @onready var brain_timer = $BrainTimer
 @onready var visuals = $TesseractVisuals
@@ -190,6 +193,7 @@ func spawn_bullet(dir: Vector2) -> void:
 	bullet.setup(dir)
 	
 func take_damage(amount: int) -> void:
+	if is_dead: return
 	# 1. Take the damage (using parent logic)
 	super.take_damage(amount)
 	if visuals.has_method("play_hurt_animation"):
@@ -198,14 +202,19 @@ func take_damage(amount: int) -> void:
 	# 2. Report new HP to the Manager
 	# Note: If we died, hp is 0, which is fine to report.
 	GameManager.report_boss_damage(hp)
-	if hp <= 0:
+	#if hp <= 0:
 		# Disable Physics immediately (Stop hurting the player)
-		$CollisionShape2D.set_deferred("disabled", true)
-		set_physics_process(false) 
-		die()
+	#	$CollisionShape2D.set_deferred("disabled", true)
+	#	set_physics_process(false) 
+	#	die()
 	
 func die() -> void:
-	print("TIME FOR BOSS TO DIE!")
+	if is_dead: return
+	is_dead = true
+	print("Boss.die()")
+	# Disable Physics immediately (Stop hurting the player)
+	$CollisionShape2D.set_deferred("disabled", true)
+	set_physics_process(false) 
 	if brain_timer: brain_timer.stop()
 	# --- THE CINEMATIC SEQUENCE ---
 	# Slow Motion Start
@@ -214,7 +223,7 @@ func die() -> void:
 	var tween = create_tween().set_parallel(true)
 	tween.tween_property(visual, "modulate", Color(10, 10, 10, 1), 1.5) # Super bright white
 	tween.tween_property(visual, "scale", Vector2(1.5, 1.5), 1.5)       # Expand
-	
+	boss_died.emit()
 	# Screen Shake
 	var shake_tween = create_tween()
 	for i in range(10):

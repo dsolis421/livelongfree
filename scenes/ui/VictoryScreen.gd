@@ -3,6 +3,7 @@ extends CanvasLayer
 # --- UI REFERENCES ---
 # We use @onready because we know the structure now.
 # Make sure these node names match your Scene Tree exactly!
+@onready var sectors_label: Label = $CenterContainer/VBoxContainer/SectorsLabel
 @onready var run_stats_label: Label = $CenterContainer/VBoxContainer/RunStatsLabel
 @onready var gold_label: Label = $CenterContainer/VBoxContainer/GoldLabel
 @onready var total_label: Label = $CenterContainer/VBoxContainer/TotalLabel
@@ -10,7 +11,11 @@ extends CanvasLayer
 @onready var return_btn: Button = $CenterContainer/VBoxContainer/ReturnToBase
 
 func _ready() -> void:
+	GameManager.check_achievements()
 	# 1. DISPLAY STATS
+	if sectors_label:
+		sectors_label.text = "Sectors Cleared: " + str(GameManager.sectors_current_run)
+	
 	if run_stats_label:
 		run_stats_label.text = "Threats Neutralized: " + str(GameManager.kills)
 	

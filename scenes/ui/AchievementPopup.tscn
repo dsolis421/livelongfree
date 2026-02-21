@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://dq4tnlq6sdxft"]
+
+[ext_resource type="Script" uid="uid://bqk2502xihrlf" path="res://scenes/ui/AchievementPopup.gd" id="1_gsbuy"]
+
+[sub_resource type="Animation" id="Animation_gsbuy"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelContainer:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-150, -0.0005, 0, 0.0005, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_fh4vq"]
+resource_name = "slide_in"
+length = 4.0
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelContainer:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2, 2),
+"points": PackedFloat32Array(-150, -0.0005, 0, 0.0005, 0, 150, -0.083333336, -41.666668, 0, 0, 150, -0.5, 0, 0, 0, -150, -0.083333336, 41.666668, 0, 0),
+"times": PackedFloat32Array(0, 0.5, 3.5, 4)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8kgyf"]
+_data = {
+&"RESET": SubResource("Animation_gsbuy"),
+&"slide_in": SubResource("Animation_fh4vq")
+}
+
+[node name="AchievementPopup" type="Control" unique_id=178355645]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+grow_horizontal = 2
+script = ExtResource("1_gsbuy")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=2042811901]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = -150.0
+offset_right = 20.0
+offset_bottom = -100.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer" unique_id=711414520]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="PanelContainer/HBoxContainer" unique_id=1643439007]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer" unique_id=637371712]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer" unique_id=332768331]
+layout_mode = 2
+
+[node name="Desc" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer" unique_id=1722724403]
+layout_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=340509077]
+libraries/ = SubResource("AnimationLibrary_8kgyf")

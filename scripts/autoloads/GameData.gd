@@ -42,6 +42,7 @@ const UPGRADE_CONFIG = {
 # --- PERSISTENT VARIABLES ---
 var gold: int = 0
 var high_kills: int = 0
+var max_sectors: int = 0
 var upgrades: Dictionary = {
 	"buffer": 0,
 	"magnet": 0,
@@ -72,6 +73,43 @@ var item_data = {
 	}
 }
 
+# --- ACHIEVEMENTS ---
+# The "Static" Data (What they are)
+var ACHIEVEMENT_DATA = {
+	"sector_10": {
+		"name": "Marathon Runner",
+		"description": "Clear 10 Sectors in a single run.",
+		"icon": preload("res://kat7icon.png") # Placeholder
+	},
+	"max_damage": {
+		"name": "Glass Cannon",
+		"description": "Reach Max Level on Damage Overclock.",
+		"icon": preload("res://kat7icon.png")
+	},
+	"max_siphon": {
+		"name": "Vampire",
+		"description": "Reach Max Level on Siphon.",
+		"icon": preload("res://kat7icon.png")
+	},
+	"max_ricochet": {
+		"name": "Chain Reaction",
+		"description": "Reach Max Level on Ricochet.",
+		"icon": preload("res://kat7icon.png")
+	},
+	"max_slots": {
+		"name": "Fully Loaded",
+		"description": "Unlock all Active Item Slots.",
+		"icon": preload("res://kat7icon.png")
+	},
+	"max_buffer": {
+		"name": "Time Lord",
+		"description": "Reach Max Level on Buffer.",
+		"icon": preload("res://kat7icon.png")
+	}
+}
+
+var unlocked_achievements: Array = []
+
 func _ready() -> void:
 	# Print path for debugging
 	print("GameData ready. Save path: ", ProjectSettings.globalize_path(SAVE_PATH))
@@ -81,7 +119,7 @@ func _ready() -> void:
 # We manually combine values so the order never changes
 func generate_content_string(data: Dictionary) -> String:
 	# 1. Force strict order for the base stats
-	var base_str = str(int(data.get("gold", 0))) + str(int(data.get("high_kills", 0)))
+	var base_str = str(int(data.get("gold", 0))) + str(int(data.get("high_kills", 0))) + str(int(data.get("max_sectors", 0)))
 	
 	# 2. Force strict order for upgrades (Alphabetical or Fixed)
 	# We manually pull each known key. Do not trust "str(dict)"!
@@ -92,13 +130,22 @@ func generate_content_string(data: Dictionary) -> String:
 	upgrade_str += str(int(ups.get("buffer", 0)))
 	upgrade_str += str(int(ups.get("slots", 0)))
 	upgrade_str += str(int(ups.get("ricochet", 0)))
+	
+	var achs = data.get("unlocked_achievements", []).duplicate()
+	achs.sort()
+	var ach_str = ""
+	for medal in achs:
+		ach_str += str(medal)
+		
 	# 3. Combine with Secret Key
-	return base_str + upgrade_str + SECRET_KEY
+	return base_str + upgrade_str + ach_str + SECRET_KEY
 
 func save_game() -> void:
 	var data = {
 		"gold": gold,
 		"high_kills": high_kills,
+		"max_sectors": max_sectors,
+		"unlocked_achievements": unlocked_achievements,
 		"upgrades": upgrades
 	}
 	
@@ -151,8 +198,9 @@ func load_game() -> void:
 	
 	gold = int(clean_data.get("gold", 0))
 	high_kills = int(clean_data.get("high_kills", 0))
+	max_sectors = int(clean_data.get("max_sectors", 0))
 	upgrades = clean_data.get("upgrades", {})
-	
+	unlocked_achievements = clean_data.get("unlocked_achievements", [])
 	print("Save Loaded Successfully. Gold: ", gold, " Kills: ", high_kills)
 
 func add_gold(amount: int) -> void:

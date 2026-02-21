@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://diefs60vu5xe6" path="res://scenes/ui/RepoStore.gd" id="1_m4dye"]
 [ext_resource type="PackedScene" uid="uid://dlvmo5lc3uwwa" path="res://scenes/ui/UpgradeItem.tscn" id="2_5m2y2"]
+[ext_resource type="PackedScene" uid="uid://dq4tnlq6sdxft" path="res://scenes/ui/AchievementPopup.tscn" id="2_17ff2"]
 [ext_resource type="Theme" uid="uid://da2h212h2jmb6" path="res://assets/fonts/MainTheme.tres" id="2_v20v2"]
 [ext_resource type="Texture2D" uid="uid://cg13vfyvc8tep" path="res://assets/LLF_buffericon.png" id="4_53mla"]
 [ext_resource type="Texture2D" uid="uid://dv6or1fwtvnkg" path="res://assets/LLF_ActiveDir.png" id="4_gpuet"]
@@ -18,6 +19,9 @@ font_color = Color(1, 0.84313726, 0, 1)
 
 [node name="RepoStore" type="CanvasLayer" unique_id=2119109134]
 script = ExtResource("1_m4dye")
+
+[node name="AchievementPopup" parent="." unique_id=178355645 instance=ExtResource("2_17ff2")]
+z_index = 15
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=789620407]
 anchors_preset = 15

@@ -109,6 +109,13 @@ label_settings = SubResource("LabelSettings_iwbf0")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="SectorsLabel" type="Label" parent="MainLayout/RightColumn/StatsPanel/VBoxContainer" unique_id=506935431]
+layout_mode = 2
+text = "Max Sectors: 0"
+label_settings = SubResource("LabelSettings_iwbf0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="PlayButton" type="Button" parent="MainLayout/RightColumn" unique_id=833856683]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
@@ -126,7 +133,17 @@ size_flags_vertical = 4
 theme = ExtResource("2_6jbdy")
 theme_override_fonts/font = ExtResource("2_2ysvc")
 theme_override_font_sizes/font_size = 36
-text = "Go to Repo"
+text = "Code Repo"
+
+[node name="MedalsButton" type="Button" parent="MainLayout/RightColumn" unique_id=1467271715]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("2_6jbdy")
+theme_override_fonts/font = ExtResource("2_2ysvc")
+theme_override_font_sizes/font_size = 36
+text = "Medals"
 
 [node name="Label" type="Label" parent="." unique_id=1947637536]
 layout_mode = 1
@@ -142,3 +159,5 @@ offset_bottom = -57.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "Bot76 Games"
+
+[connection signal="pressed" from="MainLayout/RightColumn/MedalsButton" to="." method="_on_medals_button_pressed"]
