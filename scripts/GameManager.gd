@@ -125,7 +125,7 @@ func level_up() -> void:
 
 # --- BOSS & ENDING LOGIC ---
 func spawn_final_boss() -> void:
-	print("!!! TIME LIMIT REACHED - SUMMONING BOSS !!!")
+	print("Spawn Final Boss")
 	boss_has_spawned = true
 	is_boss_active = true
 	audio.start_loop("boss_loop")
@@ -251,7 +251,7 @@ func check_achievements() -> void:
 		unlock_achievement("max_ricochet")
 		
 	# 5. CHECK: Max Slots
-	if GameData.unlocked_active_slots >= 6: # Assuming 3 is max
+	if GameData.unlocked_active_slots >= 5: # Assuming 3 is max
 		unlock_achievement("max_slots")
 		
 	# 6. CHECK: Max Buffer
@@ -272,7 +272,7 @@ func unlock_achievement(key: String) -> void:
 		return
 		
 	# 2. Unlock it
-	print("ACHIEVEMENT UNLOCKED: " + key)
+	print("Unlock achievement: " + key)
 	GameData.unlocked_achievements.append(key)
 	GameData.save_game() # Save immediately so they don't lose it if they crash
 	
@@ -280,7 +280,7 @@ func unlock_achievement(key: String) -> void:
 	show_achievement_popup(key)
 
 func show_achievement_popup(key: String):
-	print("ATTEMPTING TO SHOW POPUP FOR: ", key)
+	print("Medal popup for: ", key)
 	if achievement_popup:
 		print(" > POPUP FOUND")
 		achievement_popup.show_medal(key)

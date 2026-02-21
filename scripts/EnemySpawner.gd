@@ -56,8 +56,6 @@ func spawn_boss() -> void:
 	if boss_scene == null:
 		print("ERROR: No Boss Scene assigned!")
 		return
-
-	print("--- SPAWNER RECEIVED BOSS COMMAND ---")
 	
 	var boss = boss_scene.instantiate()
 	var player = get_tree().get_first_node_in_group("player")

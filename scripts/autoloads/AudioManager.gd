@@ -59,6 +59,7 @@ var sfx_library: Dictionary = {
 	# "ui_click": preload("res://audio/sfx/ui_click.ogg"),
 	# "ui_hover": preload("res://audio/sfx/ui_hover.ogg"),
 	# "ui_back": preload("res://audio/sfx/ui_back.ogg"),
+	"new_medal": preload("res://audio/sfx/LLF_medal.ogg")
 }
 
 ## Music tracks

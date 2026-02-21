@@ -5,6 +5,7 @@ extends Control
 @onready var title = $PanelContainer/HBoxContainer/VBoxContainer/Title
 @onready var desc = $PanelContainer/HBoxContainer/VBoxContainer/Desc
 @onready var icon = $PanelContainer/HBoxContainer/Icon
+@onready var audio = AudioManager
 
 func _ready() -> void:
 	# 1. REGISTER MYSELF
@@ -27,6 +28,7 @@ func show_medal(key: String):
 	# The 'stop()' ensures that if we are already playing one, 
 	# it resets to the start immediately.
 	anim.stop()
+	audio.play_sfx("new_medal")
 	anim.play("slide_in")
 
 func _exit_tree() -> void:
