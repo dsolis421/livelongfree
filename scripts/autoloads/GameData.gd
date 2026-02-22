@@ -50,11 +50,12 @@ var upgrades: Dictionary = {
 	"slots": 0,
 	"ricochet":0
 }
-var unlocked_active_slots: int = 1
+# var unlocked_active_slots: int = 1
 
 const ICON_PURGE = preload("res://assets/LLF_purge.png")
 const ICON_METEOR = preload("res://assets/LLF_sigkill.png")
 const ICON_ROOT = preload("res://assets/LLF_Root.png")
+const ICON_DEFRAG = preload("res://assets/LLF_defrag.png")
 
 # Visual settings for each type (Color for now, Texture later)
 # We use a Dictionary to map "Type Name" -> Color
@@ -70,6 +71,10 @@ var item_data = {
 	"SysRoot": {
 		"icon": ICON_ROOT,
 		"color": Color(1.0, 0.0, 1.0, 1.0), # Gold Glow
+	},
+	"Defrag": {
+		"icon": ICON_DEFRAG,
+		"color": Color(0.0, 1.0, 0.5, 1.0), # White Glow
 	}
 }
 

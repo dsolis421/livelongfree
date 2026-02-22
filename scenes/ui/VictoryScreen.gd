@@ -35,11 +35,15 @@ func _ready() -> void:
 	
 	if return_btn:
 		return_btn.pressed.connect(_on_return_pressed)
-		
+
 	# 3. MOUSE HANDLING
 	# Ensure the mouse is visible so they can click buttons
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-
+	
+	await get_tree().process_frame
+	
+	GameManager.check_achievements()
+	
 func _on_next_mission_pressed() -> void:
 	print("Loading Next Mission...")
 	

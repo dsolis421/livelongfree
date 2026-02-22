@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://ccgnc4ke7lvi"]
+
+[ext_resource type="Script" uid="uid://bokwrv5mbpy2e" path="res://scenes/combat/DefragProjectile.gd" id="1_qdgij"]
+
+[sub_resource type="Gradient" id="Gradient_qdgij"]
+offsets = PackedFloat32Array(0.071428575, 0.7012987)
+colors = PackedColorArray(0, 0, 0, 1, 0, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_43lc1"]
+gradient = SubResource("Gradient_qdgij")
+width = 100
+height = 100
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_43lc1"]
+radius = 50.0
+
+[node name="DefragProjectile" type="Area2D" unique_id=1094827783]
+collision_mask = 5
+script = ExtResource("1_qdgij")
+spin_speed = 5.0
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=527763173]
+texture = SubResource("GradientTexture2D_43lc1")
+texture_offset = Vector2(50, 50)
+polygon = PackedVector2Array(0, -48, 16, -32, 16, -16, 8, -8, -8, -32, -40, -24, -48, 0, -32, -16, -16, -16, -8, -8, -32, 8, -24, 40, 0, 48, -16, 32, -16, 16, -8, 8, 8, 32, 40, 24, 48, 0, 32, 16, 16, 16, 8, 8, 32, -8, 24, -40)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1351039912]
+shape = SubResource("CircleShape2D_43lc1")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=769223433]

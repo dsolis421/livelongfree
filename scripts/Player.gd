@@ -5,11 +5,13 @@ signal player_died
 
 @onready var audio = AudioManager
 
+# --- NEW COMPONENT ---
+@onready var weapon_manager = $WeaponManager
+
 # --- SCENES ---
 @export var projectile_scene: PackedScene
 @export var game_over_screen: PackedScene
-@export var explosion_scene: PackedScene
-@export var purge_scene: PackedScene
+# (Purge and Explosion scenes were moved to WeaponManager)
 
 # --- NODES ---
 @onready var gun_timer = $GunTimer
@@ -22,13 +24,6 @@ signal player_died
 @export var max_hp: float = 1.0  
 var current_hp: float
 
-# --- SPELL CONFIGURATION ---
-@export_group("Spell Stats")
-@export var invincible_duration: float = 5.0
-@export var purge_damage: int = 50
-@export var meteor_damage: int = 10
-@export var meteor_impact_radius: float = 150.0 
-
 # --- SCREEN SHAKE ---
 @export var shake_decay: float = 5.0  
 @export var meteor_shake_intensity: float = 8.0
@@ -38,6 +33,7 @@ var damage_multiplier: float = 1.0
 var cooldown_modifier: float = 1.0 
 var is_invincible: bool = false
 var current_shake_strength: float = 0.0
+var last_facing_direction: Vector2 = Vector2.RIGHT # Needed for Defrag
 
 const BASE_COOLDOWN_TIME: float = 0.5 
 const MIN_COOLDOWN_MODIFIER: float = 0.2 
@@ -76,8 +72,6 @@ func _apply_global_upgrades() -> void:
 
 # --- PHYSICS LOOP ---
 func _physics_process(delta: float) -> void:
-	# Cleaned up: No more update_animation() call.
-	# The Visuals node handles animation automatically in its own _process().
 	move()
 	handle_screen_shake(delta)
 
@@ -86,13 +80,12 @@ func move() -> void:
 	
 	if direction.length() > 0:
 		velocity = direction * movement_speed
+		# Cache the last direction for weapons like Defrag that shoot straight!
+		last_facing_direction = direction.normalized() 
 	else:
 		velocity = Vector2.ZERO
 
 	move_and_slide()
-
-# Removed update_animation() entirely. 
-# The new HoverBotAnimator handles looking at mouse and walking bob.
 
 func get_game_input() -> Vector2:
 	var input = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
@@ -103,7 +96,6 @@ func get_game_input() -> Vector2:
 	return input
 
 # --- COMBAT LOGIC ---
-
 func take_damage(amount: float = 1.0) -> void:
 	if GameManager.is_game_over: return
 	
@@ -118,7 +110,6 @@ func take_damage(amount: float = 1.0) -> void:
 
 func die() -> void:
 	set_physics_process(false)
-	# Optional: Hide visuals immediately or play a death tween here
 	await get_tree().create_timer(0.1).timeout
 	if GameManager.is_game_over:
 		queue_free()
@@ -163,24 +154,22 @@ func _on_gun_timer_timeout() -> void:
 	# 2. Stats
 	bullet.damage = 1.0 * damage_multiplier 
 	
-	# --- NEW: APPLY RICOCHET UPGRADE ---
+	# 3. Apply Ricochet
 	var ricochet_level = GameData.get_upgrade_level("ricochet")
 	if ricochet_level > 0:
 		bullet.bounce_count = ricochet_level
-		# Optional: Set range if not hardcoded in Projectile
 		bullet.bounce_range = 400.0 
 	
-	# 3. Direction
+	# 4. Direction
 	var direction = (target.global_position - global_position).normalized()
 	bullet.direction = direction
 	bullet.rotation = direction.angle()
 	
-	# 4. Audio
+	# 5. Audio
 	if audio:
 		audio.play_sfx("weapon_fire")
 
 # --- LEVEL UP & POWER UPS ---
-
 func apply_upgrade(type: String) -> void:
 	match type:
 		"movement_speed":
@@ -193,74 +182,17 @@ func apply_upgrade(type: String) -> void:
 				cooldown_modifier = MIN_COOLDOWN_MODIFIER
 			$GunTimer.wait_time = BASE_COOLDOWN_TIME * cooldown_modifier
 
+# ALL POWER WEAPON LOGIC IS DELEGATED HERE!
 func activate_power_weapon(type: String) -> void:
-	match type:
-		"SysRoot": cast_invincible()
-		"Purge": cast_purge()
-		"SigKill": cast_meteor()
-
-func cast_invincible() -> void:
-	if is_invincible: return
-	is_invincible = true
-	var original_modulate = self.modulate
-	self.modulate = Color(2, 2, 0, 1) # Turns the whole bot Gold
-	await get_tree().create_timer(invincible_duration).timeout
-	is_invincible = false
-	self.modulate = original_modulate
-
-func cast_purge() -> void:
-	if purge_scene:
-		var purge_vfx = purge_scene.instantiate()
-		get_tree().root.add_child(purge_vfx) 
-	var enemies = get_tree().get_nodes_in_group("enemy")
-	for enemy in enemies:
-		if enemy.has_method("take_damage"):
-			enemy.take_damage(purge_damage)
-
-func cast_meteor() -> void:
-	audio.play_sfx("sigkill")
-	for i in range(3):
-		fire_one_meteor()
-		await get_tree().create_timer(0.2).timeout
-
-func fire_one_meteor() -> void:
-	if not explosion_scene: return
-	var all_enemies = get_tree().get_nodes_in_group("enemy")
-	if all_enemies.is_empty(): return
-		
-	var visible_enemies = []
-	var screen_size = get_viewport_rect().size
-	var player_pos = global_position
-	var max_dx = (screen_size.x / 2) + 100 
-	var max_dy = (screen_size.y / 2) + 100
-	
-	for enemy in all_enemies:
-		var dx = abs(enemy.global_position.x - player_pos.x)
-		var dy = abs(enemy.global_position.y - player_pos.y)
-		if dx < max_dx and dy < max_dy:
-			visible_enemies.append(enemy)
-	
-	var target = null
-	if visible_enemies.size() > 0:
-		target = visible_enemies.pick_random()
+	if weapon_manager:
+		weapon_manager.activate_power_weapon(type)
 	else:
-		target = all_enemies[0]
+		print("ERROR: WeaponManager node not found!")
 
-	var boom = explosion_scene.instantiate()
-	get_tree().current_scene.add_child(boom) 
-	var offset = Vector2(randf_range(-30, 30), randf_range(-30, 30))
-	boom.global_position = target.global_position + offset
-	apply_shake(meteor_shake_intensity)
-	
-	var hit_enemies = get_tree().get_nodes_in_group("enemy")
-	for e in hit_enemies:
-		if e.global_position.distance_to(boom.global_position) < meteor_impact_radius:
-			if e.has_method("take_damage"):
-				e.take_damage(meteor_damage)
-
+# --- SCREEN SHAKE (Used by Weapon Manager) ---
 func handle_screen_shake(delta: float) -> void:
 	if current_shake_strength > 0:
-		current_shake_strength = lerp(current_shake_strength, 0.0, shake_decay * delta)      
+		current_shake_strength = lerp(current_shake_strength, 0.0, shake_decay * delta)       
 		var camera = $Camera2D
 		if camera:
 			var random_offset = Vector2(

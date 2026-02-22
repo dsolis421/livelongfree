@@ -43,7 +43,7 @@ var sfx_library: Dictionary = {
 	# Enemy sounds
 	"enemy_death": preload("res://audio/sfx/LLF_shatter.ogg"),
 	"supernova": preload("res://audio/sfx/LLF_supernova.ogg"),
-	"enemy_hit": preload("res://audio/sfx/LLF_impact2.ogg"),
+	"enemy_hit": preload("res://audio/sfx/LLF_impact.ogg"),
 	"boss_loop": preload("res://audio/sfx/LLF_bossloop.ogg"),
 	
 	# Item/pickup sounds
@@ -55,6 +55,7 @@ var sfx_library: Dictionary = {
 	"weapon_fire": preload("res://audio/sfx/LLF_weapon.ogg"),
 	# "weapon_swing": preload("res://audio/sfx/weapon_swing.ogg"),
 	"sigkill": preload("res://audio/sfx/LLF_sigkill.ogg"),
+	"defrag": preload("res://audio/sfx/LLF_defrag.ogg"),
 	# UI sounds
 	# "ui_click": preload("res://audio/sfx/ui_click.ogg"),
 	# "ui_hover": preload("res://audio/sfx/ui_hover.ogg"),
@@ -104,6 +105,7 @@ var _sfx_muted: bool = false
 # =============================================================================
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	# Create the SFX player pool (non-positional sounds)
 	_create_sfx_pool()
 	

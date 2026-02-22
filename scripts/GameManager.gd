@@ -155,6 +155,7 @@ func on_extraction_complete() -> void:
 	audio.stop_loop("agent_drone", true)
 	sectors_current_run += 1
 	var win_screen = load("res://scenes/ui/VictoryScreen.tscn").instantiate()
+	await get_tree().create_timer(0.5).timeout
 	get_tree().root.add_child(win_screen)
 	get_tree().paused = true
 
@@ -251,7 +252,7 @@ func check_achievements() -> void:
 		unlock_achievement("max_ricochet")
 		
 	# 5. CHECK: Max Slots
-	if GameData.unlocked_active_slots >= 5: # Assuming 3 is max
+	if is_upgrade_maxed("slots"): # Assuming 3 is max
 		unlock_achievement("max_slots")
 		
 	# 6. CHECK: Max Buffer
@@ -284,5 +285,8 @@ func show_achievement_popup(key: String):
 	if achievement_popup:
 		print(" > POPUP FOUND")
 		achievement_popup.show_medal(key)
+		print(" > About to play sound...")
+		audio.play_sfx("new_medal")
+		print(" > Sound triggered")
 	else:
 		print(" > POPUP ERROR")
