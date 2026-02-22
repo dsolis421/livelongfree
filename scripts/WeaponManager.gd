@@ -89,12 +89,21 @@ func fire_one_meteor() -> void:
 func cast_defrag() -> void:
 	if not defrag_scene: return
 	
-	audio.play_sfx("defrag") # Replace with a cool laser/bass drop sound later
+	audio.play_sfx("weapon_fire") 
 	
 	var defrag = defrag_scene.instantiate()
 	get_tree().current_scene.add_child(defrag)
 	
 	defrag.global_position = global_position
-	# Pass the player's last known movement direction to the projectile
-	defrag.direction = player.last_facing_direction 
+	
+	# --- NEW: MOBILE AUTO-AIM LOGIC ---
+	var target = player.get_nearest_enemy()
+	
+	if target:
+		# Lock onto the closest enemy
+		defrag.direction = (target.global_position - global_position).normalized()
+	else:
+		# Fallback: Fire straight ahead if the screen is empty
+		defrag.direction = player.last_facing_direction 
+		
 	defrag.damage = defrag_damage

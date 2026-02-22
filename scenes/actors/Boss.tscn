@@ -6,36 +6,36 @@
 [ext_resource type="Script" uid="uid://y5htun3hke44" path="res://scenes/actors/TesseractVisuals.gd" id="4_qy6jy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vm5jf"]
-bg_color = Color(0.78039217, 0, 0.22352941, 0.49019608)
+bg_color = Color(0.78039217, 0, 0.22352941, 0.19607843)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
-border_color = Color(0.78039217, 0, 0.22352941, 1)
+border_color = Color(0.78039217, 0, 0.22352941, 0.7058824)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qy6jy"]
-bg_color = Color(0.78039217, 0, 0.22352941, 0.49019608)
+bg_color = Color(0.78039217, 0, 0.22352941, 0.29411766)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
-border_color = Color(0.78039217, 0, 0.22352941, 1)
+border_color = Color(0.78039217, 0, 0.22352941, 0.8039216)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7dhht"]
-bg_color = Color(0.78039217, 0, 0.22352941, 0.49019608)
+bg_color = Color(0.78039217, 0, 0.22352941, 0.39215687)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
-border_color = Color(0.78039217, 0, 0.22352941, 1)
+border_color = Color(0.78039217, 0, 0.22352941, 0.9019608)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5

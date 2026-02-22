@@ -2,7 +2,7 @@ extends Area2D
 
 @export var speed = 400
 @export var damage: float = 1.0
-@export var knockback_force: float = 500.0
+@export var knockback_force: float = 600.0
 
 var direction = Vector2.RIGHT
 
@@ -16,12 +16,37 @@ func _ready() -> void:
 	# (Requires 'direction' to be set by the spawner before adding to scene)
 	rotation = direction.angle()
 	
-	# 1. SCREEN EXIT (Keep this, it's good)
+	# SCREEN EXIT (Keep this, it's good)
 	$VisibleOnScreenNotifier2D.screen_exited.connect(queue_free)
 	
-	# 2. LIFETIME TIMER
+	# LIFETIME TIMER
 	var timer = get_tree().create_timer(5.0)
 	timer.timeout.connect(queue_free)
+	
+	# Get the current upgrade level once
+	var dmg_level = GameData.get_upgrade_level("damage")
+	
+	# --- 1. VISUAL WEIGHT (Particle Amount) ---
+	# Read the base amount you set in the Inspector (e.g., 10 or 15)
+	var base_particles: int = $SparkTrail.amount 
+	# Add 5 extra sparks per upgrade level (Level 5 = +25 sparks!)
+	var bonus_particles: int = dmg_level * 10 
+	
+	# Apply the new amount (Must be cast to int)
+	$SparkTrail.amount = int(base_particles + bonus_particles)
+	
+	
+	# --- 2. GLOW INTENSITY (Brightness) ---
+	# Base multiplier is 1.0. Each level adds 0.5 brightness.
+	var glow_modifier: float = 1.0 + (dmg_level * 2)
+	var base_color: Color = Color(1.0, 1.0, 1.0, 1.0) # Change to your trail's base color
+	
+	$SparkTrail.modulate = Color(
+		base_color.r * glow_modifier,
+		base_color.g * glow_modifier,
+		base_color.b * glow_modifier,
+		1.0 # Keep Alpha solid
+	)
 
 func _physics_process(delta: float) -> void:
 	position += direction * speed * delta
@@ -38,6 +63,7 @@ func _physics_process(delta: float) -> void:
 	# 3. Flicker the brightness (Energy Noise)
 	var energy = randf_range(0.8, 1.5)
 	$Sprite2D.modulate.a = energy
+	$SparkTrail.modulate.a = randf_range(0.5, 1.5)
 
 func _on_body_entered(body: Node2D) -> void:
 	

@@ -1,16 +1,23 @@
 [gd_scene format=3 uid="uid://prmueubsccmx"]
 
 [ext_resource type="Script" uid="uid://cjt3iiiu7d0vf" path="res://scenes/ui/HUD.gd" id="1_kw0id"]
+[ext_resource type="FontFile" uid="uid://culw22xs6a7cs" path="res://assets/fonts/Orbitron-VariableFont_wght.ttf" id="2_6ll6g"]
 [ext_resource type="FontFile" uid="uid://yyvjy3sfm4jx" path="res://assets/fonts/DotGothic16-Regular.ttf" id="2_atyv1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ig75s"]
 bg_color = Color(0.6, 0.6, 0.6, 0.47058824)
 expand_margin_left = 15.0
+expand_margin_bottom = 5.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_hc4fa"]
+font = ExtResource("2_6ll6g")
 font_size = 24
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ll6g"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 1.0
 bg_color = Color(0.6, 0.6, 0.6, 0.47058824)
 
 [sub_resource type="LabelSettings" id="LabelSettings_kw0id"]
@@ -20,9 +27,10 @@ font_size = 24
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ed8p"]
 bg_color = Color(0.6, 0.6, 0.6, 0.47058824)
 expand_margin_right = 15.0
+expand_margin_bottom = 5.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_atyv1"]
-font_size = 20
+font_size = 45
 outline_size = 1
 outline_color = Color(1, 0, 0, 1)
 

@@ -34,7 +34,7 @@ func _on_game_over_triggered() -> void:
 	if total_label:
 		# GameData should have been saved/updated by Player.die() just before this
 		var true_total = GameData.gold + GameManager.gold_current_run
-		total_label.text = "Net Worth: " + str(true_total)
+		total_label.text = "Net Worth: " + GameData.format_number(true_total)
 	audio.start_loop("game_over")
 	visible = true
 	get_tree().paused = true

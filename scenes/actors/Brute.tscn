@@ -5,13 +5,14 @@
 [ext_resource type="PackedScene" uid="uid://nsfu03fajja8" path="res://scenes/loot/ItemPickup.tscn" id="4_dkpe8"]
 
 [sub_resource type="Gradient" id="Gradient_sbw3t"]
-offsets = PackedFloat32Array(0, 0.5, 1)
-colors = PackedColorArray(1, 0.37254903, 0, 1, 0.78039217, 0, 0.22352941, 1, 1, 0.37254903, 0, 1)
+offsets = PackedFloat32Array(0.19480519, 0.9285714)
+colors = PackedColorArray(1, 0.45490196, 0, 1, 0.78039217, 0, 0.22352941, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_dkpe8"]
 gradient = SubResource("Gradient_sbw3t")
-fill_from = Vector2(1, 0)
-fill_to = Vector2(1, 1)
+fill = 2
+fill_from = Vector2(0, 0.48623854)
+fill_to = Vector2(1, 0.51834863)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dkpe8"]
 radius = 32.0

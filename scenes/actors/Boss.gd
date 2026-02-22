@@ -213,6 +213,10 @@ func die() -> void:
 	is_dead = true
 	print("Boss.die()")
 	# Disable Physics immediately (Stop hurting the player)
+	var player = get_tree().get_first_node_in_group("player")
+	if player:
+		player.is_invincible = true
+	get_tree().call_group("projectile", "queue_free")
 	$CollisionShape2D.set_deferred("disabled", true)
 	set_physics_process(false) 
 	if brain_timer: brain_timer.stop()

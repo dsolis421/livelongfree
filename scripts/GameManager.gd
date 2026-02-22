@@ -2,7 +2,6 @@ extends Node
 
 @onready var audio = AudioManager
 
-
 # --- SIGNALS ---
 signal xp_updated(current: int, target: int)
 signal level_up_triggered(level: int)
@@ -71,19 +70,19 @@ func start_new_game_from_menu() -> void:
 		print("Staring new run")
 		needs_full_reset = true
 		is_run_active = true
-		
+	calculate_difficulty()
 	get_tree().change_scene_to_file("res://scenes/Main.tscn")
 
 # --- 2. CALLED BY VICTORY SCREEN ("Next Sector") ---
 func continue_to_next_sector() -> void:
 	# needs_full_reset = false
+	calculate_difficulty()
 	get_tree().change_scene_to_file("res://scenes/Main.tscn")
 
 # --- 3. CALLED BY MAIN.GD (When Drone Lands) ---
 func start_mission_logic() -> void:
 	print("--- STARTING MISSION LOGIC ---")
-	calculate_difficulty()
-	check_achievements()
+	# check_achievements()
 	# A. Handle the "New Game" vs "Next Level" decision here
 	print(" > Continuing Career (Kills: ", kills, ")")
 	# B. ALWAYS Reset Stage Logic (Fixes Extraction/Boss bugs)
@@ -209,12 +208,12 @@ func calculate_difficulty() -> void:
 	
 	# 2. DAMAGE -> SPAWN RATE (-0.1s per level)
 	var dmg_lvl = GameData.get_upgrade_level("damage")
-	run_spawn_timer_mod = dmg_lvl * 0.1 
+	run_spawn_timer_mod = dmg_lvl * 0.12
 	
-	# 3. RICOCHET -> ENEMY HP (Linear Scaling) # ENEMY MOVEMENT?
+	# 3. RICOCHET -> ENEMY SPEED 
 	# +5 Enemy Movement Per Ric Level
 	var ric_lvl = GameData.get_upgrade_level("ricochet")
-	run_enemy_speed_mod = ric_lvl * 5
+	run_enemy_speed_mod = ric_lvl * 30
 	
 	# 4. SIPHON -> XP LEVEL (+10% per level)
 	var xp_lvl = GameData.get_upgrade_level("magnet")

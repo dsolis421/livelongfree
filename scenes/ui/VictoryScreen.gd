@@ -17,7 +17,7 @@ func _ready() -> void:
 		sectors_label.text = "Sectors Cleared: " + str(GameManager.sectors_current_run)
 	
 	if run_stats_label:
-		run_stats_label.text = "Threats Neutralized: " + str(GameManager.kills)
+		run_stats_label.text = "Threats Neutralized: " + GameData.format_number(GameManager.kills)
 	
 	if gold_label:
 		# Use 'gold_current_run' to show what they just earned
@@ -26,7 +26,7 @@ func _ready() -> void:
 	if total_label:
 		# Use GameData to show their total bank (Persistence check!)
 		var true_total = GameData.gold + GameManager.gold_current_run
-		total_label.text = "Net Worth: " + str(true_total)
+		total_label.text = "Net Worth: " + GameData.format_number(true_total)
 
 	# 2. CONNECT BUTTONS
 	# (Your existing logic, just cleaned up with direct references)

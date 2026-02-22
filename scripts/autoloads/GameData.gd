@@ -260,3 +260,20 @@ func purchase_upgrade(type: String) -> bool:
 	
 	print("SUCCESS: Purchased ", type, " Level ", upgrades[type], " for ", cost)
 	return true
+
+func format_number(value: int) -> String:
+	var string_value = str(value)
+	var formatted_string = ""
+	var digit_count = 0
+	
+	# Loop backwards through the numbers
+	for i in range(string_value.length() - 1, -1, -1):
+		# Every 3 digits, add a comma (as long as it's not a negative sign)
+		if digit_count == 3 and string_value[i] != "-":
+			formatted_string = "," + formatted_string
+			digit_count = 0
+			
+		formatted_string = string_value[i] + formatted_string
+		digit_count += 1
+		
+	return formatted_string

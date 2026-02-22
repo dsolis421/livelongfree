@@ -14,7 +14,7 @@ func _ready() -> void:
 		audio.play_music("main_menu")
 
 func update_gold_display() -> void:
-	bank_label.text = "BANK: " + str(GameData.gold) + " G"
+	bank_label.text = "BANK: " + GameData.format_number(GameData.gold) + " G"
 
 func _on_return_pressed() -> void:
 	# Save just in case

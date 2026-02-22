@@ -11,7 +11,7 @@ func _ready() -> void:
 	audio.play_music("main_menu")
 	# Display Gold
 	if has_node("MainLayout/RightColumn/StatsPanel/VBoxContainer/GoldLabel"):
-		$MainLayout/RightColumn/StatsPanel/VBoxContainer/GoldLabel.text = "Net Worth: " + str(GameData.gold)
+		$MainLayout/RightColumn/StatsPanel/VBoxContainer/GoldLabel.text = "Net Worth: " + GameData.format_number(GameData.gold)
 	
 	if has_node("MainLayout/RightColumn/StatsPanel/VBoxContainer/KillsLabel"):
 		$MainLayout/RightColumn/StatsPanel/VBoxContainer/KillsLabel.text = "Most Kills: " + str(GameData.high_kills)

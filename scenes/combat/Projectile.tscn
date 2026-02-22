@@ -42,6 +42,8 @@ texture = SubResource("GradientTexture2D_rgbsv")
 amount = 5
 texture = SubResource("PlaceholderTexture2D_rgbsv")
 lifetime = 0.29000000000000004
+explosiveness = 0.1
+randomness = 0.1
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_1jo0v")
 
