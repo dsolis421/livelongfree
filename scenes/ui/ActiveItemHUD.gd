@@ -1,7 +1,7 @@
 extends Control
 
 # --- CONFIGURATION ---
-const MAX_SLOTS = 6
+const MAX_SLOTS = 4
 
 # Use preloads if you have icons, otherwise use text for now
 const ICON_LOCKED = preload("res://assets/LLF_ActiveLock.png")
@@ -16,9 +16,7 @@ var slots = [null, null, null, null, null, null]
 	$HBoxContainer/Slot1, 
 	$HBoxContainer/Slot2, 
 	$HBoxContainer/Slot3,
-	$HBoxContainer/Slot4, 
-	$HBoxContainer/Slot5, 
-	$HBoxContainer/Slot6
+	$HBoxContainer/Slot4
 ]
 @onready var game = GameData
 
@@ -102,10 +100,6 @@ func _on_slot_3_pressed() -> void:
 	use_item(2)
 func _on_slot_4_pressed() -> void: 
 	use_item(3)
-func _on_slot_5_pressed() -> void: 
-	use_item(4)
-func _on_slot_6_pressed() -> void: 
-	use_item(5)
 
 func get_unlocked_slot_count() -> int:
 	# Level 0 = 1 Slot. Level 5 = 6 Slots.

@@ -8,8 +8,8 @@ colors = PackedColorArray(0, 0.9529412, 1, 1, 0, 0, 0, 0, 0, 0.36078432, 0.38039
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_de684"]
 gradient = SubResource("Gradient_co4ur")
-width = 80
-height = 60
+width = 120
+height = 90
 
 [node name="Drone" type="Node2D" unique_id=1160803629]
 script = ExtResource("1_co4ur")

@@ -159,5 +159,6 @@ offset_bottom = -57.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "Bot76 Games"
+horizontal_alignment = 1
 
 [connection signal="pressed" from="MainLayout/RightColumn/MedalsButton" to="." method="_on_medals_button_pressed"]

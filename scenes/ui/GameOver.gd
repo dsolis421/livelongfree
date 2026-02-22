@@ -12,9 +12,7 @@ extends CanvasLayer
 func _ready() -> void:
 	# 1. Start Hidden
 	visible = false 
-	
-	# 2. Ensure game is running normally at start
-	get_tree().paused = false 
+	GameManager.game_over_triggered.connect(_on_game_over_triggered)
 	
 	# 3. Connect Button (Safety check)
 	if not reboot_button.pressed.is_connected(_on_button_pressed):
@@ -22,7 +20,7 @@ func _ready() -> void:
 
 # Call this function when the Player emits the 'died' signal
 # OR call this from Player.gd: get_tree().root.get_node("Main/GameOver")._on_player_died()
-func _on_player_died() -> void:
+func _on_game_over_triggered() -> void:
 	print("GAME OVER SCREEN ACTIVATED")
 	audio.stop_all_loops(true)
 	# 1. UPDATE STATS
@@ -37,15 +35,14 @@ func _on_player_died() -> void:
 		# GameData should have been saved/updated by Player.die() just before this
 		var true_total = GameData.gold + GameManager.gold_current_run
 		total_label.text = "Net Worth: " + str(true_total)
-	
-	# 2. SHOW SCREEN
+	audio.start_loop("game_over")
 	visible = true
-	
-	# 3. PAUSE GAME (Stops enemies from moving/attacking)
 	get_tree().paused = true
 
 func _on_button_pressed() -> void:
 	# 1. Helper stops the clock, unpauses, and changes scene
+	audio.stop_loop("game_over")
+	GameManager.game_reset()
 	GameManager.return_to_main_menu()
 	
 	# 2. Since this screen was added to 'root' (outside the scene), 

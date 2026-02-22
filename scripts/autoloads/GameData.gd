@@ -21,20 +21,20 @@ const UPGRADE_CONFIG = {
 	"damage": {
 		"name": "Weapon Overclock",
 		"description": "Weapon does additional damage.",
-		"base_cost": 10,
+		"base_cost": 20,
 		"cost_multiplier": 2.0, 
 		"max_level": 5
 	},
 	"slots": {
 		"name": "Expansion Slot",
 		"description": "Unlock a new Active Item Slot.",
-		"fixed_costs": [10,15,20,25,30],
-		"max_level": 5
+		"fixed_costs": [100,150,200],
+		"max_level": 3
 	},
 	"ricochet": {
 		"name": "Chain Ricochet",
 		"description": "Enable chain ricochet.",
-		"fixed_costs": [10,15,20],
+		"fixed_costs": [50,75,100],
 		"max_level": 3
 	}
 }

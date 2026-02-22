@@ -62,7 +62,7 @@ size = Vector2(122, 122)
 [node name="Boss" unique_id=1413542967 node_paths=PackedStringArray("visual") instance=ExtResource("1_vm5jf")]
 script = ExtResource("2_ltkqj")
 boss_bullet_scene = ExtResource("3_vm5jf")
-hp = 20
+hp = 30
 movement_speed = 250.0
 damage = 3
 xp_value = 0

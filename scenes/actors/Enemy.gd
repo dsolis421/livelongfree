@@ -66,13 +66,9 @@ func _ready() -> void:
 		
 	# --- 5. NEW: APPLY RUN DIFFICULTY ---
 	if GameManager:
-		# Apply HP Multiplier (Ricochet Curse)
-		# We must cast to int because HP is an integer
-		hp = int(hp * GameManager.run_enemy_hp_mult)
-		
-		# Apply Damage Bonus (Slots Curse)
-		# damage = damage + GameManager.run_enemy_dmg_bonus
-		
+		# Apply HP Multiplier (Slots Curse - Elites and Bosses ONLY)
+		if is_in_group("elite") or is_in_group("boss"):
+			hp = int(hp * GameManager.run_enemy_hp_mult)
 		# Apply Movement Mult (Rico Curse)
 		movement_speed = movement_speed + GameManager.run_enemy_speed_mod
 

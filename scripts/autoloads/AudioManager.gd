@@ -36,6 +36,7 @@ var sfx_library: Dictionary = {
 	# Player sounds
 	# "player_hit": preload("res://audio/sfx/player_hit.ogg"),
 	# "player_death": preload("res://audio/sfx/player_death.ogg"),
+	"game_over": preload("res://audio/sfx/LLF_gameover.ogg"),
 	"level_up": preload("res://audio/sfx/LLF_levelup.ogg"),
 	"upgrade": preload("res://audio/sfx/LLF_overclock.ogg"),
 	"agent_drone": preload("res://audio/sfx/LLF_drone.ogg"),
@@ -60,6 +61,7 @@ var sfx_library: Dictionary = {
 	# "ui_click": preload("res://audio/sfx/ui_click.ogg"),
 	# "ui_hover": preload("res://audio/sfx/ui_hover.ogg"),
 	# "ui_back": preload("res://audio/sfx/ui_back.ogg"),
+	"purchase": preload("res://audio/sfx/LLF_purchase.ogg"),
 	"new_medal": preload("res://audio/sfx/LLF_medal.ogg")
 }
 

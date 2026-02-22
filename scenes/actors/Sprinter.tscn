@@ -22,7 +22,6 @@ height = 52.0
 size = Vector2(52, 22)
 
 [node name="Sprinter" unique_id=1413542967 instance=ExtResource("1_xsveu")]
-hp = 2
 movement_speed = 275.0
 drop_chance = 0.7
 knockback_resistance = -0.2

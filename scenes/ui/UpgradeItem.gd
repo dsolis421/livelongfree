@@ -47,4 +47,5 @@ func _on_buy_pressed() -> void:
 		get_tree().call_group("upgrade_items", "refresh_ui")
 		# Update the Total Gold Display (in parent scene)
 		get_tree().call_group("store_ui", "update_gold_display")
+		AudioManager.play_sfx("purchase")
 		GameManager.check_achievements()

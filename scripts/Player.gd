@@ -10,7 +10,7 @@ signal player_died
 
 # --- SCENES ---
 @export var projectile_scene: PackedScene
-@export var game_over_screen: PackedScene
+# @export var game_over_screen: PackedScene
 # (Purge and Explosion scenes were moved to WeaponManager)
 
 # --- NODES ---
@@ -54,13 +54,13 @@ func _apply_global_upgrades() -> void:
 		var bonus_hp = buffer_level
 		max_hp += bonus_hp
 		current_hp += bonus_hp
-		print("Repo Upgrade: Buffer Applied (+", bonus_hp, " HP)")
+		print("Repo Upgrade: Player Buffer Applied (+", bonus_hp, " HP)")
 	
 	# B. DAMAGE (Multiplier)
 	var damage_level = GameData.get_upgrade_level("damage")
 	if damage_level > 0:
 		damage_multiplier = 1.0 + (damage_level * 0.5)
-		print("Repo Upgrade: Damage Multiplier set to ", damage_multiplier)
+		print("Repo Upgrade: Player Damage Multiplier set to ", damage_multiplier)
 
 	# C. MAGNET (Collection Range)
 	var magnet_level = GameData.get_upgrade_level("magnet")
@@ -110,20 +110,16 @@ func take_damage(amount: float = 1.0) -> void:
 
 func die() -> void:
 	set_physics_process(false)
+	
 	await get_tree().create_timer(0.1).timeout
+	
 	if GameManager.is_game_over:
 		queue_free()
 		return
 	
-	GameManager.on_player_died()
-	player_died.emit()
 	GameManager.save_game()
-	
-	if game_over_screen:
-		var screen = game_over_screen.instantiate()
-		get_tree().root.add_child(screen)
+	GameManager.on_player_died()
 
-	get_tree().paused = true
 	queue_free()
 
 func get_nearest_enemy():
