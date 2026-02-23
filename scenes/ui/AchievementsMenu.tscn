@@ -4,9 +4,9 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ea3g"]
 content_margin_left = 20.0
-content_margin_top = 50.0
+content_margin_top = 60.0
 content_margin_right = 20.0
-content_margin_bottom = 50.0
+content_margin_bottom = 225.0
 bg_color = Color(0, 0, 0, 1)
 
 [node name="Control" type="Control" unique_id=258205164]
@@ -39,10 +39,10 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_7ea3g")
 
 [node name="GridContainer" type="GridContainer" parent="ScrollContainer" unique_id=635848652]
 layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 4
-theme_override_constants/h_separation = 30
-theme_override_constants/v_separation = 30
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 15
+theme_override_constants/v_separation = 15
 columns = 2
 
 [node name="BackToRepo" type="Button" parent="." unique_id=1281507222]
@@ -51,8 +51,8 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -80.0
-offset_bottom = -49.0
+offset_top = -155.0
+offset_bottom = -102.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 32

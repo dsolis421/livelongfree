@@ -39,7 +39,6 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	# CRITICAL: We are OVERRIDING the Enemy.gd movement logic here.
 	# We do NOT call super._physics_process(delta) because we want full control.
-	
 	match current_state:
 		State.CHASE:
 			state_chase(delta)
@@ -49,10 +48,8 @@ func _physics_process(delta: float) -> void:
 			state_dash(delta)
 		State.ATTACK:
 			state_attack(delta)
-
 	# Apply the velocity we calculated in the functions above
 	move_and_slide()
-	
 	# Visual Rotation (Keep facing direction of travel)
 	if velocity.length() > 0:
 		rotation = velocity.angle()
@@ -84,7 +81,6 @@ func state_orbit(_delta: float) -> void:
 		correction_dir = to_player # Move Closer
 	elif distance < orbit_distance - 20:
 		correction_dir = -to_player # Move Away
-		
 	# 4. Combine them
 	# We blend them: mostly orbit, a little bit of correction
 	var final_dir = (orbit_dir + correction_dir * 0.5).normalized()
@@ -97,7 +93,6 @@ func state_dash(_delta: float) -> void:
 		# Move in a STRAIGHT LINE based on where the player WAS 
 		# (Do not update direction here, or he will home in like a missile)
 		velocity = dash_direction * dash_speed
-		
 		# Friction? No. He's a bull. He goes full speed until the timer runs out.
 	else:
 		# Still winding up
@@ -113,16 +108,13 @@ func _on_brain_decision() -> void:
 	# Pick a random state
 	var states = State.values()
 	var new_state = states.pick_random()
-	
 	change_state(new_state)
 
 func change_state(new_state: State) -> void:
 	current_state = new_state
-	# print("Boss switched to state: ", State.keys()[new_state])
 	# --- RESET FLAGS ---
 	is_dashing_active = false
 	is_attacking = false
-	
 	# --- STATE ENTRY LOGIC ---
 	match current_state:
 		State.DASH:
@@ -134,8 +126,6 @@ func prepare_dash() -> void:
 	# 1. Stop Moving
 	velocity = Vector2.ZERO
 	
-	# 2. Visual Tell (Tween)
-	# We use a code-based animation to flash red and scale up
 	if visual:
 		var tween = create_tween()
 		# Turn Red and Grow
@@ -174,10 +164,9 @@ func prepare_attack() -> void:
 		
 func fire_shotgun() -> void:
 	if not is_attacking or not player or not boss_bullet_scene: return
-	# print(">>> BOSS FIRES SHOTGUN <<<")
-	# Calculate direction to player
+
 	var main_dir = global_position.direction_to(player.global_position)
-	# Fire 5 bullets in a spread (-30 to +30 degrees)
+
 	var angle_step = deg_to_rad(15)
 	var start_angle = -2 * angle_step
 	
@@ -199,23 +188,15 @@ func take_damage(amount: int) -> void:
 	if visuals.has_method("play_hurt_animation"):
 		visuals.play_hurt_animation()
 	print("BOSS DAMAGE: ", amount , " - ", hp)
-	# 2. Report new HP to the Manager
-	# Note: If we died, hp is 0, which is fine to report.
 	GameManager.report_boss_damage(hp)
-	#if hp <= 0:
-		# Disable Physics immediately (Stop hurting the player)
-	#	$CollisionShape2D.set_deferred("disabled", true)
-	#	set_physics_process(false) 
-	#	die()
 	
 func die() -> void:
 	if is_dead: return
 	is_dead = true
-	print("Boss.die()")
 	# Disable Physics immediately (Stop hurting the player)
-	var player = get_tree().get_first_node_in_group("player")
-	if player:
-		player.is_invincible = true
+	var protect_player = get_tree().get_first_node_in_group("player")
+	if protect_player:
+		protect_player.is_invincible = true
 	get_tree().call_group("projectile", "queue_free")
 	$CollisionShape2D.set_deferred("disabled", true)
 	set_physics_process(false) 
@@ -239,18 +220,12 @@ func die() -> void:
 	# The 'true' arguments allow the timer to ignore the time_scale slowdown
 	await get_tree().create_timer(3.5, true, false, true).timeout
 	
-	# 7. THE EXPLOSION	
-	
 	GameManager.trigger_supernova() # Triggers the UI white flash
 	visual.visible = false          # Hide the boss sprite
 	Engine.time_scale = 1.0         # Restore normal game speed
 	
-	# 8. Brief Pause (The "Silence" after the boom)
-	# I reduced this from 2.0s to 1.0s so the Drone arrives sooner.
 	await get_tree().create_timer(1.0).timeout
-	
-	# 9. TRIGGER EXTRACTION
-	# This calls the function in GameManager that kills enemies and calls the Drone.
+
 	GameManager.on_boss_died()
 	
 	queue_free()

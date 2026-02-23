@@ -6,7 +6,6 @@ extends Area2D
 
 var direction: Vector2 = Vector2.ZERO
 
-
 func _ready():
 	# Make the star point in the direction it is flying
 	rotation = direction.angle()

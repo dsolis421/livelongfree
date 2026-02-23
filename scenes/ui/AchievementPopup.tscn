@@ -61,15 +61,19 @@ layout_mode = 2
 
 [node name="Icon" type="TextureRect" parent="PanelContainer/HBoxContainer" unique_id=1643439007]
 layout_mode = 2
+stretch_mode = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer" unique_id=637371712]
 layout_mode = 2
+alignment = 1
 
 [node name="Title" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer" unique_id=332768331]
 layout_mode = 2
+theme_override_font_sizes/font_size = 16
 
 [node name="Desc" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer" unique_id=1722724403]
 layout_mode = 2
+theme_override_font_sizes/font_size = 16
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=340509077]
 libraries/ = SubResource("AnimationLibrary_8kgyf")

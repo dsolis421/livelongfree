@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 class_name Player
-signal player_died
+# signal player_died
 
 @onready var audio = AudioManager
 

@@ -84,32 +84,32 @@ var ACHIEVEMENT_DATA = {
 	"sector_10": {
 		"name": "Marathon Runner",
 		"description": "Clear 10 Sectors in a single run.",
-		"icon": preload("res://kat7icon.png") # Placeholder
+		"icon": preload("res://assets/LLF_medalholder.png") # Placeholder
 	},
 	"max_damage": {
 		"name": "Glass Cannon",
 		"description": "Reach Max Level on Damage Overclock.",
-		"icon": preload("res://kat7icon.png")
+		"icon": preload("res://assets/LLF_medalholder.png")
 	},
 	"max_siphon": {
 		"name": "Vampire",
 		"description": "Reach Max Level on Siphon.",
-		"icon": preload("res://kat7icon.png")
+		"icon": preload("res://assets/LLF_medalholder.png")
 	},
 	"max_ricochet": {
 		"name": "Chain Reaction",
 		"description": "Reach Max Level on Ricochet.",
-		"icon": preload("res://kat7icon.png")
+		"icon": preload("res://assets/LLF_medalholder.png")
 	},
 	"max_slots": {
 		"name": "Fully Loaded",
 		"description": "Unlock all Active Item Slots.",
-		"icon": preload("res://kat7icon.png")
+		"icon": preload("res://assets/LLF_medalholder.png")
 	},
 	"max_buffer": {
 		"name": "Time Lord",
 		"description": "Reach Max Level on Buffer.",
-		"icon": preload("res://kat7icon.png")
+		"icon": preload("res://assets/LLF_medalholder.png")
 	}
 }
 

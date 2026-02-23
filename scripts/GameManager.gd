@@ -16,7 +16,7 @@ signal game_over_triggered
 
 # --- CONFIGURATION ---
 const STARTING_XP = 0
-const STARTING_TARGET_XP = 200
+const STARTING_TARGET_XP = 150
 const STAGE_TIME_LIMIT: float = 60.0
 
 # --- SESSION DATA ---
