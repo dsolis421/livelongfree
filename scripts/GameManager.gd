@@ -52,7 +52,8 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _process(delta: float) -> void:
-	if is_game_over or get_tree().paused: return
+	if not is_run_active or is_game_over or get_tree().paused:
+		return
 
 	time_remaining -= delta
 	time_elapsed += delta
@@ -113,7 +114,7 @@ func level_up() -> void:
 	experience -= target_experience
 	if experience < 0: experience = 0
 	level += 1
-	target_experience = int(target_experience * 1.2) * run_xp_level_mult
+	target_experience = int((target_experience * 1.2) * run_xp_level_mult)
 	print("UPGRADE READY! Tier: ", level)
 	# print("NEW XP : ", experience, " of ", target_experience)
 	level_up_triggered.emit(level)
@@ -293,7 +294,7 @@ func game_reset() -> void:
 		kills = 0
 		level = 1
 		experience = STARTING_XP
-		target_experience = STARTING_TARGET_XP * run_xp_level_mult
+		target_experience = int(STARTING_TARGET_XP * run_xp_level_mult)
 		gold_current_run = 0
 		sectors_current_run = 0
 		is_run_active = false

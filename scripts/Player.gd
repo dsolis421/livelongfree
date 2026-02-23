@@ -116,7 +116,12 @@ func die() -> void:
 	if GameManager.is_game_over:
 		queue_free()
 		return
-	
+	## Orphan the camera so GameOver renders in place.
+	var camera = $Camera2D
+	if camera:
+		remove_child(camera)
+		get_parent().add_child(camera)
+		camera.global_position = global_position
 	GameManager.save_game()
 	GameManager.on_player_died()
 
