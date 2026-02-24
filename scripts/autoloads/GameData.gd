@@ -9,7 +9,7 @@ const UPGRADE_CONFIG = {
 		"description": "Start with temporary extra integrity.",
 		"base_cost": 5,
 		"cost_multiplier": 1.5, 
-		"max_level": 10
+		"max_level": 8
 	},
 	"magnet": {
 		"name": "Matter Siphon",

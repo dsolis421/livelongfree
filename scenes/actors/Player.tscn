@@ -11,6 +11,17 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8iu4y"]
 size = Vector2(40, 40)
 
+[sub_resource type="Gradient" id="Gradient_4aj10"]
+offsets = PackedFloat32Array(0.560241, 0.58433735, 0.7409639)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cbt8o"]
+gradient = SubResource("Gradient_4aj10")
+width = 120
+height = 120
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4aj10"]
 draw_center = false
 border_width_left = 3
@@ -54,6 +65,10 @@ drag_vertical_offset = 0.1
 
 [node name="PlayerVisuals" type="Node2D" parent="." unique_id=243409905]
 script = ExtResource("7_4aj10")
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerVisuals" unique_id=1023502563]
+modulate = Color(1, 1, 1, 0.09803922)
+texture = SubResource("GradientTexture2D_cbt8o")
 
 [node name="Body" type="Panel" parent="PlayerVisuals" unique_id=2093219733]
 anchors_preset = 8

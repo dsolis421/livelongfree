@@ -16,13 +16,14 @@ class_name Player
 # --- NODES ---
 @onready var gun_timer = $GunTimer
 @onready var detection_area = $EnemyDetectionArea
+@onready var player_shield = $PlayerVisuals/Sprite2D
 @export var joystick: VirtualJoystick 
 
 # --- STATS & CONFIG ---
 @export_group("Player Stats")
 @export var movement_speed: float = 300.0
-@export var max_hp: float = 1.0  
-var current_hp: float
+@export var max_hp: float = 2.0  
+var current_hp: float = 2.0
 
 # --- SCREEN SHAKE ---
 @export var shake_decay: float = 5.0  
@@ -34,6 +35,7 @@ var cooldown_modifier: float = 1.0
 var is_invincible: bool = false
 var current_shake_strength: float = 0.0
 var last_facing_direction: Vector2 = Vector2.RIGHT # Needed for Defrag
+var shield_modulate: float = 0.1
 
 const BASE_COOLDOWN_TIME: float = 0.5 
 const MIN_COOLDOWN_MODIFIER: float = 0.2 
@@ -43,7 +45,6 @@ const MAX_SPEED: float = 500.0
 func _ready() -> void:
 	# 1. Initialize Health
 	current_hp = max_hp
-	
 	# 2. Load Store Upgrades
 	_apply_global_upgrades()
 
@@ -54,7 +55,10 @@ func _apply_global_upgrades() -> void:
 		var bonus_hp = buffer_level
 		max_hp += bonus_hp
 		current_hp += bonus_hp
+		shield_modulate = (shield_modulate * current_hp) - 0.1
+		player_shield.modulate.a = shield_modulate
 		print("Repo Upgrade: Player Buffer Applied (+", bonus_hp, " HP)")
+		print("STARTING SHIELD MODULATE = = = ", shield_modulate)
 	
 	# B. DAMAGE (Multiplier)
 	var damage_level = GameData.get_upgrade_level("damage")
@@ -103,8 +107,10 @@ func take_damage(amount: float = 1.0) -> void:
 		return 
 
 	current_hp -= amount
+	shield_modulate -= 0.1
+	player_shield.modulate.a = shield_modulate
 	print("Player Hit! HP: ", current_hp, " / ", max_hp)
-	
+	print("SHIELD DEGRADED: ", shield_modulate)
 	if current_hp <= 0:
 		die()
 

@@ -48,7 +48,6 @@ bg_color = Color(0, 0.32244235, 0.3400644, 1)
 bg_color = Color(0, 0.9529412, 1, 1)
 
 [node name="Main" type="Node2D" unique_id=1153333135]
-position = Vector2(360, 640)
 script = ExtResource("1_cvmbd")
 
 [node name="WorldGenerator" type="Node2D" parent="." unique_id=2014433057 node_paths=PackedStringArray("ground_layer", "player") groups=["world_generator"]]
@@ -123,5 +122,4 @@ z_index = 1000
 
 [node name="GameOver" parent="CanvasLayer" unique_id=250668618 instance=ExtResource("1_c01mt")]
 
-[connection signal="player_died" from="Player" to="CanvasLayer/GameOver" method="_on_player_died"]
 [connection signal="timeout" from="EnemySpawner/Timer" to="EnemySpawner" method="_on_timer_timeout"]
