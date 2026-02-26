@@ -19,8 +19,9 @@ fill_to = Vector2(0, 0.5)
 radius = 12.0
 height = 52.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lqgpg"]
-size = Vector2(52, 22)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lqgpg"]
+radius = 12.0
+height = 52.0
 
 [node name="Sprinter" unique_id=1413542967 instance=ExtResource("1_xsveu")]
 movement_speed = 250.0
@@ -47,19 +48,12 @@ color = Color(1, 0.84313726, 0, 1)
 [node name="Polygon2D" type="Polygon2D" parent="." index="1" unique_id=1013079940]
 texture = SubResource("GradientTexture2D_lqgpg")
 texture_offset = Vector2(25, 11)
-polygon = PackedVector2Array(26, 0, 0, -11, -26, -11, 0, 0, -26, 11, 0, 11)
+polygon = PackedVector2Array(26, 0, 17, -11, -26, -11, -8, 0, -26, 11, 17, 11)
 
 [node name="CollisionShape2D" parent="." index="2" unique_id=1944004044]
-visible = false
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_kyd6q")
 
-[node name="Hitbox" parent="." index="3" unique_id=1527609457]
-visible = false
-
-[node name="CollisionShape2D" parent="Hitbox" index="0" unique_id=1995205190]
-visible = false
-shape = SubResource("RectangleShape2D_lqgpg")
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitbox" index="1" unique_id=1069101332]
-polygon = PackedVector2Array(26, 0, 0, -11, -26, -11, 0, 0, -26, 11, 0, 11)
+[node name="CollisionShape2D" parent="Hitbox" parent_id_path=PackedInt32Array(1527609457) index="0" unique_id=1995205190]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_lqgpg")

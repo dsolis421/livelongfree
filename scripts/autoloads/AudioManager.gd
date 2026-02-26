@@ -34,7 +34,7 @@ const DEFAULT_PITCH_VARIATION: float = 0.05
 ## Non-positional sound effects (UI, global sounds)
 var sfx_library: Dictionary = {
 	# Player sounds
-	# "player_hit": preload("res://audio/sfx/player_hit.ogg"),
+	"player_hit": preload("res://audio/sfx/LLF_playerhit.ogg"),
 	# "player_death": preload("res://audio/sfx/player_death.ogg"),
 	"game_over": preload("res://audio/sfx/LLF_gameover.ogg"),
 	"level_up": preload("res://audio/sfx/LLF_levelup.ogg"),

@@ -4,8 +4,6 @@ class_name Player
 # signal player_died
 
 @onready var audio = AudioManager
-
-# --- NEW COMPONENT ---
 @onready var weapon_manager = $WeaponManager
 
 # --- SCENES ---
@@ -17,11 +15,12 @@ class_name Player
 @onready var gun_timer = $GunTimer
 @onready var detection_area = $EnemyDetectionArea
 @onready var player_shield = $PlayerVisuals/Sprite2D
+
 @export var joystick: VirtualJoystick 
 
 # --- STATS & CONFIG ---
 @export_group("Player Stats")
-@export var movement_speed: float = 300.0
+@export var movement_speed: float = 200.0
 @export var max_hp: float = 2.0  
 var current_hp: float = 2.0
 
@@ -58,7 +57,6 @@ func _apply_global_upgrades() -> void:
 		shield_modulate = (shield_modulate * current_hp) - 0.1
 		player_shield.modulate.a = shield_modulate
 		print("Repo Upgrade: Player Buffer Applied (+", bonus_hp, " HP)")
-		print("STARTING SHIELD MODULATE = = = ", shield_modulate)
 	
 	# B. DAMAGE (Multiplier)
 	var damage_level = GameData.get_upgrade_level("damage")
@@ -105,14 +103,14 @@ func take_damage(amount: float = 1.0) -> void:
 	
 	if is_invincible:
 		return 
-
+	audio.play_sfx("player_hit")
 	current_hp -= amount
 	shield_modulate -= 0.1
 	player_shield.modulate.a = shield_modulate
 	print("Player Hit! HP: ", current_hp, " / ", max_hp)
-	print("SHIELD DEGRADED: ", shield_modulate)
 	if current_hp <= 0:
 		die()
+		return
 
 func die() -> void:
 	set_physics_process(false)

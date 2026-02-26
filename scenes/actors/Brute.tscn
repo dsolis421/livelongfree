@@ -5,20 +5,20 @@
 [ext_resource type="PackedScene" uid="uid://nsfu03fajja8" path="res://scenes/loot/ItemPickup.tscn" id="4_dkpe8"]
 
 [sub_resource type="Gradient" id="Gradient_sbw3t"]
-offsets = PackedFloat32Array(0.19480519, 0.9285714)
+offsets = PackedFloat32Array(0, 0.8701299)
 colors = PackedColorArray(1, 0.45490196, 0, 1, 0.78039217, 0, 0.22352941, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_dkpe8"]
 gradient = SubResource("Gradient_sbw3t")
-fill = 2
-fill_from = Vector2(0, 0.48623854)
+fill = 1
+fill_from = Vector2(0.25, 0.5)
 fill_to = Vector2(1, 0.51834863)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dkpe8"]
 radius = 32.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sbw3t"]
-radius = 32.0
+radius = 33.0
 
 [node name="Brute" unique_id=1413542967 node_paths=PackedStringArray("visual") groups=["elite"] instance=ExtResource("1_hij64")]
 hp = 12
@@ -43,10 +43,9 @@ color = Color(1, 0.37254903, 0, 1)
 [node name="Polygon2D" type="Polygon2D" parent="." index="1" unique_id=1906433040]
 texture = SubResource("GradientTexture2D_dkpe8")
 texture_offset = Vector2(32, 32)
-polygon = PackedVector2Array(32, 0, 8, 32, -32, 24, -32, -24, 8, -32)
+polygon = PackedVector2Array(32, -16, 24, -24, 0, -32, -16, -16, -16, -32, -32, -8, -24, 0, -32, 8, -16, 32, -16, 8, 0, 32, 24, 24, 32, 16, 16, 16, 0, 8, 24, 0, 0, -8, 16, -16)
 
 [node name="CollisionShape2D" parent="." index="2" unique_id=1944004044]
-visible = false
 shape = SubResource("CircleShape2D_dkpe8")
 
 [node name="Hitbox" parent="." index="3" unique_id=1527609457]

@@ -12,7 +12,7 @@ const LOOT_SCENE = preload("res://scenes/loot/Gem.tscn")
 
 @export_group("Loot Settings")
 @export var hp: int = 3
-@export var movement_speed: float = 150.0 
+@export var movement_speed: float = 115.0 
 @export var damage: int = 1 
 @export var xp_value: int = 1 
 @export var loot_scene: PackedScene
