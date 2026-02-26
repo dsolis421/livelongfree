@@ -21,7 +21,7 @@ radius = 32.0
 radius = 33.0
 
 [node name="Brute" unique_id=1413542967 node_paths=PackedStringArray("visual") groups=["elite"] instance=ExtResource("1_hij64")]
-hp = 12
+hp = 10
 movement_speed = 100.0
 loot_scene = null
 drop_chance = 0.0

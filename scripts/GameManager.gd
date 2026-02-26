@@ -68,7 +68,7 @@ func start_new_game_from_menu() -> void:
 		print("Resuming active run")
 		needs_full_reset = false
 	else:
-		print("Staring new run")
+		print("Starting new run")
 		needs_full_reset = true
 		is_run_active = true
 	calculate_difficulty()
@@ -116,7 +116,6 @@ func level_up() -> void:
 	level += 1
 	target_experience = int((target_experience * 1.2) * run_xp_level_mult)
 	print("UPGRADE READY! Tier: ", level)
-	# print("NEW XP : ", experience, " of ", target_experience)
 	level_up_triggered.emit(level)
 	xp_updated.emit(experience, target_experience)
 
@@ -130,7 +129,6 @@ func spawn_final_boss() -> void:
 	boss_spawn_requested.emit()
 
 func on_boss_died() -> void:
-	print("GameManager.on_boss_died")
 	is_boss_active = false
 	audio.stop_loop("boss_loop")
 	boss_cleared_ui.emit()
@@ -195,7 +193,6 @@ func on_player_died() -> void:
 
 # 2. SAFE RETURN (Call this from GameOverScreen or VictoryScreen buttons)
 func return_to_main_menu() -> void:
-	print("--- RETURNING TO MENU ---")
 	# Double check the flag is set so the timer is dead
 	is_game_over = true 
 	# IMPORTANT: Unpause the tree, or the Main Menu will be frozen!
@@ -214,7 +211,7 @@ func calculate_difficulty() -> void:
 	# 3. RICOCHET -> ENEMY SPEED 
 	# +5 Enemy Movement Per Ric Level
 	var ric_lvl = GameData.get_upgrade_level("ricochet")
-	run_enemy_speed_mod = ric_lvl * 30
+	run_enemy_speed_mod = (ric_lvl * 30) + (sectors_current_run * 2)
 	
 	# 4. SIPHON -> XP LEVEL (+10% per level)
 	var xp_lvl = GameData.get_upgrade_level("magnet")
@@ -223,7 +220,7 @@ func calculate_difficulty() -> void:
 	# 5. SLOTS -> ENEMY HP (+1 per 2 levels)
 	# 2x HP for every 2 slots opened.
 	var slot_lvl = GameData.get_upgrade_level("slots")
-	run_enemy_hp_mult = 1.0 + (slot_lvl * 0.5)
+	run_enemy_hp_mult = 1.0 + (slot_lvl * 0.5) + (sectors_current_run * 0.5)
 
 	print("--- DIFFICULTY CALCULATED ---")
 	print("Time Bonus: +", run_max_time_bonus)
@@ -279,13 +276,9 @@ func unlock_achievement(key: String) -> void:
 	show_achievement_popup(key)
 
 func show_achievement_popup(key: String):
-	print("Medal popup for: ", key)
 	if achievement_popup:
-		print(" > POPUP FOUND")
 		achievement_popup.show_medal(key)
-		print(" > About to play sound...")
 		audio.play_sfx("new_medal")
-		print(" > Sound triggered")
 	else:
 		print(" > POPUP ERROR")
 		

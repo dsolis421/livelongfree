@@ -19,7 +19,6 @@ func _physics_process(delta: float) -> void:
 	rotation += spin_speed * delta
 	
 func _on_body_entered(body: Node2D) -> void:
-	print("Defrag just touched: ", body.name)
 	if body.is_in_group("enemy"):
 		if body.has_method("take_damage"):
 			body.take_damage(damage)

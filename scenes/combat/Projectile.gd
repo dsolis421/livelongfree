@@ -2,7 +2,7 @@ extends Area2D
 
 @export var speed = 400
 @export var damage: float = 1.0
-@export var knockback_force: float = 600.0
+@export var knockback_force: float = 800.0
 
 var direction = Vector2.RIGHT
 

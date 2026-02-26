@@ -19,7 +19,6 @@ func spawn_insertion_drone() -> void:
 	# Connect the "Done" signal to the Game Start logic
 	drone.insertion_complete.connect(_start_game_logic)
 	
-	# Go!
 	drone.start_insertion(player)
 	
 func spawn_drone() -> void:

@@ -10,11 +10,11 @@ class_name WeaponManager
 @export var defrag_scene: PackedScene
 
 # --- SPELL STATS ---
-@export var invincible_duration: float = 5.0
-@export var purge_damage: int = 50
-@export var meteor_damage: int = 10
+@export var invincible_duration: float = 10.0
+@export var purge_damage: int = 20
+@export var meteor_damage: int = 12
 @export var meteor_impact_radius: float = 150.0
-@export var defrag_damage: int = 500
+@export var defrag_damage: int = 20
 
 func activate_power_weapon(type: String) -> void:
 	match type:

@@ -35,6 +35,7 @@ var is_invincible: bool = false
 var current_shake_strength: float = 0.0
 var last_facing_direction: Vector2 = Vector2.RIGHT # Needed for Defrag
 var shield_modulate: float = 0.1
+var hit_tween: Tween = null
 
 const BASE_COOLDOWN_TIME: float = 0.5 
 const MIN_COOLDOWN_MODIFIER: float = 0.2 
@@ -56,13 +57,13 @@ func _apply_global_upgrades() -> void:
 		current_hp += bonus_hp
 		shield_modulate = (shield_modulate * current_hp) - 0.1
 		player_shield.modulate.a = shield_modulate
-		print("Repo Upgrade: Player Buffer Applied (+", bonus_hp, " HP)")
+		print("Player Upgrade: Player Buffer Applied (+", bonus_hp, " HP)")
 	
 	# B. DAMAGE (Multiplier)
 	var damage_level = GameData.get_upgrade_level("damage")
 	if damage_level > 0:
-		damage_multiplier = 1.0 + (damage_level * 0.5)
-		print("Repo Upgrade: Player Damage Multiplier set to ", damage_multiplier)
+		damage_multiplier = 1.0 + damage_level
+		print("Player Upgrade: Player Damage Multiplier set to ", damage_multiplier)
 
 	# C. MAGNET (Collection Range)
 	var magnet_level = GameData.get_upgrade_level("magnet")
@@ -70,7 +71,7 @@ func _apply_global_upgrades() -> void:
 		var magnet_shape = get_node_or_null("MagnetArea/CollisionShape2D")
 		if magnet_shape and magnet_shape.shape is CircleShape2D:
 			magnet_shape.shape.radius *= (1.0 + (magnet_level * 0.1))
-			print("Repo Upgrade: Magnet Radius Increased to ", magnet_shape.shape.radius)
+			print("Player Upgrade: Magnet Radius Increased to ", magnet_shape.shape.radius)
 
 # --- PHYSICS LOOP ---
 func _physics_process(delta: float) -> void:
@@ -111,6 +112,7 @@ func take_damage(amount: float = 1.0) -> void:
 	if current_hp <= 0:
 		die()
 		return
+	flash_hit()
 
 func die() -> void:
 	set_physics_process(false)
@@ -214,3 +216,12 @@ func apply_shake(amount: float) -> void:
 
 func _on_player_died() -> void:
 	pass
+
+func flash_hit():
+	if hit_tween and hit_tween.is_running():
+		hit_tween.kill()
+	hit_tween = create_tween()
+	hit_tween.tween_property(player_shield, "modulate", Color(1, 0.3, 0.3, 1), 0.0)
+	hit_tween.tween_interval(0.3)
+	hit_tween.tween_property(player_shield, "modulate", Color(1,1,1, shield_modulate), 0.0)
+	

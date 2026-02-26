@@ -53,7 +53,6 @@ func _ready() -> void:
 			
 		EnemyRole.BOSS:
 			add_to_group("boss")
-			print("Role is BOSS. Extending whiskers...")
 			
 			# EXTEND WHISKERS (Logic moved here directly)
 			if left_ray: left_ray.target_position *= 4.0

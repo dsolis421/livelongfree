@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var damage: int = 100
+@export var damage: int = 20
 
 func _ready() -> void:
 	# 1. OPTIONAL: Randomize rotation for variety

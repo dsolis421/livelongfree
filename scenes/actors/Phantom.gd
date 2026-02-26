@@ -36,7 +36,6 @@ func _physics_process(_delta: float) -> void:
 
 func start_wandering() -> void:
 	is_approaching = false
-	print("Phantom arrived! Starting timer.")
 	
 	# Pick random initial direction
 	change_direction()
@@ -52,5 +51,4 @@ func change_direction() -> void:
 
 func _on_vanish_timer() -> void:
 	# Optional: Play a sound or fade out tween here.
-	print("Phantom escaped!")
 	queue_free()

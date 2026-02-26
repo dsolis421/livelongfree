@@ -68,11 +68,11 @@ func animate_run(_velocity: Vector2) -> void:
 	hand_l.position.x = base_hand_l_pos.x + swing
 	hand_l.position.y = base_hand_l_pos.y + (cos(time) * 2.0)
 	hand_l.rotation = base_hand_l_rot + drag_tilt
-	# print(" left swing: ", swing, " | hand_l.rotation: ", hand_l.rotation)  # DEBUG - remove later
+
 	hand_r.position.x = base_hand_r_pos.x - swing
 	hand_r.position.y = base_hand_r_pos.y + (cos(time + PI) * 2.0)
 	hand_r.rotation = base_hand_r_rot - drag_tilt
-	# print("right swing: ", swing, " | hand_r.rotation: ", hand_r.rotation)  # DEBUG - remove later
+
 func animate_idle() -> void:
 	# Reset Body Lean
 	body.rotation = lerp_angle(body.rotation, 0.0, 0.1)
