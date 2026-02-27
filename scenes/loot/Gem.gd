@@ -5,10 +5,10 @@ extends Area2D
 enum TYPE { COMMON, RARE, EPIC, LEGENDARY, GOLD }
 
 var stats = {
-	TYPE.COMMON:    {"color": Color(0.4,0,0.8),       "val": 20,   "is_gold": false},
-	TYPE.RARE:      {"color": Color(0,0,0.8),        "val": 50,   "is_gold": false},
-	TYPE.EPIC:      {"color": Color(0,0.4,0.8),     "val": 100,  "is_gold": false},
-	TYPE.LEGENDARY: {"color": Color(0,0.8,0.8),      "val": 200,  "is_gold": false},
+	TYPE.COMMON:    {"color": Color(0,0.25,0.25),       "val": 20,   "is_gold": false},
+	TYPE.RARE:      {"color": Color(0,0.5,0.5),        "val": 50,   "is_gold": false},
+	TYPE.EPIC:      {"color": Color(0,0.75,0.75),     "val": 100,  "is_gold": false},
+	TYPE.LEGENDARY: {"color": Color(0,1,1),      "val": 200,  "is_gold": false},
 	TYPE.GOLD:      {"color": Color(1, 0.85, 0), "val": 200,    "is_gold": true} 
 }
 

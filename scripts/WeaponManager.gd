@@ -12,7 +12,7 @@ class_name WeaponManager
 # --- SPELL STATS ---
 @export var invincible_duration: float = 10.0
 @export var purge_damage: int = 20
-@export var meteor_damage: int = 12
+@export var meteor_damage: int = 10
 @export var meteor_impact_radius: float = 150.0
 @export var defrag_damage: int = 20
 
@@ -89,7 +89,7 @@ func fire_one_meteor() -> void:
 func cast_defrag() -> void:
 	if not defrag_scene: return
 	
-	audio.play_sfx("weapon_fire") 
+	audio.play_sfx("defrag") 
 	
 	var defrag = defrag_scene.instantiate()
 	get_tree().current_scene.add_child(defrag)

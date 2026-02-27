@@ -222,10 +222,10 @@ func calculate_difficulty() -> void:
 	var slot_lvl = GameData.get_upgrade_level("slots")
 	run_enemy_hp_mult = 1.0 + (slot_lvl * 0.5) + (sectors_current_run * 0.5)
 
-	print("--- DIFFICULTY CALCULATED ---")
-	print("Time Bonus: +", run_max_time_bonus)
+	print("--- SECTOR DIFFICULTY ---")
+	print("Time Add: +", run_max_time_bonus)
 	print("Spawn Mod: -", run_spawn_timer_mod)
-	print("HP Mult: x", run_enemy_hp_mult)
+	print("Elite HP: x", run_enemy_hp_mult)
 	print("Speed Mod: +", run_enemy_speed_mod)
 	print("XP Mod: x", run_xp_level_mult)
 

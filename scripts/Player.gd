@@ -49,6 +49,7 @@ func _ready() -> void:
 	_apply_global_upgrades()
 
 func _apply_global_upgrades() -> void:
+	print("--- PLAYER UPGRADES ---")
 	# A. BUFFER (Extra HP)
 	var buffer_level = GameData.get_upgrade_level("buffer")
 	if buffer_level > 0:
@@ -57,13 +58,13 @@ func _apply_global_upgrades() -> void:
 		current_hp += bonus_hp
 		shield_modulate = (shield_modulate * current_hp) - 0.1
 		player_shield.modulate.a = shield_modulate
-		print("Player Upgrade: Player Buffer Applied (+", bonus_hp, " HP)")
+		print("Player Buffer Applied (+", bonus_hp, " HP)")
 	
 	# B. DAMAGE (Multiplier)
 	var damage_level = GameData.get_upgrade_level("damage")
 	if damage_level > 0:
 		damage_multiplier = 1.0 + damage_level
-		print("Player Upgrade: Player Damage Multiplier set to ", damage_multiplier)
+		print("Player Damage Multiplier set to ", damage_multiplier)
 
 	# C. MAGNET (Collection Range)
 	var magnet_level = GameData.get_upgrade_level("magnet")
@@ -71,7 +72,7 @@ func _apply_global_upgrades() -> void:
 		var magnet_shape = get_node_or_null("MagnetArea/CollisionShape2D")
 		if magnet_shape and magnet_shape.shape is CircleShape2D:
 			magnet_shape.shape.radius *= (1.0 + (magnet_level * 0.1))
-			print("Player Upgrade: Magnet Radius Increased to ", magnet_shape.shape.radius)
+			print("Magnet Radius Increased to ", magnet_shape.shape.radius)
 
 # --- PHYSICS LOOP ---
 func _physics_process(delta: float) -> void:

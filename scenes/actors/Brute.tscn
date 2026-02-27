@@ -6,13 +6,13 @@
 
 [sub_resource type="Gradient" id="Gradient_sbw3t"]
 offsets = PackedFloat32Array(0, 0.8701299)
-colors = PackedColorArray(1, 0.45490196, 0, 1, 0.78039217, 0, 0.22352941, 1)
+colors = PackedColorArray(1, 0.45490196, 0, 1, 0.78431374, 0, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_dkpe8"]
 gradient = SubResource("Gradient_sbw3t")
 fill = 1
 fill_from = Vector2(0.25, 0.5)
-fill_to = Vector2(1, 0.51834863)
+fill_to = Vector2(1, 0.5)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dkpe8"]
 radius = 32.0
@@ -21,12 +21,12 @@ radius = 32.0
 radius = 33.0
 
 [node name="Brute" unique_id=1413542967 node_paths=PackedStringArray("visual") groups=["elite"] instance=ExtResource("1_hij64")]
-hp = 10
+hp = 8
 movement_speed = 100.0
 loot_scene = null
 drop_chance = 0.0
 death_effect = ExtResource("2_sbw3t")
-special_drop_chance = 1.0
+special_drop_chance = 0.7
 special_drop_scene = ExtResource("4_dkpe8")
 role = 1
 visual = NodePath("Polygon2D")
