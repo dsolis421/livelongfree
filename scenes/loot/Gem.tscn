@@ -2,16 +2,35 @@
 
 [ext_resource type="Script" uid="uid://btgxasesngibd" path="res://scenes/loot/Gem.gd" id="1_7pbjj"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_pdei0"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7pbjj"]
+size = Vector2(30, 30)
 
 [sub_resource type="Gradient" id="Gradient_7pbjj"]
-offsets = PackedFloat32Array(0.26404494, 0.4494382, 0.64606744)
-colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+offsets = PackedFloat32Array(0.3433735, 0.6686747)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_pdei0"]
 gradient = SubResource("Gradient_7pbjj")
+width = 30
+height = 30
 fill = 1
 fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pdei0"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1dk5v"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 1, 1, 1)
 
 [node name="Gem" type="Area2D" unique_id=874650658]
 collision_layer = 16
@@ -19,7 +38,90 @@ collision_mask = 2
 script = ExtResource("1_7pbjj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1737201008]
-shape = SubResource("CircleShape2D_pdei0")
+shape = SubResource("RectangleShape2D_7pbjj")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1831406894]
+[node name="GemVisuals" type="Node2D" parent="." unique_id=2012060797]
+
+[node name="Sprite2D" type="Sprite2D" parent="GemVisuals" unique_id=1831406894]
 texture = SubResource("GradientTexture2D_pdei0")
+
+[node name="Box1" type="Panel" parent="GemVisuals" unique_id=378715255]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pdei0")
+
+[node name="Box2" type="Panel" parent="GemVisuals" unique_id=261337477]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1dk5v")
+
+[node name="Line1" type="ColorRect" parent="GemVisuals" unique_id=22807005]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 13.5
+offset_top = -15.0
+offset_right = 15.5
+grow_horizontal = 0
+rotation = 0.7853982
+color = Color(0, 1, 1, 1)
+
+[node name="Line2" type="ColorRect" parent="GemVisuals" unique_id=539154900]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -5.0
+offset_top = -15.0
+offset_right = -3.0
+offset_bottom = -0.8000002
+grow_horizontal = 0
+rotation = 0.7853982
+color = Color(0, 1, 1, 1)
+
+[node name="Line3" type="ColorRect" parent="GemVisuals" unique_id=1693969229]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = 3.0
+offset_right = -3.0
+offset_bottom = 17.0
+grow_horizontal = 0
+grow_vertical = 0
+rotation = 0.7853982
+color = Color(0, 1, 1, 1)
+
+[node name="Line4" type="ColorRect" parent="GemVisuals" unique_id=521821085]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 13.5
+offset_top = 3.5
+offset_right = 15.499999
+offset_bottom = 17.7
+grow_horizontal = 0
+grow_vertical = 0
+rotation = 0.7853982
+color = Color(0, 1, 1, 1)

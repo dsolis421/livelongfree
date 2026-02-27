@@ -8,7 +8,7 @@ var stats = {
 	TYPE.COMMON:    {"color": Color(0,0.25,0.25),       "val": 20,   "is_gold": false},
 	TYPE.RARE:      {"color": Color(0,0.5,0.5),        "val": 50,   "is_gold": false},
 	TYPE.EPIC:      {"color": Color(0,0.75,0.75),     "val": 100,  "is_gold": false},
-	TYPE.LEGENDARY: {"color": Color(0,1,1),      "val": 200,  "is_gold": false},
+	TYPE.LEGENDARY: {"color": Color(1,1,1),      "val": 200,  "is_gold": false},
 	TYPE.GOLD:      {"color": Color(1, 0.85, 0), "val": 200,    "is_gold": true} 
 }
 
@@ -48,17 +48,36 @@ func _physics_process(delta: float) -> void:
 
 func setup(type: int) -> void:
 	# 1. Get Data
-	var data = stats.get(type, stats[TYPE.COMMON])
+	#var data = stats.get(type, stats[TYPE.COMMON])
 	
 	# 2. Apply Visuals
 	# Ensure you have a Sprite2D node named "Sprite2D"
-	if has_node("Sprite2D"):
-		$Sprite2D.modulate = data["color"]
+	#if has_node("Sprite2D"):
+	#	$Sprite2D.modulate = data["color"]
 	
 	# 3. Apply Logic
+	#current_value = data["val"]
+	#is_currency = data["is_gold"]
+	# 1. Get Data
+	var data = stats.get(type, stats[TYPE.COMMON])
+	
+	# 2. Apply Logic
 	current_value = data["val"]
 	is_currency = data["is_gold"]
 
+	# 3. Apply Visuals (The New Logic)
+	if not is_currency:
+		# Check if your new Node2D container exists
+		if has_node("GemVisuals"):
+			# Loop through Box1, Box2, Line1, etc.
+			var gem = $GemVisuals/Sprite2D
+			gem.modulate = data["color"]
+
+	else:
+		# It's a Coin! 
+		# It uses its own Coin scene visuals, so skip the color math.
+		pass
+		
 # --- MAGNET DETECTION ---
 func _on_area_entered(area: Area2D) -> void:
 	# If we are already flying, ignore other areas

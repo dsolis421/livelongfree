@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://c0k74r7vuf7av"]
+
+[ext_resource type="Script" uid="uid://btgxasesngibd" path="res://scenes/loot/Gem.gd" id="1_dbqe8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pdei0"]
+radius = 20.0
+
+[sub_resource type="Gradient" id="Gradient_7pbjj"]
+offsets = PackedFloat32Array(0.26404494, 0.4494382, 0.64606744)
+colors = PackedColorArray(1, 1, 1, 0, 0.8901961, 0.79607844, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pdei0"]
+gradient = SubResource("Gradient_7pbjj")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Coin" type="Area2D" unique_id=874650658]
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("1_dbqe8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1737201008]
+shape = SubResource("CircleShape2D_pdei0")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1831406894]
+texture = SubResource("GradientTexture2D_pdei0")

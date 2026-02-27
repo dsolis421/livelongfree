@@ -98,7 +98,7 @@ func generate_chunk(chunk_coord: Vector2i) -> void:
 			# Decide what tile to place based on noise height
 			var atlas_coord = Vector2i(1,0) # Default: Floor (0,0)
 			
-			if noise_val > 0.4:
+			if noise_val > 0.5:
 				# Wall / Obstacle
 				# Make sure this matches your TileSet atlas coords!
 				atlas_coord = Vector2i(0, 0) 
@@ -135,7 +135,7 @@ func is_position_wall(global_pos: Vector2) -> bool:
 	
 	# 3. Check the Threshold
 	# Must match the "if noise_val > 0.4" logic in generate_chunk
-	if noise_val > 0.4:
+	if noise_val > 0.5:
 		return true # It IS a wall (or will be)
 	
 	return false # It is safe floor

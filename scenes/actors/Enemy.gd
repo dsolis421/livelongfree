@@ -8,7 +8,7 @@ enum EnemyRole {
 	BOSS      # The big bad
 }
 
-const LOOT_SCENE = preload("res://scenes/loot/Gem.tscn")
+# const LOOT_SCENE = preload("res://scenes/loot/Gem.tscn")
 
 @export_group("Loot Settings")
 @export var hp: int = 3
@@ -23,6 +23,7 @@ const LOOT_SCENE = preload("res://scenes/loot/Gem.tscn")
 @export var special_drop_scene: PackedScene 
 @export var available_drops: Array[String] = ["SigKill", "Purge", "Defrag"] 
 @export var role: EnemyRole = EnemyRole.FODDER
+@export var is_coin_dropper: bool = false
 
 # We track knockback separately so we can decay it over time
 var knockback_velocity: Vector2 = Vector2.ZERO
@@ -172,18 +173,24 @@ func spawn_standard_loot() -> void:
 	if GameManager.is_boss_active and is_in_group("fodder"):
 		return
 
-	var loot = LOOT_SCENE.instantiate()
+	# SAFETY CHECK: If we forgot to assign the scene in the Inspector, don't crash!
+	if not loot_scene:
+		push_warning("Enemy tried to drop loot, but no loot_scene was assigned!")
+		return
 
-	if randf() < 0.10:
+	var loot = loot_scene.instantiate()
+
+	# --- THE CLEAN SEPARATION ---
+	if is_coin_dropper:
 		loot.setup(loot.TYPE.GOLD)
 	else:
 		var roll = randf() # Returns 0.0 to 1.0
 		
-		if roll < 0.05:      # 1% Chance
+		if roll < 0.05:      # 5% Chance
 			loot.setup(loot.TYPE.LEGENDARY)
-		elif roll < 0.1:    # 4% Chance (0.01 to 0.05)
+		elif roll < 0.1:     # 5% Chance (0.05 to 0.10)
 			loot.setup(loot.TYPE.EPIC)
-		elif roll < 0.25:    # 20% Chance (0.05 to 0.25)
+		elif roll < 0.25:    # 15% Chance (0.10 to 0.25)
 			loot.setup(loot.TYPE.RARE)
 		else:                # 75% Chance (The rest)
 			loot.setup(loot.TYPE.COMMON)
