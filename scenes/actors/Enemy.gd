@@ -23,7 +23,7 @@ enum EnemyRole {
 @export var movement_speed: float = 115.0 
 @export var damage: int = 1 
 @export var xp_value: int = 1 
-@export var knockback_resistance: float = 0.0 
+@export var knockback_resistance: float = 0.3 
 @export var death_effect: PackedScene
 @export var role: EnemyRole = EnemyRole.FODDER
 
@@ -113,7 +113,7 @@ func _physics_process(delta: float) -> void:
 	# 4. Apply Knockback (The Fix)
 	# Add the knockback to the movement, then slowly reduce it (decay)
 	velocity = desired_velocity + knockback_velocity
-	knockback_velocity = knockback_velocity.lerp(Vector2.ZERO, 10 * delta)
+	knockback_velocity = knockback_velocity.lerp(Vector2.ZERO, 5 * delta)
 	
 	move_and_slide()
 	

@@ -220,7 +220,7 @@ func calculate_difficulty() -> void:
 	# 5. SLOTS -> ENEMY HP (+1 per 2 levels)
 	# 2x HP for every 2 slots opened.
 	var slot_lvl = GameData.get_upgrade_level("slots")
-	run_enemy_hp_mult = int(1.0 + (slot_lvl * 0.5) + sectors_current_run)
+	run_enemy_hp_mult = int(1.0 + slot_lvl + sectors_current_run)
 
 	print("--- SECTOR DIFFICULTY ---")
 	print("Time Add: +", run_max_time_bonus)

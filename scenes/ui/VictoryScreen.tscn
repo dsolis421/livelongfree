@@ -5,8 +5,12 @@
 [ext_resource type="PackedScene" uid="uid://dq4tnlq6sdxft" path="res://scenes/ui/AchievementPopup.tscn" id="2_ndtoe"]
 [ext_resource type="FontFile" uid="uid://culw22xs6a7cs" path="res://assets/fonts/Orbitron-VariableFont_wght.ttf" id="3_nysyb"]
 
+[sub_resource type="FontVariation" id="FontVariation_ndtoe"]
+base_font = ExtResource("3_nysyb")
+variation_embolden = 1.25
+spacing_glyph = 10
+
 [sub_resource type="LabelSettings" id="LabelSettings_kruri"]
-font = ExtResource("3_nysyb")
 font_size = 45
 font_color = Color(0, 0.7137255, 0.007843138, 1)
 
@@ -41,6 +45,7 @@ theme_override_constants/separation = 45
 
 [node name="Label" type="Label" parent="CenterContainer/VBoxContainer" unique_id=638911852]
 layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_ndtoe")
 text = "> SCAN COMPLETE"
 label_settings = SubResource("LabelSettings_kruri")
 horizontal_alignment = 1

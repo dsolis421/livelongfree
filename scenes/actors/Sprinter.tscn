@@ -31,6 +31,7 @@ drop_chance = 0.7
 is_coin_dropper = true
 hp = 3
 movement_speed = 250.0
+knockback_resistance = -0.2
 death_effect = ExtResource("2_kyd6q")
 
 [node name="ColorRect" parent="." index="0" unique_id=2128324598]

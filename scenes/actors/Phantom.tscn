@@ -6,15 +6,16 @@
 [ext_resource type="PackedScene" uid="uid://cx1i5tfrv4ajw" path="res://scenes/combat/DeathPhantom.tscn" id="3_q5s0s"]
 
 [sub_resource type="Gradient" id="Gradient_q5s0s"]
-offsets = PackedFloat32Array(0, 0.52597404, 0.72727275)
-colors = PackedColorArray(0.7058824, 0, 0.7058824, 1, 1, 0.6862745, 1, 0.3137255, 1, 1, 1, 0.627451)
+offsets = PackedFloat32Array(0.012987013, 0.2012987, 0.46103895, 1)
+colors = PackedColorArray(0.11764706, 0, 0.11764706, 1, 0.7058824, 0, 0.7058824, 1, 1, 1, 1, 0.627451, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_vto3u"]
 gradient = SubResource("Gradient_q5s0s")
 width = 40
-height = 40
+height = 50
 fill = 1
-fill_from = Vector2(0.5, 0.8)
+fill_from = Vector2(0.5, 1)
+fill_to = Vector2(0.5, 0)
 
 [node name="Phantom" unique_id=1413542967 groups=["enemy"] instance=ExtResource("1_mleiq")]
 collision_mask = 2
@@ -33,7 +34,7 @@ color = Color(1, 0, 1, 0.3529412)
 
 [node name="Polygon2D" type="Polygon2D" parent="." index="1" unique_id=1766444801]
 texture = SubResource("GradientTexture2D_vto3u")
-texture_offset = Vector2(20, 20)
+texture_offset = Vector2(20, 30)
 polygon = PackedVector2Array(0, -4, -8, -12, -12, -4, -20, -20, -16, 0, -8, 0, -20, 4, -20, 12, -8, 20, 0, 16, 8, 20, 20, 12, 20, 4, 8, 0, 16, 0, 20, -16, 8, -4, -4, -20)
 
 [node name="Hitbox" parent="." index="3" unique_id=1527609457]

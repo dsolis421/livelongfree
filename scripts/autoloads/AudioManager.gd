@@ -58,6 +58,7 @@ var sfx_library: Dictionary = {
 	"weapon_fire": preload("res://audio/sfx/LLF_weapon.ogg"),
 	"sigkill": preload("res://audio/sfx/LLF_sigkill.ogg"),
 	"defrag": preload("res://audio/sfx/LLF_defrag.ogg"),
+	"pulse": preload("res://audio/sfx/LLF_pulsewave.ogg"),
 	# UI sounds
 	# "ui_click": preload("res://audio/sfx/ui_click.ogg"),
 	"purchase": preload("res://audio/sfx/LLF_purchase.ogg"),

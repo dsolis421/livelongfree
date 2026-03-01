@@ -56,7 +56,8 @@ func cast_invincible() -> void:
 func cast_purge() -> void:
 	if purge_scene:
 		var purge_vfx = purge_scene.instantiate()
-		get_tree().root.add_child(purge_vfx) 
+		get_tree().root.add_child(purge_vfx)
+		audio.play_sfx("pulse")
 	var enemies = get_tree().get_nodes_in_group("enemy")
 	for enemy in enemies:
 		if enemy.has_method("take_damage"):
