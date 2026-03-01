@@ -40,12 +40,14 @@ var sfx_library: Dictionary = {
 	"level_up": preload("res://audio/sfx/LLF_levelup.ogg"),
 	"upgrade": preload("res://audio/sfx/LLF_overclock.ogg"),
 	"agent_drone": preload("res://audio/sfx/LLF_drone.ogg"),
+	"invincible": preload("res://audio/sfx/LLF_invincible.ogg"),
 	
 	# Enemy sounds
 	"enemy_death": preload("res://audio/sfx/LLF_shatter.ogg"),
 	"supernova": preload("res://audio/sfx/LLF_supernova.ogg"),
 	"enemy_hit": preload("res://audio/sfx/LLF_impact.ogg"),
 	"boss_loop": preload("res://audio/sfx/LLF_bossloop.ogg"),
+	"sprinter": preload("res://audio/sfx/LLF_sprinter.ogg"),
 	
 	# Item/pickup sounds
 	"item_pickup": preload("res://audio/sfx/LLF_itempickup.ogg"),
@@ -54,24 +56,21 @@ var sfx_library: Dictionary = {
 	
 	# Weapon sounds
 	"weapon_fire": preload("res://audio/sfx/LLF_weapon.ogg"),
-	# "weapon_swing": preload("res://audio/sfx/weapon_swing.ogg"),
 	"sigkill": preload("res://audio/sfx/LLF_sigkill.ogg"),
 	"defrag": preload("res://audio/sfx/LLF_defrag.ogg"),
 	# UI sounds
 	# "ui_click": preload("res://audio/sfx/ui_click.ogg"),
-	# "ui_hover": preload("res://audio/sfx/ui_hover.ogg"),
-	# "ui_back": preload("res://audio/sfx/ui_back.ogg"),
 	"purchase": preload("res://audio/sfx/LLF_purchase.ogg"),
 	"new_medal": preload("res://audio/sfx/LLF_medal.ogg")
 }
 
 ## Music tracks
 var music_library: Dictionary = {
-	"main_menu": preload("res://audio/music/LLF_titlemusic.ogg"),
+	"main_menu": preload("res://audio/music/LLF_titlemusic.ogg")
 	# "gameplay": preload("res://audio/music/gameplay.ogg"),
 	# "boss": preload("res://audio/music/boss.ogg"),
 	# "game_over": preload("res://audio/music/game_over.ogg"),
-	# "victory": preload("res://audio/music/victory.ogg"),
+	# "victory": preload("res://audio/music/victory.ogg")
 }
 
 # =============================================================================

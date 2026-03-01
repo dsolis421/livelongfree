@@ -77,7 +77,7 @@ vertical_alignment = 1
 [node name="NextSector" type="Button" parent="CenterContainer/VBoxContainer" unique_id=73957395]
 layout_mode = 2
 theme_override_font_sizes/font_size = 45
-text = " Next Directory "
+text = " Next Sector "
 
 [node name="ReturnToBase" type="Button" parent="CenterContainer/VBoxContainer" unique_id=527434688]
 layout_mode = 2

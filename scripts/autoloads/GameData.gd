@@ -7,34 +7,34 @@ const UPGRADE_CONFIG = {
 	"buffer": { 
 		"name": "Data Buffer", 
 		"description": "Start with temporary extra integrity.",
-		"base_cost": 5,
+		"base_cost": 10,
 		"cost_multiplier": 1.5, 
 		"max_level": 8
 	},
 	"magnet": {
 		"name": "Matter Siphon",
 		"description": "Extend magnetic reach for gems and coins.",
-		"base_cost": 10,
+		"base_cost": 15,
 		"cost_multiplier": 1.2, 
-		"max_level": 20
+		"max_level": 15
 	},
 	"damage": {
 		"name": "Weapon Overclock",
 		"description": "Weapon does additional damage.",
-		"base_cost": 20,
-		"cost_multiplier": 2.0, 
+		"base_cost": 30,
+		"cost_multiplier": 2.5, 
 		"max_level": 5
 	},
 	"slots": {
 		"name": "Expansion Slot",
 		"description": "Unlock a new Active Item Slot.",
-		"fixed_costs": [100,150,200],
+		"fixed_costs": [200,400,600],
 		"max_level": 3
 	},
 	"ricochet": {
 		"name": "Chain Ricochet",
 		"description": "Enable chain ricochet.",
-		"fixed_costs": [50,75,100],
+		"fixed_costs": [50,100,150],
 		"max_level": 3
 	}
 }

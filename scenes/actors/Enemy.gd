@@ -11,19 +11,21 @@ enum EnemyRole {
 # const LOOT_SCENE = preload("res://scenes/loot/Gem.tscn")
 
 @export_group("Loot Settings")
+@export var loot_scene: PackedScene
+@export var drop_chance: float = 1.0 
+@export var special_drop_chance: float = 1.0 
+@export var special_drop_scene: PackedScene 
+@export var available_drops: Array[String] = ["SigKill", "Purge", "Defrag"] 
+@export var is_coin_dropper: bool = false
+
+@export_group("Enemy Settings")
 @export var hp: int = 3
 @export var movement_speed: float = 115.0 
 @export var damage: int = 1 
 @export var xp_value: int = 1 
-@export var loot_scene: PackedScene
-@export var drop_chance: float = 1.0 
 @export var knockback_resistance: float = 0.0 
 @export var death_effect: PackedScene
-@export var special_drop_chance: float = 1.0 
-@export var special_drop_scene: PackedScene 
-@export var available_drops: Array[String] = ["SigKill", "Purge", "Defrag"] 
 @export var role: EnemyRole = EnemyRole.FODDER
-@export var is_coin_dropper: bool = false
 
 # We track knockback separately so we can decay it over time
 var knockback_velocity: Vector2 = Vector2.ZERO
@@ -77,7 +79,7 @@ func _physics_process(delta: float) -> void:
 	# If we are too far away, vanish instantly.
 	# 2000px is about 2-3 screens away.
 	var dist_to_player = global_position.distance_to(player.global_position)
-	
+			
 	if dist_to_player > 2000.0:
 		# CRITICAL: Do not despawn the Boss!
 		if not is_in_group("boss"):

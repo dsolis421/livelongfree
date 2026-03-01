@@ -27,9 +27,28 @@ func activate_power_weapon(type: String) -> void:
 func cast_invincible() -> void:
 	if player.is_invincible: return
 	player.is_invincible = true
+	
 	var original_modulate = player.modulate
-	player.modulate = Color(2, 2, 0, 1) # Turns the whole bot Gold
-	await get_tree().create_timer(invincible_duration).timeout
+	
+	# 1. Calculate the timing split
+	var warning_time = invincible_duration * 0.20
+	var main_time = invincible_duration - warning_time
+	
+	# 2. Main Phase: Turn Gold
+	player.modulate = Color(0, 1, 0, 1)
+	AudioManager.play_sfx("invincible") 
+	await get_tree().create_timer(main_time).timeout
+	
+	# SAFETY CHECK: Did the player quit the game or get deleted while we were waiting?
+	if not is_instance_valid(player): return
+	
+	# 3. Warning Phase: Turn Bright Orange (or Red) for the last 20%
+	player.modulate = Color(0, 0.5, 1, 1) # Bright Orange
+	await get_tree().create_timer(warning_time).timeout
+	
+	if not is_instance_valid(player): return
+	
+	# 4. End Phase: Back to normal
 	player.is_invincible = false
 	player.modulate = original_modulate
 

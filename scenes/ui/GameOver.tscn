@@ -6,20 +6,20 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_57v1k"]
 font = ExtResource("2_57v1k")
-font_size = 32
+font_size = 42
 font_color = Color(0.78039217, 0, 0.22352941, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_pxa5g"]
 font = ExtResource("3_05upv")
-font_size = 24
+font_size = 30
 
 [sub_resource type="LabelSettings" id="LabelSettings_tnwko"]
 font = ExtResource("3_05upv")
-font_size = 24
+font_size = 30
 
 [sub_resource type="LabelSettings" id="LabelSettings_fb0mb"]
 font = ExtResource("3_05upv")
-font_size = 24
+font_size = 30
 
 [node name="GameOver" type="CanvasLayer" unique_id=250668618]
 process_mode = 3
@@ -43,11 +43,11 @@ grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=202753810]
 layout_mode = 2
-theme_override_constants/separation = 25
+theme_override_constants/separation = 30
 
 [node name="Label" type="Label" parent="CenterContainer/VBoxContainer" unique_id=638911852]
 layout_mode = 2
-text = "[ Kay-7 Has Been Deleted ]"
+text = "[  Deleted  ]"
 label_settings = SubResource("LabelSettings_57v1k")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -70,7 +70,7 @@ label_settings = SubResource("LabelSettings_fb0mb")
 [node name="Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=527434688]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_57v1k")
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 36
 text = "Return to Repo"
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]

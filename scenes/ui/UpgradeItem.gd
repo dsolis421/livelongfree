@@ -29,6 +29,7 @@ func refresh_ui() -> void:
 	name_label.text = config.get("name", "Unknown Upgrade")
 	var max_lvl = config.get("max_level", 10)
 	level_label.text = "Level %d / %d" % [current_level, max_lvl]
+	$MarginContainer/HBoxContainer/LevelIndicator.update_levels(current_level, max_lvl)
 	
 	# 3. Handle Button State
 	if cost == -1:

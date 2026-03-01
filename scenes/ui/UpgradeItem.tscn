@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dlvmo5lc3uwwa"]
 
 [ext_resource type="Script" uid="uid://dlwip6b3xvkga" path="res://scenes/ui/UpgradeItem.gd" id="1_hp6f7"]
+[ext_resource type="Script" uid="uid://dw28q7gq472vk" path="res://scenes/ui/LevelIndicator.gd" id="2_4wud7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4wud7"]
 bg_color = Color(0.13333334, 0.13333334, 0.13333334, 1)
@@ -17,7 +18,7 @@ font_size = 18
 font_color = Color(0.5019608, 0.5019608, 0.5019608, 1)
 
 [node name="UpgradeItem" type="PanelContainer" unique_id=1602326425]
-custom_minimum_size = Vector2(300, 80)
+custom_minimum_size = Vector2(300, 120)
 offset_right = 40.0
 offset_bottom = 40.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_4wud7")
@@ -35,29 +36,41 @@ layout_mode = 2
 theme_override_constants/separation = 15
 
 [node name="Icon" type="TextureRect" parent="MarginContainer/HBoxContainer" unique_id=1054685451]
-custom_minimum_size = Vector2(48, 48)
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
 
 [node name="InfoBox" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=210735293]
+custom_minimum_size = Vector2(125, 0)
 layout_mode = 2
 
 [node name="NameLabel" type="Label" parent="MarginContainer/HBoxContainer/InfoBox" unique_id=1593557234]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+size_flags_vertical = 3
 text = "Upgrade: "
 label_settings = SubResource("LabelSettings_83yvk")
+autowrap_mode = 2
 
 [node name="LevelLabel" type="Label" parent="MarginContainer/HBoxContainer/InfoBox" unique_id=869076221]
 layout_mode = 2
 text = "0 / 10"
 label_settings = SubResource("LabelSettings_hf1eo")
 
+[node name="LevelIndicator" type="Control" parent="MarginContainer/HBoxContainer" unique_id=1652284320]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_4wud7")
+
 [node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer" unique_id=697295957]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="BuyButton" type="Button" parent="MarginContainer/HBoxContainer" unique_id=797452676]
-custom_minimum_size = Vector2(100, 0)
+custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 25
 text = "100 G"
