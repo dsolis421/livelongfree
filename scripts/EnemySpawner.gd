@@ -65,14 +65,16 @@ func spawn_boss() -> void:
 	
 	if player:
 		# BUG FIX 1: Request a MUCH larger radius for the Boss (e.g. 90.0)
-		var safe_pos = get_valid_spawn_position(player, 90.0)
+		# var safe_pos = get_valid_spawn_position(player, 90.0)
 		
 		# BUG FIX 2: Handle the failure case
-		if safe_pos == Vector2.ZERO:
+		#if safe_pos == Vector2.ZERO:
 			# Fallback: Spawn 600px to the right of player if logic fails
 			# (Better than spawning at 0,0 inside a rock)
-			safe_pos = player.global_position + Vector2(600, 0)
+		#	safe_pos = player.global_position + Vector2(600, 0)
 			
+		#boss.global_position = safe_pos
+		var safe_pos = get_guaranteed_boss_spawn(player, 90.0)
 		boss.global_position = safe_pos
 	
 	get_tree().current_scene.call_deferred("add_child", boss)
@@ -151,3 +153,56 @@ func get_valid_spawn_position(player: Node2D, required_radius: float = 30.0) -> 
 			return candidate_pos
 	
 	return Vector2.ZERO
+
+func get_guaranteed_boss_spawn(player: Node2D, required_radius: float = 90.0) -> Vector2:
+	var world_gen = get_tree().get_first_node_in_group("world_generator")
+	var space_state = get_world_2d().direct_space_state
+
+	var current_radius = 800.0 # Start safely off-screen
+	var max_radius = 3000.0    # Hard cap so the game doesn't freeze in an infinite loop
+
+	while current_radius <= max_radius:
+		# Calculate how many points to check on this ring (larger ring = more checks)
+		var steps = max(8, int(current_radius / 50.0)) 
+		
+		for i in range(steps):
+			var angle = (TAU / steps) * i
+			var offset = Vector2(cos(angle), sin(angle)) * current_radius
+			var candidate_pos = player.global_position + offset
+			
+			# --- CHECK 1: THE ORACLE (Terrain) ---
+			var is_wall = false
+			if world_gen:
+				# Check the center AND the 4 extremes of the Boss's massive body
+				if world_gen.is_position_wall(candidate_pos) or \
+				   world_gen.is_position_wall(candidate_pos + Vector2(required_radius, 0)) or \
+				   world_gen.is_position_wall(candidate_pos - Vector2(required_radius, 0)) or \
+				   world_gen.is_position_wall(candidate_pos + Vector2(0, required_radius)) or \
+				   world_gen.is_position_wall(candidate_pos - Vector2(0, required_radius)):
+					is_wall = true
+			
+			# If any part of the Boss touches a wall, skip this spot immediately
+			if is_wall:
+				continue 
+
+			# --- CHECK 2: THE PHYSICS (Dynamic Obstacles) ---
+			var query = PhysicsShapeQueryParameters2D.new()
+			var shape = CircleShape2D.new()
+			shape.radius = required_radius
+			query.shape = shape
+			query.transform = Transform2D(0, candidate_pos)
+			query.collision_mask = 1 
+			query.collide_with_bodies = true
+			
+			var result = space_state.intersect_shape(query)
+			
+			if result.is_empty():
+				print("Spawner: Found guaranteed boss spawn at distance: ", current_radius)
+				return candidate_pos # Guaranteed safe!
+		
+		# If the entire ring was blocked, push outward 100 pixels and search again
+		current_radius += 100.0
+	
+	# Fallback ONLY if the entire 3000px radius is a solid block of terrain
+	push_warning("CRITICAL: Boss could not find space. Spawning at player.")
+	return player.global_position

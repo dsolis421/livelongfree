@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cgna31p5cx674" path="res://scenes/actors/Enemy.tscn" id="3_0bbpv"]
 [ext_resource type="Texture2D" uid="uid://dhe3qma8nxxru" path="res://assets/sprites/tile_proto.png" id="3_bb450"]
 [ext_resource type="Script" uid="uid://bevfo8jg6sw65" path="res://scripts/EnemySpawner.gd" id="3_rarhs"]
+[ext_resource type="PackedScene" uid="uid://bdxs07512fr7y" path="res://scenes/actors/BossIndicator.tscn" id="4_bb450"]
 [ext_resource type="PackedScene" uid="uid://prmueubsccmx" path="res://scenes/ui/HUD.tscn" id="5_vcsgt"]
 [ext_resource type="PackedScene" uid="uid://cg1lfl38v4s4t" path="res://scenes/actors/Phantom.tscn" id="6_bjd11"]
 [ext_resource type="PackedScene" uid="uid://dfe3nkk2kx5yn" path="res://scenes/ui/LevelUpScreen.tscn" id="6_nxtc6"]
@@ -58,6 +59,8 @@ player = NodePath("../Player")
 
 [node name="GroundLayer" type="TileMapLayer" parent="." unique_id=716858734]
 tile_set = SubResource("TileSet_1nqs0")
+
+[node name="BossIndicator" parent="." unique_id=1900499540 instance=ExtResource("4_bb450")]
 
 [node name="Player" parent="." unique_id=1378413890 node_paths=PackedStringArray("joystick") instance=ExtResource("2_0bbpv")]
 joystick = NodePath("../Controls/VirtualJoystick")

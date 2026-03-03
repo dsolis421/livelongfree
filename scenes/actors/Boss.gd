@@ -194,7 +194,7 @@ func die() -> void:
 	if is_dead: return
 	is_dead = true
 	# Disable Physics immediately (Stop hurting the player)
-	var player = get_tree().get_first_node_in_group("player")
+	#var player = get_tree().get_first_node_in_group("player")
 	if player:
 		player.is_invincible = true
 	get_tree().call_group("projectile", "queue_free")

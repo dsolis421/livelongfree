@@ -6,7 +6,7 @@
 
 [sub_resource type="FontVariation" id="FontVariation_05upv"]
 base_font = ExtResource("2_57v1k")
-variation_embolden = 1.25
+variation_embolden = 1.1
 spacing_glyph = 10
 
 [sub_resource type="LabelSettings" id="LabelSettings_57v1k"]
@@ -24,6 +24,11 @@ font_size = 30
 [sub_resource type="LabelSettings" id="LabelSettings_fb0mb"]
 font = ExtResource("3_05upv")
 font_size = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_05upv"]
+bg_color = Color(0, 1, 1, 0.49019608)
+expand_margin_top = 8.0
+expand_margin_bottom = 8.0
 
 [node name="GameOver" type="CanvasLayer" unique_id=250668618]
 process_mode = 3
@@ -76,6 +81,7 @@ label_settings = SubResource("LabelSettings_fb0mb")
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_57v1k")
 theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_05upv")
 text = "Return to Repo"
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]

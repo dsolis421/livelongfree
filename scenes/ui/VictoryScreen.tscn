@@ -18,6 +18,16 @@ font_color = Color(0, 0.7137255, 0.007843138, 1)
 font_size = 32
 shadow_color = Color(0, 0, 0, 0.39215687)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ndtoe"]
+bg_color = Color(0, 1, 1, 0.47058824)
+expand_margin_top = 8.0
+expand_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_88p6j"]
+bg_color = Color(0, 1, 1, 0.47058824)
+expand_margin_top = 8.0
+expand_margin_bottom = 8.0
+
 [node name="VictoryScreen" type="CanvasLayer" unique_id=250668618]
 process_mode = 3
 layer = 200
@@ -79,14 +89,20 @@ label_settings = SubResource("LabelSettings_57v1k")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Spacer" type="Control" parent="CenterContainer/VBoxContainer" unique_id=1727986360]
+layout_mode = 2
+size_flags_vertical = 3
+
 [node name="NextSector" type="Button" parent="CenterContainer/VBoxContainer" unique_id=73957395]
 layout_mode = 2
 theme_override_font_sizes/font_size = 45
+theme_override_styles/normal = SubResource("StyleBoxFlat_ndtoe")
 text = " Next Sector "
 
 [node name="ReturnToBase" type="Button" parent="CenterContainer/VBoxContainer" unique_id=527434688]
 layout_mode = 2
 theme_override_font_sizes/font_size = 45
+theme_override_styles/normal = SubResource("StyleBoxFlat_88p6j")
 text = " Return to Repo "
 
 [node name="AchievementPopup" parent="." unique_id=178355645 instance=ExtResource("2_ndtoe")]

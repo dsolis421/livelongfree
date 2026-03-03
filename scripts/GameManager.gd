@@ -18,6 +18,7 @@ signal game_over_triggered
 const STARTING_XP = 0
 const STARTING_TARGET_XP = 150
 const STAGE_TIME_LIMIT: float = 60.0
+var is_stage_active: bool = false
 
 # --- SESSION DATA ---
 var kills: int = 0
@@ -52,7 +53,7 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _process(delta: float) -> void:
-	if not is_run_active or is_game_over or get_tree().paused:
+	if not is_run_active or not is_stage_active or is_game_over or get_tree().paused:
 		return
 
 	time_remaining -= delta
@@ -92,7 +93,8 @@ func start_mission_logic() -> void:
 	is_boss_active = false
 	is_game_over = false # <--- CRITICAL: Allows extraction to happen again
 
-	# C. Update UI
+	# START THE CLOCK
+	is_stage_active = true
 	xp_updated.emit(experience, target_experience)
 
 # --- GAMEPLAY LOGIC ---
@@ -114,7 +116,7 @@ func level_up() -> void:
 	experience -= target_experience
 	if experience < 0: experience = 0
 	level += 1
-	target_experience = int((target_experience * 1.2) * run_xp_level_mult)
+	target_experience = int((target_experience * 1.15) * run_xp_level_mult)
 	print("UPGRADE READY! Tier: ", level)
 	level_up_triggered.emit(level)
 	xp_updated.emit(experience, target_experience)
@@ -137,7 +139,7 @@ func on_boss_died() -> void:
 func start_extraction_sequence() -> void:
 	# Ensure we don't trigger this twice
 	if is_game_over: return
-	
+	is_stage_active = false
 	is_game_over = true # Stop the clock/spawning
 	
 	get_tree().call_group("enemy", "queue_free")
@@ -194,33 +196,39 @@ func on_player_died() -> void:
 # 2. SAFE RETURN (Call this from GameOverScreen or VictoryScreen buttons)
 func return_to_main_menu() -> void:
 	# Double check the flag is set so the timer is dead
-	is_game_over = true 
+	is_game_over = true
+	is_stage_active = false 
 	# IMPORTANT: Unpause the tree, or the Main Menu will be frozen!
 	get_tree().paused = false 
 	get_tree().change_scene_to_file("res://scenes/ui/MainMenu.tscn")
 
 func calculate_difficulty() -> void:
 	# 1. BUFFER -> TIME (+15s per level)
-	var buffer_lvl = GameData.get_upgrade_level("buffer")
-	run_max_time_bonus = buffer_lvl * 15.0 
+	#var buffer_lvl = GameData.get_upgrade_level("buffer")
+	#run_max_time_bonus = buffer_lvl * 15.0 
 	
 	# 2. DAMAGE -> SPAWN RATE (-0.1s per level)
-	var dmg_lvl = GameData.get_upgrade_level("damage")
-	run_spawn_timer_mod = dmg_lvl * 0.12
+	#var dmg_lvl = GameData.get_upgrade_level("damage")
+	#run_spawn_timer_mod = dmg_lvl * 0.12
 	
 	# 3. RICOCHET -> ENEMY SPEED 
 	# +5 Enemy Movement Per Ric Level
-	var ric_lvl = GameData.get_upgrade_level("ricochet")
-	run_enemy_speed_mod = (ric_lvl * 30) + (sectors_current_run * 2)
+	#var ric_lvl = GameData.get_upgrade_level("ricochet")
+	#run_enemy_speed_mod = (ric_lvl * 30) + (sectors_current_run * 2)
 	
 	# 4. SIPHON -> XP LEVEL (+10% per level)
-	var xp_lvl = GameData.get_upgrade_level("magnet")
-	run_xp_level_mult = 1 + (xp_lvl * .01)
+	#var xp_lvl = GameData.get_upgrade_level("magnet")
+	#run_xp_level_mult = 1 + (xp_lvl * .01)
 	
 	# 5. SLOTS -> ENEMY HP (+1 per 2 levels)
 	# 2x HP for every 2 slots opened.
-	var slot_lvl = GameData.get_upgrade_level("slots")
-	run_enemy_hp_mult = int(1.0 + slot_lvl + sectors_current_run)
+	#var slot_lvl = GameData.get_upgrade_level("slots")
+	#run_enemy_hp_mult = int(1.0 + slot_lvl + sectors_current_run)
+	run_max_time_bonus = sectors_current_run * 10.0
+	run_spawn_timer_mod = sectors_current_run * 0.05
+	run_enemy_speed_mod = sectors_current_run * 5
+	run_xp_level_mult = 1 + (sectors_current_run * 0.02)
+	run_enemy_hp_mult = 1.0 + sectors_current_run
 
 	print("--- SECTOR DIFFICULTY ---")
 	print("Time Add: +", run_max_time_bonus)
@@ -291,4 +299,5 @@ func game_reset() -> void:
 		gold_current_run = 0
 		sectors_current_run = 0
 		is_run_active = false
+		is_stage_active = false
 		needs_full_reset = false # Done!

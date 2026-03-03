@@ -17,6 +17,9 @@ font_size = 36
 font_size = 32
 font_color = Color(1, 0.84313726, 0, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_17ff2"]
+bg_color = Color(0, 1, 0.99607843, 0.47058824)
+
 [node name="RepoStore" type="CanvasLayer" unique_id=2119109134]
 script = ExtResource("1_m4dye")
 
@@ -102,4 +105,5 @@ custom_minimum_size = Vector2(200, 60)
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_17ff2")
 text = "Return to Base"

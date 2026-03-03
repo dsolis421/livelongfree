@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bdxs07512fr7y"]
+
+[ext_resource type="Script" uid="uid://bwd40mjbfimo2" path="res://scenes/actors/BossIndicator.gd" id="1_okif8"]
+
+[sub_resource type="Gradient" id="Gradient_ev8rk"]
+offsets = PackedFloat32Array(0, 0.8795181, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 0, 0, 0.39215687, 1, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7yn2i"]
+gradient = SubResource("Gradient_ev8rk")
+width = 30
+height = 150
+fill = 1
+fill_from = Vector2(0, 0.5)
+fill_to = Vector2(0.2, 1)
+
+[node name="BossIndicator" type="CanvasLayer" unique_id=1900499540]
+script = ExtResource("1_okif8")
+
+[node name="ArrowSprite" type="Sprite2D" parent="." unique_id=684430400]
+texture = SubResource("GradientTexture2D_7yn2i")

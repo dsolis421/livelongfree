@@ -43,8 +43,8 @@ func _on_button_pressed() -> void:
 	# 1. Helper stops the clock, unpauses, and changes scene
 	# audio.stop_loop("game_over")
 	GameManager.game_reset()
-	GameManager.return_to_main_menu()
-	
+	#GameManager.return_to_main_menu()
+	TransitionManager.transition_to("res://scenes/ui/MainMenu.tscn") # Adjust path to your actual Repo scene!
 	# 2. Since this screen was added to 'root' (outside the scene), 
 	# we must destroy it manually so it doesn't get stuck on top of the menu.
 	queue_free()

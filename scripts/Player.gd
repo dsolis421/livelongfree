@@ -21,8 +21,8 @@ class_name Player
 # --- STATS & CONFIG ---
 @export_group("Player Stats")
 @export var movement_speed: float = 200.0
-@export var max_hp: float = 2.0  
-var current_hp: float = 2.0
+@export var max_hp: float = 3.0  
+var current_hp: float = 3.0
 
 # --- SCREEN SHAKE ---
 @export var shake_decay: float = 5.0  
@@ -34,7 +34,7 @@ var cooldown_modifier: float = 1.0
 var is_invincible: bool = false
 var current_shake_strength: float = 0.0
 var last_facing_direction: Vector2 = Vector2.RIGHT # Needed for Defrag
-var shield_modulate: float = 0.1
+var shield_modulate: float = 0.2
 var hit_tween: Tween = null
 
 const BASE_COOLDOWN_TIME: float = 0.5 
@@ -59,6 +59,7 @@ func _apply_global_upgrades() -> void:
 		shield_modulate = (shield_modulate * current_hp) - 0.1
 		player_shield.modulate.a = shield_modulate
 		print("Player Buffer Applied (+", bonus_hp, " HP)")
+		print("Player Shield Applied >> ", shield_modulate)
 	
 	# B. DAMAGE (Multiplier)
 	var damage_level = GameData.get_upgrade_level("damage")
@@ -109,7 +110,7 @@ func take_damage(amount: float = 1.0) -> void:
 	current_hp -= amount
 	shield_modulate -= 0.1
 	player_shield.modulate.a = shield_modulate
-	print("Player Hit! HP: ", current_hp, " / ", max_hp)
+	print("Player Hit! HP: ", current_hp, " / ", max_hp, " Shield: ", shield_modulate)
 	if current_hp <= 0:
 		die()
 		return

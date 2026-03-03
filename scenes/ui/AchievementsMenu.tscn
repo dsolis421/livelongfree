@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://by6pqpknloq0p"]
 
 [ext_resource type="Script" uid="uid://blwcac3bvmxh7" path="res://scenes/ui/AchievementsMenu.gd" id="1_7ea3g"]
+[ext_resource type="FontFile" uid="uid://culw22xs6a7cs" path="res://assets/fonts/Orbitron-VariableFont_wght.ttf" id="2_8ch1v"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ea3g"]
 content_margin_left = 20.0
@@ -8,6 +9,11 @@ content_margin_top = 60.0
 content_margin_right = 20.0
 content_margin_bottom = 225.0
 bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ch1v"]
+bg_color = Color(0, 1, 1, 0.47058824)
+expand_margin_top = 8.0
+expand_margin_bottom = 8.0
 
 [node name="Control" type="Control" unique_id=258205164]
 layout_mode = 3
@@ -55,7 +61,9 @@ offset_top = -155.0
 offset_bottom = -102.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_8ch1v")
 theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_8ch1v")
 text = "Back to Repo"
 
 [connection signal="pressed" from="BackToRepo" to="." method="_on_back_to_repo_pressed"]

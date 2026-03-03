@@ -9,11 +9,12 @@ var stats = {
 	TYPE.RARE:      {"color": Color(0.5,0.5,0.5),        "val": 50,   "is_gold": false},
 	TYPE.EPIC:      {"color": Color(0.75,0.75,0.75),     "val": 100,  "is_gold": false},
 	TYPE.LEGENDARY: {"color": Color(0,1,1),      "val": 200,  "is_gold": false},
-	TYPE.GOLD:      {"color": Color(1, 0.85, 0), "val": 200,    "is_gold": true} 
+	TYPE.GOLD:      {"color": Color(1, 0.85, 0), "val": 1,    "is_gold": true} 
 }
 
 # --- STATE VARIABLES ---
-var current_value: int = 10
+var current_value: int = 1
+var gold_bonus: int = 0
 var is_currency: bool = false
 var target: Node2D = null  # The player, once magnetized
 
@@ -60,9 +61,9 @@ func setup(type: int) -> void:
 	#is_currency = data["is_gold"]
 	# 1. Get Data
 	var data = stats.get(type, stats[TYPE.COMMON])
-	
 	# 2. Apply Logic
-	current_value = data["val"]
+	gold_bonus = GameManager.sectors_current_run
+	current_value = data["val"] + gold_bonus
 	is_currency = data["is_gold"]
 
 	# 3. Apply Visuals (The New Logic)

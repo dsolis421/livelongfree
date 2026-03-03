@@ -17,6 +17,9 @@ font_size = 25
 font_size = 18
 font_color = Color(0.5019608, 0.5019608, 0.5019608, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_83yvk"]
+bg_color = Color(0, 1, 1, 0.47058824)
+
 [node name="UpgradeItem" type="PanelContainer" unique_id=1602326425]
 custom_minimum_size = Vector2(300, 120)
 offset_right = 40.0
@@ -73,4 +76,5 @@ size_flags_horizontal = 3
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxFlat_83yvk")
 text = "100 G"
