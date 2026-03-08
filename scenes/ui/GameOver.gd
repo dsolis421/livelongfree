@@ -26,10 +26,10 @@ func _on_game_over_triggered() -> void:
 	# 1. UPDATE STATS
 	# We pull the specific numbers from our Managers
 	if run_stats_label:
-		run_stats_label.text = "Targets Neutralized: " + str(GameManager.kills)
+		run_stats_label.text = "Targets Neutralized: " + GameData.format_number(GameManager.kills)
 		
 	if gold_label:
-		gold_label.text = "Bounty Collected: " + str(GameManager.gold_current_run)
+		gold_label.text = "Bounty Collected: " + GameData.format_number(GameManager.gold_current_run)
 		
 	if total_label:
 		# GameData should have been saved/updated by Player.die() just before this

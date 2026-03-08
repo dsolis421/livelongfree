@@ -14,7 +14,7 @@ func _ready() -> void:
 		$MainLayout/RightColumn/StatsPanel/VBoxContainer/GoldLabel.text = "Net Worth: " + GameData.format_number(GameData.gold)
 	
 	if has_node("MainLayout/RightColumn/StatsPanel/VBoxContainer/KillsLabel"):
-		$MainLayout/RightColumn/StatsPanel/VBoxContainer/KillsLabel.text = "Most Kills: " + str(GameData.high_kills)
+		$MainLayout/RightColumn/StatsPanel/VBoxContainer/KillsLabel.text = "Most Kills: " + GameData.format_number(GameData.high_kills)
 
 	if has_node("MainLayout/RightColumn/StatsPanel/VBoxContainer/SectorsLabel"):
 		$MainLayout/RightColumn/StatsPanel/VBoxContainer/SectorsLabel.text = "Max Sectors: " + str(GameData.max_sectors)

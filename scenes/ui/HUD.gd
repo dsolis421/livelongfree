@@ -75,11 +75,11 @@ func _process(_delta: float) -> void:
 	timer_label.text = "%02d:%02d:%03d" % [minutes, seconds, milliseconds]
 	
 	# 2. UPDATE SCORE (Kills)
-	score_label.text = "Kills: " + str(GameManager.kills)
+	score_label.text = "Kills: " + GameData.format_number(GameManager.kills)
 	
 	# 3. UPDATE GOLD
 	if gold_label:
-		gold_label.text = "Bounty: " + str(GameManager.gold_current_run)
+		gold_label.text = "Bounty: " + GameData.format_number(GameManager.gold_current_run)
 
 func _on_supernova() -> void:
 	var tween = create_tween()

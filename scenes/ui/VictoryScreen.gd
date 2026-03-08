@@ -21,7 +21,7 @@ func _ready() -> void:
 	
 	if gold_label:
 		# Use 'gold_current_run' to show what they just earned
-		gold_label.text = "Bounty Collected: " + str(GameManager.gold_current_run)
+		gold_label.text = "Bounty Collected: " + GameData.format_number(GameManager.gold_current_run)
 		
 	if total_label:
 		# Use GameData to show their total bank (Persistence check!)
