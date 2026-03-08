@@ -76,6 +76,7 @@ phantom_scene = ExtResource("6_bjd11")
 boss_scene = ExtResource("8_3p2gp")
 
 [node name="Timer" type="Timer" parent="EnemySpawner" unique_id=1323218654]
+wait_time = 1.2
 autostart = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1166950624]

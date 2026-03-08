@@ -67,11 +67,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("2_4wud7")
 
-[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer" unique_id=697295957]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-
 [node name="BuyButton" type="Button" parent="MarginContainer/HBoxContainer" unique_id=797452676]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2

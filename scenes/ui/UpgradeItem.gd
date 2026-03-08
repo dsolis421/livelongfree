@@ -36,7 +36,7 @@ func refresh_ui() -> void:
 		buy_button.text = "MAXED"
 		buy_button.disabled = true
 	else:
-		buy_button.text = str(cost) + " G"
+		buy_button.text = str(cost) + " B"
 		# Check wallet: Disable if too expensive
 		buy_button.disabled = (GameData.gold < cost)
 

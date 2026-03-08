@@ -15,27 +15,27 @@ const UPGRADE_CONFIG = {
 		"name": "Matter Siphon",
 		"description": "Extend magnetic reach for gems and coins.",
 		"base_cost": 15,
-		"cost_multiplier": 1.2, 
+		"cost_multiplier": 2.2, 
 		"max_level": 15
 	},
 	"damage": {
 		"name": "Weapon Overclock",
 		"description": "Weapon does additional damage.",
 		"base_cost": 30,
-		"cost_multiplier": 2.5, 
+		"cost_multiplier": 3.5, 
 		"max_level": 5
 	},
 	"slots": {
 		"name": "Expansion Slot",
 		"description": "Unlock a new Active Item Slot.",
-		"fixed_costs": [200,400,600],
+		"fixed_costs": [200,600,1200],
 		"max_level": 3
 	},
 	"ricochet": {
 		"name": "Chain Ricochet",
 		"description": "Enable chain ricochet.",
-		"fixed_costs": [50,100,150],
-		"max_level": 3
+		"fixed_costs": [100,250,500,750],
+		"max_level": 4
 	}
 }
 
@@ -109,6 +109,16 @@ var ACHIEVEMENT_DATA = {
 	"max_buffer": {
 		"name": "Time Lord",
 		"description": "Reach Max Level on Buffer.",
+		"icon": preload("res://assets/LLF_medalholder.png")
+	},
+	"2k_kills": {
+		"name": "Slayer",
+		"description": "Defeat 2000 enemies in a single run.",
+		"icon": preload("res://assets/LLF_medalholder.png")
+	},
+	"5k_coins": {
+		"name": "Hoarder",
+		"description": "Collect 5000 coins in a single run.",
 		"icon": preload("res://assets/LLF_medalholder.png")
 	}
 }

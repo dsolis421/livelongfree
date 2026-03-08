@@ -183,13 +183,13 @@ func apply_upgrade(type: String) -> void:
 	match type:
 		"movement_speed":
 			if movement_speed >= MAX_SPEED: return
-			movement_speed += 20.0
+			movement_speed += 30.0
 		"cooldown":
-			if cooldown_modifier <= MIN_COOLDOWN_MODIFIER: return
-			cooldown_modifier -= 0.03
-			if cooldown_modifier < MIN_COOLDOWN_MODIFIER:
-				cooldown_modifier = MIN_COOLDOWN_MODIFIER
+			if cooldown_modifier <= MIN_COOLDOWN_MODIFIER: 
+				return 
+			cooldown_modifier = max(cooldown_modifier - 0.08, MIN_COOLDOWN_MODIFIER)
 			$GunTimer.wait_time = BASE_COOLDOWN_TIME * cooldown_modifier
+			print("GUNTIMER = ", $GunTimer.wait_time)
 
 # ALL POWER WEAPON LOGIC IS DELEGATED HERE!
 func activate_power_weapon(type: String) -> void:

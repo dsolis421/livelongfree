@@ -21,13 +21,15 @@ const STAGE_TIME_LIMIT: float = 60.0
 var is_stage_active: bool = false
 
 # --- SESSION DATA ---
-var kills: int = 0
-var gold_current_run: int = 0
+# var kills: int = 0
+# var gold_current_run: int = 0
 var sectors_current_run: int = 0
 var experience: int = STARTING_XP
 var target_experience: int = STARTING_TARGET_XP
 var level: int = 1
 # var current_sector: int = 1
+var _has_2k_kill_medal: bool = false
+var _has_5k_coin_medal: bool = false
 var achievement_popup: Node = null
 
 # --- RUN MODIFIERS (SCALING) ---
@@ -49,6 +51,31 @@ var boss_has_spawned: bool = false
 var is_boss_active: bool = false
 var is_game_over: bool = false
 
+var kills: int = 0:
+	set(value):
+		kills = value
+		if _has_2k_kill_medal: return 
+		
+		if kills >= 100:
+			_has_2k_kill_medal = true
+			unlock_achievement("2k_kills") # Call your actual unlock logic
+
+var gold_current_run: int = 0:
+	set(value):
+		gold_current_run = value 
+		if _has_5k_coin_medal: return
+		
+		if gold_current_run >= 50:
+			_has_5k_coin_medal = true
+			unlock_achievement("5k_coins")
+
+func initialize_run() -> void:
+	# Check the permanent array ONCE at the start of the run
+	_has_2k_kill_medal = GameData.unlocked_achievements.has("2k_kills")
+	_has_5k_coin_medal = GameData.unlocked_achievements.has("5k_coins")
+	kills = 0
+	gold_current_run = 0
+	
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
@@ -173,14 +200,14 @@ func add_gold(amount: int) -> void:
 func save_game() -> void:
 	if gold_current_run > 0:
 		GameData.add_gold(gold_current_run)
-		gold_current_run = 0
+		# gold_current_run = 0
 
 	if kills > GameData.high_kills:
 		GameData.high_kills = kills
 		
 	if sectors_current_run > GameData.max_sectors:
 		GameData.max_sectors = sectors_current_run
-		
+	print("<< GAME SAVED >>")
 	GameData.save_game()
 	
 # --- PLAYER DEATH & MENU LOGIC ---
@@ -270,7 +297,9 @@ func is_upgrade_maxed(key: String) -> bool:
 	var max_lvl = GameData.UPGRADE_CONFIG[key].max_level
 	
 	return current_lvl >= max_lvl
-	
+
+
+			
 func unlock_achievement(key: String) -> void:
 	# 1. If we already have it, stop.
 	if key in GameData.unlocked_achievements:
