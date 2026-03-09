@@ -3,6 +3,12 @@
 [ext_resource type="Script" uid="uid://toqod6dgw8sw" path="res://scenes/actors/Enemy.gd" id="1_jq30h"]
 [ext_resource type="PackedScene" uid="uid://teqhl7anwhsn" path="res://scenes/loot/Gem.tscn" id="2_ay0ne"]
 [ext_resource type="PackedScene" uid="uid://720dybtofa5b" path="res://scenes/combat/DeathGoblin.tscn" id="3_ktxhy"]
+[ext_resource type="Shader" uid="uid://cn54bfpiftx6o" path="res://scenes/actors/Enemy.gdshader" id="4_qqu5c"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dqsgq"]
+shader = ExtResource("4_qqu5c")
+shader_parameter/progress = 1.0
+shader_parameter/corruption_color = Color(0.9, 0.1, 0.1, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ay0ne"]
 size = Vector2(40, 40)
@@ -22,6 +28,7 @@ death_effect = ExtResource("3_ktxhy")
 visual = NodePath("ColorRect")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=2128324598]
+material = SubResource("ShaderMaterial_dqsgq")
 offset_left = -20.0
 offset_top = -20.0
 offset_right = 20.0
