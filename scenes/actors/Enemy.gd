@@ -85,9 +85,6 @@ func start_wall_spawn(wall_position: Vector2, floor_position: Vector2, spawn_dur
 	# The Squeeze: Compress the visual code to fit in the wall
 	if visual:
 		visual.scale = Vector2(0.1, 0.1) 
-		# Set shader to fully glitched
-		if visual.material:
-			visual.material.set_shader_parameter("progress", 0.0) 
 		
 	# The Peel: Tween out to the floor and decompress
 	var tween = create_tween().set_parallel(true)
@@ -98,15 +95,45 @@ func start_wall_spawn(wall_position: Vector2, floor_position: Vector2, spawn_dur
 		
 		# Animate the shader from 0.0 (glitch) to 1.0 (solid)
 		if visual.material:
-			tween.tween_property(visual.material, "shader_parameter/progress", 1.2, spawn_duration)
+			tween.tween_method(set_shader_progress, 0.0, 1.5, spawn_duration)
 	
 	# When finished, wake up!
 	tween.chain().tween_callback(finish_spawning)
 
+func start_floor_spawn(floor_position: Vector2, spawn_duration: float = 1.0) -> void:
+	enemy_status = EnemyState.SPAWNING
+	global_position = floor_position
+	
+	# Become a ghost (No targeting, no physics)
+	if is_in_group("enemy"):
+		remove_from_group("enemy")
+	collision_shape.set_deferred("disabled", true)
+	
+	# The Puddle: Start tiny and glitched on the floor
+	if visual:
+		visual.scale = Vector2(0.1, 0.1) 
+		
+	# The Eruption: Grow to full size while the shader compiles
+	var tween = create_tween().set_parallel(true)
+	
+	if visual:
+		# Unzip upward/outward
+		tween.tween_property(visual, "scale", Vector2(1.0, 1.0), spawn_duration).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+		
+		# Animate the Cyan-to-Red shader compilation
+		tween.tween_method(set_shader_progress, 0.0, 1.5, spawn_duration)
+	
+	# When finished, wake up!
+	tween.chain().tween_callback(finish_spawning)
+	
 func finish_spawning() -> void:
 	enemy_status = EnemyState.ACTIVE
 	add_to_group("enemy")
 	collision_shape.set_deferred("disabled", false)
+	
+func set_shader_progress(value: float) -> void:
+	if visual and visual.material:
+		visual.material.set_shader_parameter("progress", value)
 	
 func _physics_process(delta: float) -> void:
 # --- NEW GUARD: Don't move if we are stuck in the wall spawning! ---
@@ -173,20 +200,15 @@ func die() -> void:
 	AudioManager.play_sfx("enemy_death")
 	if GameManager:
 		GameManager.kills += 1
-		
-	# 1. Try to drop Special Loot first
-	var dropped_special = spawn_special_loot()
 	
-	# 2. If no special loot dropped, try to drop Standard Loot
-	if not dropped_special:
+	if special_drop_scene:
+		spawn_special_loot()
+	else:
 		spawn_standard_loot()
 
 	queue_free()
 
 func spawn_special_loot() -> bool:
-	# If this specific enemy doesn't have special loot assigned, fail immediately
-	if special_drop_scene == null:
-		return false
 		
 	# Roll the dice against the Inspector's special_drop_chance!
 	if randf() <= special_drop_chance:
@@ -217,9 +239,9 @@ func spawn_standard_loot() -> void:
 		loot.setup(loot.TYPE.GOLD)
 	else:
 		var roll = randf() 
-		if roll < 0.05:      loot.setup(loot.TYPE.LEGENDARY)
+		if roll < 0.02:      loot.setup(loot.TYPE.LEGENDARY)
 		elif roll < 0.1:     loot.setup(loot.TYPE.EPIC)
-		elif roll < 0.25:    loot.setup(loot.TYPE.RARE)
+		elif roll < 0.23:    loot.setup(loot.TYPE.RARE)
 		else:                loot.setup(loot.TYPE.COMMON)
 
 	get_tree().current_scene.call_deferred("add_child", loot)

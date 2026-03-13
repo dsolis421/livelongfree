@@ -1,33 +1,42 @@
 shader_type canvas_item;
 
-// This is the slider we will animate from Godot (0.0 = fully glitched, 1.0 = solid)
-uniform float progress : hint_range(0.0, 1.0) = 1.0; 
+// Bumped to 1.5 to guarantee all glitch artifacts clear off at the end
+uniform float progress : hint_range(0.0, 2) = 2; 
 
-// The color of the malicious code
-uniform vec4 corruption_color : source_color = vec4(0.9, 0.1, 0.1, 1.0); 
+uniform vec4 friendly_color : source_color = vec4(0.0, 1.0, 1.0, 1.0); // Cyan
+uniform vec4 hostile_color : source_color = vec4(1, 0.0, 0.0, 1.0); // Red
 
-// A tiny math function to generate TV static/digital noise
 float random(vec2 uv) {
     return fract(sin(dot(uv.xy, vec2(12.9898,78.233))) * 43758.5453123);
 }
 
 void fragment() {
-    // Get the base color of your Polygon/ColorRect
+    // The normal, final color of your enemy (from the ColorRect/Polygon2D)
     vec4 base_color = COLOR; 
     
-    // Create a blocky, pixelated grid for the UVs (adjust 20.0 for bigger/smaller blocks)
     vec2 blocky_uv = floor(UV * 20.0) / 20.0;
     float noise_val = random(blocky_uv);
     
-    // Calculate the threshold
     float visibility_threshold = 1.0 - progress;
     
+    // THE DELAYED SHIFT: Squaring the progress keeps the color Cyan longer,
+    // then aggressively shifts it to normal right at the end of the spawn.
+    float color_shift_timing = clamp(pow(progress, 2.0), 0.0, 1.0);
+    
+    // We blend the Cyan with the enemy's TRUE base color for the solid body
+    vec4 solid_body_color = mix(friendly_color, base_color, color_shift_timing);
+    // We blend the Cyan with pure Red for the glitchy edge
+    vec4 glitch_edge_color = mix(friendly_color, hostile_color, color_shift_timing);
+    
     if (noise_val < visibility_threshold) {
-        // Pixel is still compressed in the wall (invisible)
+        // Still invisible in the wall
         base_color.a = 0.0; 
     } else if (noise_val < visibility_threshold + 0.15) {
-        // The bleeding edge of the glitch (bright red!)
-        base_color = corruption_color; 
+        // The bleeding glitch edge
+        base_color = glitch_edge_color; 
+    } else {
+        // THE FIX: The solid part of the enemy ALSO gets the color shift!
+        base_color = solid_body_color; 
     }
     
     COLOR = base_color;

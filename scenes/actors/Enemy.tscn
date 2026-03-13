@@ -8,7 +8,8 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dqsgq"]
 shader = ExtResource("4_qqu5c")
 shader_parameter/progress = 1.0
-shader_parameter/corruption_color = Color(0.9, 0.1, 0.1, 1)
+shader_parameter/friendly_color = Color(0, 1, 1, 1)
+shader_parameter/hostile_color = Color(0.9, 0.1, 0.1, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ay0ne"]
 size = Vector2(40, 40)
@@ -21,7 +22,6 @@ collision_layer = 4
 collision_mask = 7
 script = ExtResource("1_jq30h")
 loot_scene = ExtResource("2_ay0ne")
-drop_chance = 0.6
 special_drop_chance = 0.0
 hp = 4
 death_effect = ExtResource("3_ktxhy")

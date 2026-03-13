@@ -86,67 +86,23 @@ func update_chunks() -> void:
 			chunks_to_remove.append(chunk_coord)
 	for chunk_coord in chunks_to_remove:
 		unload_chunk(chunk_coord)
-
-func generate_chunk(chunk_coord: Vector2i) -> void:
-	# --- STEP 1: Build raw map data from noise ---
-	# Instead of painting tiles immediately, we collect all decisions
-	# into a 2D array first so we can smooth it before painting.
-	
-	# map_data[x][y] = 1 means wall, 0 means floor
-	var map_data: Array = []
-	
-	for x in range(CHUNK_SIZE):
-		var column = []
-		for y in range(CHUNK_SIZE):
-			var global_x = (chunk_coord.x * CHUNK_SIZE) + x
-			var global_y = (chunk_coord.y * CHUNK_SIZE) + y
-			
-			var noise_val = noise.get_noise_2d(global_x, global_y)
-			
-			# Same rule as before — just storing it instead of painting it
-			if noise_val > 0.5:
-				column.append(1)  # Wall
-			else:
-				column.append(0)  # Floor
-		map_data.append(column)
-	
-	# --- STEP 2: Smooth the raw data ---
-	# Run cellular automata passes to eliminate jagged corners
-	# and isolated wall spurs that trap enemies
-	map_data = _smooth_chunk(map_data, chunk_coord)  # ← pass chunk_coord
-	
-	# --- STEP 3: Paint the smoothed data to the TileMap ---
-	for x in range(CHUNK_SIZE):
-		for y in range(CHUNK_SIZE):
-			var global_x = (chunk_coord.x * CHUNK_SIZE) + x
-			var global_y = (chunk_coord.y * CHUNK_SIZE) + y
-			
-			# Same atlas coords you were already using
-			var atlas_coord = Vector2i(1, 0)  # Floor
-			if map_data[x][y] == 1:
-				atlas_coord = Vector2i(0, 0)  # Wall
-			
-			ground_layer.set_cell(Vector2i(global_x, global_y), 0, atlas_coord)
 			
 func _generate_pending_chunks() -> void:
-	# This runs on the background thread.
-	
 	while true:
-		# 1. LOCK THE DOOR to safely look at the pending list
 		_thread_mutex.lock()
-		# 2. Check if we are done. If yes, unlock and exit the loop!
 		if _pending_chunks.size() == 0 or _exit_thread:
 			_thread_mutex.unlock()
 			break
-		# 3. Safely grab the next chunk in line
 		var chunk_coord = _pending_chunks.pop_front()
-		# 4. UNLOCK THE DOOR immediately so the main thread can keep appending
 		_thread_mutex.unlock()
-		# --- HEAVY MATH (Happens outside the lock so the game stays smooth) ---
+		
 		var map_data = _build_map_data(chunk_coord)
 		map_data = _smooth_chunk(map_data, chunk_coord)
-		# 5. LOCK THE DOOR again to safely hand the finished data back to the main thread
+		
 		_thread_mutex.lock()
+		# Cache the smoothed result so if this chunk unloads and reloads,
+		# it skips all generation math entirely
+		chunk_cache[chunk_coord] = map_data
 		_completed_chunks[chunk_coord] = map_data
 		_thread_mutex.unlock()
 
@@ -267,8 +223,7 @@ func _build_map_data(chunk_coord: Vector2i) -> Array:
 				column.append(1 if noise_val > 0.5 else 0)
 				
 		map_data.append(column)
-	
-	chunk_cache[chunk_coord] = map_data
+
 	return map_data
 
 func _paint_chunk(map_data: Array, chunk_coord: Vector2i) -> void:
@@ -304,10 +259,11 @@ func _paint_chunk(map_data: Array, chunk_coord: Vector2i) -> void:
 	tween.tween_callback(shadow.queue_free)
 	
 func _exit_tree() -> void:
-	# 1. Flip the kill switch so the thread loop breaks
+	# Lock the mutex before flipping the exit flag — thread safety
+	_thread_mutex.lock()
 	_exit_thread = true
+	_thread_mutex.unlock()
 	
-	# 2. If the thread is currently doing math, wait for it to finish its current loop
 	if _generation_thread.is_started():
 		_generation_thread.wait_to_finish()
 		print("WorldGenerator: Background thread safely shut down.")

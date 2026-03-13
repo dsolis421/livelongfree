@@ -58,7 +58,7 @@ func _on_timer_timeout() -> void:
 	else:
 		# Fallback: The player is in a massive open area. 
 		# Just spawn them normally on the floor.
-		enemy.global_position = spawn_data["floor_pos"]
+		enemy.start_floor_spawn(spawn_data["floor_pos"], 1.0)
 
 func spawn_boss() -> void:
 	if boss_scene == null:
